@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Owner_Homepage extends AppCompatActivity {
+public class OwnerHomepage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

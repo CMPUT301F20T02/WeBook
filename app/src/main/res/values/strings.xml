@@ -5,4 +5,13 @@
     <string name="pwd_hint">Password</string>
     <string name="sign_up">Sign up</string>
     <string name="confirm">Log in</string>
+    <string name="ALL">ALL</string>
+    <string name="Available">Available</string>
+    <string name="Requested">Requested</string>
+    <string name="Accepted">Accepted</string>
+    <string name="Borrowed">Borrowed</string>
+    <string name="Search">Search</string>
+    <string name="BOOKS">BOOKS</string>
+    <string name="REQUESTS">REQUESTS</string>
+    <string name="ME">ME</string>
 </resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1073659895077",
+    "firebase_url": "https://webook-6e65f.firebaseio.com",
+    "project_id": "webook-6e65f",
+    "storage_bucket": "webook-6e65f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073659895077:android:72d6ef17e884dabc58cecc",
+        "android_client_info": {
+          "package_name": "com.example.webook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073659895077-auo5gsriq9kupedn8e2v20u76hf43hre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR1SfHC8AMLk_6ozu0aNpXGZgAwco94WM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073659895077-auo5gsriq9kupedn8e2v20u76hf43hre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

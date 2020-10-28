@@ -4,12 +4,20 @@ import android.location.Location;
 
 import java.util.Date;
 
-public abstract class Request {
+public class Request {
     private String requester;
     private String requestee;
-    private String book;
+    private Book book;
     private Location geoLocation;
     private Date date;
+
+    Request(Book book, String requestee, String requester, Date date, Location geoLocation){
+        this.book = book;
+        this.requestee = requestee;
+        this.requester = requester;
+        this.date = date;
+        this.geoLocation = geoLocation;
+    }
 
     public String getRequester() {
         return requester;
@@ -19,7 +27,7 @@ public abstract class Request {
         return requestee;
     }
 
-    public String getBook() {
+    public Book getBook() {
         return book;
     }
 

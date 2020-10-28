@@ -9,6 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BorrowerRequestPage"
+            android:parentActivityName=".BorrowerHomepage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BorrowerHomepage" />
+        </activity>
         <activity android:name=".BorrowerHomepage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

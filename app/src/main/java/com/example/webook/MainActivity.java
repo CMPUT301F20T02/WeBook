@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,28 @@ public class MainActivity extends AppCompatActivity {
         });
         Drawable image = getResources().getDrawable(R.drawable.empty_user_icon);
         Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.empty_user_icon);
+        StorageReference imageRef = storageReference.child("images/users/");
+
+        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.empty_user_icon)).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+
         Owner user = new Owner("owner2", "test1@test1.com", "111", "111", image1);
 
         //Borrower user = new Borrower("test1", "test1@test1.com", "111", "145");

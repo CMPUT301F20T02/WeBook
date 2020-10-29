@@ -3,8 +3,11 @@ package com.example.webook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +30,14 @@ public class MainActivity extends AppCompatActivity {
         Book book = new Book();
         Map<String, Object> user = new HashMap<>();
         user.put("first", book);
-
+        Button login = findViewById(R.id.confirm_button);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OwnerHomepage.class);
+                startActivity(intent);
+            }
+        });
 // Add a new document with a generated ID
         db.collection("users")
                 .add(user)
@@ -43,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-
-
-
-
-
     }
+
 }

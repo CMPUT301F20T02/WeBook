@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,13 +33,15 @@ public class BookList extends ArrayAdapter<Book> {
         }
 
         Book book = books.get(position);
-        TextView name = view.findViewById(R.id.book_name);
+        TextView name = view.findViewById(R.id.book_title);
         TextView author = view.findViewById(R.id.book_author);
         TextView status = view.findViewById(R.id.book_status);
+        ImageView image = view.findViewById(R.id.book_icon);
         name.setText(book.getTitle());
         author.setText(book.getAuthor());
         status.setText(book.getStatus());
+        image.setImageDrawable(context.getResources().getDrawable(R.drawable.book_icon));
         return view;
-
     }
+
 }

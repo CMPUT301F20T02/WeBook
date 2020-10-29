@@ -1,0 +1,73 @@
+package com.example.webook;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
+public class BorrowerSearchUserPage extends AppCompatActivity {
+    ListView userList;
+    ArrayList<User> dataList;
+    ArrayAdapter<User> userAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.borrower_search_book_result);
+        final String TAG = "User";
+        // User's key for search
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+        userList = findViewById(R.id.borrower_search_book_list);
+        dataList = new ArrayList<>();
+        userAdapter = new UserList(this, dataList);
+        userList.setAdapter(userAdapter);
+        final ArrayList<String> userNameList = new ArrayList<String>();
+        final FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Users");
+
+        collectionReference.whereEqualTo("UserName",message).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            dataList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId());
+                                String Username = document.getId();
+                                String email = (String) document.getData().get("email");
+                                String userType =  (String) document.getData().get("userType");
+                                String pwd =  (String) document.getData().get("pwd");
+                                String phoneNumber =  (String) document.getData().get("phoneNumber");
+                                if(userType.equals("Borrower")) {
+                                    dataList.add(new Borrower(Username,email, phoneNumber, pwd, userType));
+                                }else{
+                                    dataList.add(new Owner(Username,email, phoneNumber, pwd, userType));
+                                }
+                            }
+                            userAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        collectionReference.whereEqualTo("UserName",message).get();
+
+    }
+}

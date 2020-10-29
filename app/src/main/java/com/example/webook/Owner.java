@@ -5,4 +5,7 @@ public class Owner extends User {
     private CustomList<BookRequest> requestList;
 
 
+    public Owner(String username, String email, String phoneNumber, String pwd, String userType) {
+        super(username, email, phoneNumber, pwd, userType);
+    }
 }

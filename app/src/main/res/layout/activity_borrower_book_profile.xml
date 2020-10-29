@@ -30,10 +30,10 @@
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_text" />
+        app:layout_constraintTop_toBottomOf="@+id/owner_book_profile_title_text" />
 
     <TextView
-        android:id="@+id/title_text"
+        android:id="@+id/owner_book_profile_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="240dp"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/borrower_request_button"
+        android:id="@+id/owner_delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"

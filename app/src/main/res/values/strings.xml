@@ -14,4 +14,6 @@
     <string name="BOOKS">BOOKS</string>
     <string name="REQUESTS">REQUESTS</string>
     <string name="ME">ME</string>
+    <string name="DELETE">DELETE</string>
+    <string name="EDIT">EDIT</string>
 </resources>

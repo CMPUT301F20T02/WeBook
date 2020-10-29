@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -32,10 +31,10 @@ public class BorrowerBookProfile extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_borrower_book_profile);
 
-    title_text = findViewById(R.id.title_text);
+    title_text = findViewById(R.id.owner_book_profile_title_text);
     author_text = findViewById(R.id.author_text);
     isbn_text = findViewById(R.id.isbn_text);
-    requestButton = findViewById(R.id.borrower_request_button);
+    requestButton = findViewById(R.id.owner_delete_button);
 
     Intent intent = getIntent();
     final Request newRequest = (Request) intent.getSerializableExtra("request");
@@ -66,6 +65,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
                             Log.d(TAG, "Data addition failed" + e.toString());
                         }
                     });
+            finish();
             }
         });
     }

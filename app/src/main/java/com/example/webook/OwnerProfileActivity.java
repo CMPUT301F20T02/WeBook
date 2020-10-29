@@ -6,32 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-public class OwnerHomepage extends AppCompatActivity {
-
+public class OwnerProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner__homepage);
+        setContentView(R.layout.activity_owner_profile);
 
+        Button addButton = findViewById(R.id.addButton);
 
-        TextView me = findViewById(R.id.me);
-
-        me.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OwnerHomepage.this, OwnerProfileActivity.class);
+                Intent intent = new Intent(OwnerProfileActivity.this, AddBookActivity.class);
 
                 startActivity(intent);
             }
         });
 
-
-
-
     }
+
 
 }

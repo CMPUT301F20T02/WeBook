@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Owner owner = new Owner("test", "test@test.com", "110", "123");
+        Owner owner = new Owner("test", "test@test.com", "110", "123", "owner");
         //Map<String, Object> user = new HashMap<>();
         //user.put("first", owner);
         /*db.collection("users").document("test")
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });*/
 
-        owner.addBook("AA", "1234-5678", "Jia", null, "DES");
         /*
         Book book = new Book();
         Map<String, Object> user = new HashMap<>();

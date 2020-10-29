@@ -5,12 +5,14 @@ public abstract class User {
     private String email;
     private String phoneNumber;
     private String pwd;
+    private String userType;
 
-    public User(String username, String email, String phoneNumber, String pwd){
+    public User(String username, String email, String phoneNumber, String pwd, String userType){
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.pwd = pwd;
+        this.userType = userType;
     }
 
     public void editContactInformation(String email, String phoneNumber){

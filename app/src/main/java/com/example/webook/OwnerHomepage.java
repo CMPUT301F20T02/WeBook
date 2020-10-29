@@ -40,8 +40,7 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
                 Book selectBook = dataList.get(position);
-                BookRequest newRequest = new BookRequest(selectBook, "requestee1", "requester2", null);
-                intent.putExtra("request", newRequest);
+                intent.putExtra("selectBook", selectBook);
                 startActivity(intent);
                 return true;
             }

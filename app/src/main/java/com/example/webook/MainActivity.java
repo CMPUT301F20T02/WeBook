@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        Owner user = new Owner("owner1", "test1@test1.com", "111", "111");
+        Drawable image = getResources().getDrawable(R.drawable.empty_user_icon);
+        Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.empty_user_icon);
+        Owner user = new Owner("owner2", "test1@test1.com", "111", "111", image1);
+
         //Borrower user = new Borrower("test1", "test1@test1.com", "111", "145");
         db.collection("users").document(user.getUsername())
                 .set(user)
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void authenticate(String username, final String pwd){
+    public void authenticate(final String username, final String pwd){
         DocumentReference userRef = db.collection("users").document(username);
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -137,24 +143,22 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     int duration = Toast.LENGTH_SHORT;
-                    if (document.exists()) {
-                        if (document.getString("pwd").equals(pwd)){
-                            Intent intent;
-                            if (document.getString("userType").equals("owner")){
-                                intent = new Intent(MainActivity.this, OwnerHomepage.class);
-                                startActivity(intent);
-                            }else if (document.getString("userType").equals("borrower")) {
-                                intent = new Intent(MainActivity.this, BorrowerHomepage.class);
-                                startActivity(intent);
-                            }
-
-
-                        }else{
-                            Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
-                            toast.show();
+                    if (document.exists() && document.getString("pwd").equals(pwd)) {
+                        Intent intent;
+                        if (document.getString("userType").equals("owner")){
+                            intent = new Intent(MainActivity.this, OwnerHomepage.class);
+                            Owner owner = new Owner(username, document.getString("email"),
+                                    document.getString("phoneNumber"), document.getString("pwd"), (Bitmap) document.getData().get("user_image"));
+                            intent.putExtra("user", owner);
+                            startActivity(intent);
+                        }else if (document.getString("userType").equals("borrower")) {
+                            intent = new Intent(MainActivity.this, BorrowerHomepage.class);
+                            Borrower borrower = new Borrower(username, document.getString("email"),
+                                    document.getString("phoneNumber"), document.getString("pwd"), (Bitmap) document.getData().get("user_image"));
+                            intent.putExtra("user", borrower);
+                            startActivity(intent);
                         }
                     } else {
-
                         Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
                         toast.show();
                     }

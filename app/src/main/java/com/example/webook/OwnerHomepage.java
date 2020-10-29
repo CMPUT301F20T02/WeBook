@@ -22,6 +22,7 @@ public class OwnerHomepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner__homepage);
+        /*
         Drawable image = getResources().getDrawable(R.drawable.book_icon);
         final Owner owner = new Owner("asd", "asadsda", "asdsad", "qwewqe");
         owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "available");
@@ -33,9 +34,8 @@ public class OwnerHomepage extends AppCompatActivity {
         owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "requested");
         owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "accepted");
         owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "accepted");
-        final ListView bookListView = findViewById(R.id.book_list);
-        final BookList bookList = new BookList(this, owner.getBookList());
-        bookListView.setAdapter(bookList);
+        */
+
 
         TextView me = findViewById(R.id.me);
 
@@ -44,12 +44,17 @@ public class OwnerHomepage extends AppCompatActivity {
         TextView requested = findViewById(R.id.requested);
         TextView accepted = findViewById(R.id.accepted);
         TextView borrowed = findViewById(R.id.borrowed);
+        Intent intent = getIntent();
+        final Owner owner = (Owner) intent.getSerializableExtra("user");
+        final ListView bookListView = findViewById(R.id.book_list);
+        final BookList bookList = new BookList(this, owner.getBookList());
+        bookListView.setAdapter(bookList);
 
         me.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OwnerHomepage.this, OwnerProfileActivity.class);
-
+                intent.putExtra("user", owner);
                 startActivity(intent);
             }
         });

@@ -1,17 +1,25 @@
 package com.example.webook;
 
-public abstract class User {
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
     private String username;
     private String email;
     private String phoneNumber;
     private String pwd;
     private String userType;
+    private Bitmap user_image;
 
-    public User(String username, String email, String phoneNumber, String pwd){
+    public User(String username, String email, String phoneNumber, String pwd, Bitmap user_image){
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.pwd = pwd;;
+        this.pwd = pwd;
+        this.user_image = user_image;
     }
 
     public void editContactInformation(String email, String phoneNumber){

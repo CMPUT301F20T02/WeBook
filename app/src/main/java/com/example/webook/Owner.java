@@ -1,5 +1,6 @@
 package com.example.webook;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 
@@ -10,8 +11,8 @@ public class Owner extends User {
     private ArrayList<Request> requestList;
 
 
-    public Owner(String username, String email, String phoneNumber, String pwd){
-        super(username, email, phoneNumber, pwd);
+    public Owner(String username, String email, String phoneNumber, String pwd, Bitmap image){
+        super(username, email, phoneNumber, pwd, image);
         this.setUserType("owner");
         bookList = new ArrayList<Book>();
         requestList = new ArrayList<Request>();

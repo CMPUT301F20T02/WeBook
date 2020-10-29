@@ -2,7 +2,9 @@ package com.example.webook;
 
 import android.media.Image;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String title;
     private String ISBN;
     private String author;

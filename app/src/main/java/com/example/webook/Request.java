@@ -2,16 +2,24 @@ package com.example.webook;
 
 import android.location.Location;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Request {
+public abstract class Request implements Serializable{
     private String requester;
     private String requestee;
     private Book book;
     private Location geoLocation;
     private Date date;
 
-    Request(Book book, String requestee, String requester, Date date, Location geoLocation){
+    public Request(Book book, String requestee, String requester, Date date){
+        this.book = book;
+        this.requestee = requestee;
+        this.requester = requester;
+        this.date = date;
+    }
+
+    public Request(Book book, String requestee, String requester, Date date, Location geoLocation){
         this.book = book;
         this.requestee = requestee;
         this.requester = requester;

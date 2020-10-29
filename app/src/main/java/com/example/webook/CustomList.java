@@ -28,15 +28,15 @@ public class CustomList extends ArrayAdapter<Book> {
         View view = convertView;
 
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.content, parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.book_list_content, parent,false);
         }
 
         Book book = books.get(position);
 
-        TextView ISBN = view.findViewById(R.id.ISBN);
+        TextView ISBN = view.findViewById(R.id.content_title);
         ISBN.setText(book.getISBN());
 
-        TextView request = view.findViewById(R.id.request_text);
+        TextView request = view.findViewById(R.id.content_status);
         request.setText(book.getStatus());
         return view;
 

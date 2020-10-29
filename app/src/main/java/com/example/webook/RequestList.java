@@ -29,12 +29,12 @@ public class RequestList extends ArrayAdapter<Request> {
         View view = convertView;
 
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.content, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.book_list_content, parent, false);
         }
 
         Request request = requests.get(position);
 
-        TextView cityName = view.findViewById(R.id.request_text);
+        TextView cityName = view.findViewById(R.id.content_status);
 
         cityName.setText(request.getRequester());
 

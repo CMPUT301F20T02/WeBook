@@ -7,6 +7,10 @@ import java.util.Date;
 public class BookRequest extends Request {
     private String status;
 
+    BookRequest(Book book, String requestee, String requester, Date date){
+        super(book, requestee, requester, date);
+    }
+
     BookRequest(Book book, String requestee, String requester, Date date, Location geoLocation) {
         super(book, requestee, requester, date, geoLocation);
     }

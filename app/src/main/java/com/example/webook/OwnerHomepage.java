@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class OwnerHomepage extends AppCompatActivity {
@@ -17,6 +19,10 @@ public class OwnerHomepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner__homepage);
 
+        Owner owner = new Owner("test", "test@test.com", "110", "123");
+        owner.addBook("AA", "1234-5678", "Jia", null, "DES");
+        ListView bookListView = findViewById(R.id.book_list);
+        bookListView.setAdapter(owner.getBookList());
 
         TextView me = findViewById(R.id.me);
 

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Owner owner = new Owner("test", "test@test.com", "110", "123");
         //Map<String, Object> user = new HashMap<>();
         //user.put("first", owner);
-        db.collection("users").document("test")
+        /*db.collection("users").document("test")
                 .set(owner)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -60,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
                     }
-                });
+                });*/
+
+        owner.addBook("AA", "1234-5678", "Jia", null, "DES");
         /*
         Book book = new Book();
         Map<String, Object> user = new HashMap<>();

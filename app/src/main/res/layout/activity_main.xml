@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/login_sign"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="70dp"
@@ -20,7 +20,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/pwd_text_view"
+        android:id="@+id/username_input"
+        android:layout_width="255dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="35dp"
+        android:ems="10"
+        android:hint="@string/username_hint"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_sign"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/pwd_input"
         android:layout_width="255dp"
         android:layout_height="50dp"
         android:layout_marginStart="70dp"
@@ -31,24 +45,10 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_textview" />
-
-    <EditText
-        android:id="@+id/username_textview"
-        android:layout_width="255dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="35dp"
-        android:ems="10"
-        android:hint="@string/username_hint"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/username_input" />
 
     <Button
-        android:id="@+id/confirm_button"
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -56,7 +56,7 @@
         android:layout_marginTop="50dp"
         android:text="@string/confirm"
         app:layout_constraintStart_toEndOf="@+id/signup_button"
-        app:layout_constraintTop_toBottomOf="@+id/pwd_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/pwd_input" />
 
     <Button
         android:id="@+id/signup_button"
@@ -67,6 +67,6 @@
         android:layout_marginTop="50dp"
         android:text="@string/sign_up"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pwd_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/pwd_input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

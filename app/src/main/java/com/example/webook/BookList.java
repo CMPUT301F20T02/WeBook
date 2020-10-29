@@ -33,11 +33,11 @@ public class BookList extends ArrayAdapter<Book> {
         }
 
         Book book = books.get(position);
-        TextView name = view.findViewById(R.id.book_title);
+        TextView title = view.findViewById(R.id.book_title);
         TextView author = view.findViewById(R.id.book_author);
         TextView status = view.findViewById(R.id.book_status);
-        ImageView image = view.findViewById(R.id.book_icon);
-        name.setText(book.getTitle());
+        ImageView image = view.findViewById(R.id.book_icon_detail);
+        title.setText(book.getTitle());
         author.setText(book.getAuthor());
         status.setText(book.getStatus());
         image.setImageDrawable(context.getResources().getDrawable(R.drawable.book_icon));

@@ -26,9 +26,10 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_icon"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"/>
     <TextView
+        android:gravity="center"
         android:id="@+id/book_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,10 +46,14 @@
         android:id="@+id/book_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:gravity="right"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/book_icon"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_icon"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

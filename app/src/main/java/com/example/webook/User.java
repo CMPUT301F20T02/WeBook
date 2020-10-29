@@ -7,12 +7,11 @@ public abstract class User {
     private String pwd;
     private String userType;
 
-    public User(String username, String email, String phoneNumber, String pwd, String userType){
+    public User(String username, String email, String phoneNumber, String pwd){
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.pwd = pwd;
-        this.userType = userType;
+        this.pwd = pwd;;
     }
 
     public void editContactInformation(String email, String phoneNumber){
@@ -49,5 +48,13 @@ public abstract class User {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }

@@ -10,8 +10,9 @@ public class Owner extends User {
     private ArrayList<Request> requestList;
 
 
-    public Owner(String username, String email, String phoneNumber, String pwd, String userType){
-        super(username, email, phoneNumber, pwd, userType);
+    public Owner(String username, String email, String phoneNumber, String pwd){
+        super(username, email, phoneNumber, pwd);
+        this.setUserType("owner");
         bookList = new ArrayList<Book>();
         requestList = new ArrayList<Request>();
     }
@@ -81,7 +82,6 @@ public class Owner extends User {
             }
 
         }
-
         return borrowed;
     }
 }

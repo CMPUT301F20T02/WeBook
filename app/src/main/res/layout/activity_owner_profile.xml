@@ -7,7 +7,7 @@
     tools:context=".OwnerProfileActivity">
 
     <ImageView
-        android:id="@+id/user_image"
+        android:id="@+id/owner_user_image"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/owner_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -29,11 +29,11 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
+        app:layout_constraintStart_toEndOf="@+id/owner_user_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/user_type"
+        android:id="@+id/owner_user_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -43,11 +43,11 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintStart_toEndOf="@+id/owner_user_image"
+        app:layout_constraintTop_toBottomOf="@+id/owner_username" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/owner_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -57,11 +57,11 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/phone" />
+        app:layout_constraintStart_toEndOf="@+id/owner_user_image"
+        app:layout_constraintTop_toBottomOf="@+id/owner_user_type" />
 
     <TextView
-        android:id="@+id/phone"
+        android:id="@+id/owner_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -71,11 +71,12 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_type" />
+        app:layout_constraintStart_toEndOf="@+id/owner_user_image"
+        app:layout_constraintTop_toBottomOf="@+id/owner_phone" />
 
     <TextView
-        android:id="@+id/owner_description"
+
+        android:id="@+id/owner_user_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -87,10 +88,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_image" />
+        app:layout_constraintTop_toBottomOf="@+id/owner_user_image" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/addBookButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -99,13 +100,13 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/add_book"
-        app:layout_constraintBottom_toTopOf="@+id/editButton"
+        app:layout_constraintBottom_toTopOf="@+id/owner_editProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/owner_editProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

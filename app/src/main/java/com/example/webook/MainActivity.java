@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +19,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +65,38 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        Owner user = new Owner("owner1", "test1@test1.com", "111", "111");
+        Drawable image = getResources().getDrawable(R.drawable.empty_user_icon);
+        Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.empty_user_icon);
+        StorageReference imageRef = storageReference.child("images/users/");
+
+        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.empty_user_icon)).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
+                toast.show();
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
+                toast.show();
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+
+        Owner user = new Owner("owner2", "test1@test1.com", "111", "111", image1);
+
         //Borrower user = new Borrower("test1", "test1@test1.com", "111", "145");
         db.collection("users").document(user.getUsername())
                 .set(user)
@@ -125,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void authenticate(String username, final String pwd){
+    public void authenticate(final String username, final String pwd){
         DocumentReference userRef = db.collection("users").document(username);
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -133,24 +178,22 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     int duration = Toast.LENGTH_SHORT;
-                    if (document.exists()) {
-                        if (document.getString("pwd").equals(pwd)){
-                            Intent intent;
-                            if (document.getString("userType").equals("owner")){
-                                intent = new Intent(MainActivity.this, OwnerHomepage.class);
-                                startActivity(intent);
-                            }else if (document.getString("userType").equals("borrower")) {
-                                intent = new Intent(MainActivity.this, BorrowerHomepage.class);
-                                startActivity(intent);
-                            }
-
-
-                        }else{
-                            Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
-                            toast.show();
+                    if (document.exists() && document.getString("pwd").equals(pwd)) {
+                        Intent intent;
+                        if (document.getString("userType").equals("owner")){
+                            intent = new Intent(MainActivity.this, OwnerHomepage.class);
+                            Owner owner = new Owner(username, document.getString("email"),
+                                    document.getString("phoneNumber"), document.getString("pwd"), (Bitmap) document.getData().get("user_image"));
+                            intent.putExtra("user", owner);
+                            startActivity(intent);
+                        }else if (document.getString("userType").equals("borrower")) {
+                            intent = new Intent(MainActivity.this, BorrowerHomepage.class);
+                            Borrower borrower = new Borrower(username, document.getString("email"),
+                                    document.getString("phoneNumber"), document.getString("pwd"), (Bitmap) document.getData().get("user_image"));
+                            intent.putExtra("user", borrower);
+                            startActivity(intent);
                         }
                     } else {
-
                         Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
                         toast.show();
                     }

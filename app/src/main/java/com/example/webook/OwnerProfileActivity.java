@@ -18,19 +18,19 @@ public class OwnerProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_profile);
-        TextView username = findViewById(R.id.username);
-        TextView userType = findViewById(R.id.user_type);
-        TextView phone = findViewById(R.id.phone);
-        TextView email = findViewById(R.id.email);
-        ImageView user_pic = findViewById(R.id.user_image);
-        Button addButton = findViewById(R.id.addButton);
-        Button editButton = findViewById(R.id.editButton);
-        TextView description = findViewById(R.id.owner_description);
+
+        TextView username = findViewById(R.id.owner_username);
+        TextView userType = findViewById(R.id.owner_user_type);
+        TextView phone = findViewById(R.id.owner_phone);
+        TextView email = findViewById(R.id.owner_email);
+        ImageView user_pic = findViewById(R.id.owner_user_image);
+        Button addButton = findViewById(R.id.addBookButton);
+        Button editButton = findViewById(R.id.owner_editProfile);
+        TextView description = findViewById(R.id.owner_user_description);
 
 
         Intent intent = getIntent();
         final Owner owner = (Owner) intent.getSerializableExtra("user");
-
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

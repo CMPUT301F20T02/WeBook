@@ -48,12 +48,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
         android:layout_marginLeft="200dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="8dp"
         android:gravity="right"
         android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/book_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/book_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

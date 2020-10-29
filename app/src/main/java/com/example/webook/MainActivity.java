@@ -15,13 +15,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        username = findViewById(R.id.username_textview);
-        pwd = findViewById(R.id.pwd_text_view);
+        username = findViewById(R.id.username_input);
+        pwd = findViewById(R.id.pwd_input);
         signUp = findViewById(R.id.signup_button);
-        login = findViewById(R.id.confirm_button);
+        login = findViewById(R.id.login_button);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

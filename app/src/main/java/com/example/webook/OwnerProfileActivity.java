@@ -14,7 +14,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_profile);
 
-        Button addButton = findViewById(R.id.addButton);
+        Button addButton = findViewById(R.id.addBookButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

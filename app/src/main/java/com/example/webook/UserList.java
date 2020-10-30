@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,11 +35,13 @@ public class UserList extends ArrayAdapter<User> {
 
         User user = users.get(position);
         TextView email = view.findViewById(R.id.Email);
-        TextView userName = view.findViewById(R.id.User_name);
-        TextView phoneNumber = view.findViewById(R.id.PhoneNumber);
+        TextView userName = view.findViewById(R.id.Username);
+        TextView phoneNumber = view.findViewById(R.id.phoneNumber);
+        ImageView image = view.findViewById(R.id.user_icon_detail);
         email.setText(user.getEmail());
         phoneNumber.setText(user.getPhoneNumber());
         userName.setText(user.getUsername());
+        image.setImageDrawable(context.getResources().getDrawable(R.drawable.empty_user_icon));
         return view;
 
     }

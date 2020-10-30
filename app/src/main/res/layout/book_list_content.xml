@@ -7,8 +7,8 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/book_icon_detail"
-        android:layout_width="100dp"
+        android:id="@+id/user_icon_detail"
+        android:layout_width="92dp"
         android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +25,7 @@
         android:layout_marginRight="20dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
+        app:layout_constraintStart_toEndOf="@+id/user_icon_detail"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"/>
     <TextView
@@ -39,7 +39,7 @@
         android:layout_marginRight="20dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
+        app:layout_constraintStart_toEndOf="@+id/user_icon_detail"
         app:layout_constraintTop_toBottomOf="@+id/book_title" />
 
     <TextView
@@ -54,6 +54,6 @@
         android:gravity="right"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
+        app:layout_constraintStart_toEndOf="@+id/user_icon_detail"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

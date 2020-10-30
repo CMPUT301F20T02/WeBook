@@ -9,10 +9,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowBookDetail"></activity>
-        <activity android:name=".ShowUserDetail" />
+        <activity android:name=".ShowBookDetail"
+            android:parentActivityName=".BorrowerSearchBookPage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".ShowUserDetail"
+            android:parentActivityName=".BorrowerSearchUserPage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".BorrowerHomepage" />
         <activity android:name=".OwnerHomepage" />
+        <activity android:name=".BorrowerSearch"
+            android:parentActivityName=".BorrowerHomepage"
+            android:launchMode="singleTop">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".BorrowerSearchUserPage"
+            android:parentActivityName=".BorrowerSearch"
+            android:launchMode="singleTop">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".BorrowerSearchBookPage"
+            android:parentActivityName=".BorrowerSearch"
+            android:launchMode="singleTop">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

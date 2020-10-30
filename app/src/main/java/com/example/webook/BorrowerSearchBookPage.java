@@ -1,9 +1,12 @@
 package com.example.webook;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,12 +27,12 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     ListView bookList;
     ArrayList<Book> dataList;
     ArrayAdapter<Book> bookAdapter;
-
+    public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchBookPage.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.borrower_search_book_result);
-        final String TAG = "User";
+        final String TAG = "Book";
         // User's key for search
         Intent intent = getIntent();
         final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
@@ -39,7 +42,17 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         bookList.setAdapter(bookAdapter);
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Books");
+        final CollectionReference collectionReference = db.collection("books");
+
+        bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(BorrowerSearchBookPage.this,ShowBookDetail.class);
+                Book book = dataList.get(i);
+                intent.putExtra(EXTRA_MESSAGE, book);
+                startActivity(intent);
+            }
+        });
 
         collectionReference
                 .get()
@@ -50,7 +63,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                             dataList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId());
-                                String status = (String) document.getData().get("title");
+                                String status = (String) document.getData().get("status");
                                 if(!status.equals("borrowed") && !status.equals("accepted")){
                                     String title = (String) document.getData().get("title");
                                     String author = (String) document.getData().get("author");
@@ -66,8 +79,6 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                                         dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
                                     }else if(description.contains(message)){
                                         dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
-                                    }else if(owner.contains(message)){
-                                        dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
                                     }
                                 }
                             }
@@ -77,6 +88,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                         }
                     }
                 });
-        collectionReference.whereEqualTo("UserName",message).get();
+        collectionReference.get();
+
     }
 }

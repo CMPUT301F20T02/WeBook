@@ -1,18 +1,38 @@
 package com.example.webook;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
     private String username;
     private String email;
     private String phoneNumber;
     private String pwd;
     private String userType;
-
+    private  String description;
     public User(String username, String email, String phoneNumber, String pwd, String userType) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.pwd = pwd;
         this.userType = userType;
+        this.description = "No description";
+    }
+
+    public User(String username, String email, String phoneNumber, String pwd, String userType, String description) {
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.pwd = pwd;
+        this.userType = userType;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUsername() {

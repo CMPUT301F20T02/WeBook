@@ -9,13 +9,12 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BorrowerSearch extends AppCompatActivity {
-    EditText newSearch = findViewById(R.id.borrower_search_input);
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearch.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.borrower_search_page);
-
+        final EditText newSearch = findViewById(R.id.borrower_search_input);
         // User press back in search page, back to main activity
         // User choose to search books
         final Button searchBook = findViewById(R.id.borrower_choose_books);
@@ -37,6 +36,7 @@ public class BorrowerSearch extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BorrowerSearch.this, BorrowerSearchUserPage.class);
                 String search = newSearch.getText().toString();
+
                 intent.putExtra(EXTRA_MESSAGE, search);
                 startActivity(intent);
             }

@@ -24,6 +24,7 @@ public class OwnerHomepage extends AppCompatActivity {
         owner.addBook("TITLE","ISBN","ASD",null,"sdassd");
         BookList adaptor = new BookList(this, owner.getBookList());
         app.setAdapter(adaptor);
+
     }
 
 }

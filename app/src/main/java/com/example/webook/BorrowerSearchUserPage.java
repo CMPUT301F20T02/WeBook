@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,7 +25,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
     ListView userList;
     ArrayList<User> dataList;
     ArrayAdapter<User> userAdapter;
-
+    public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchUserPage.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         final String TAG = "User";
         // User's key for search
         Intent intent = getIntent();
-        String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+        final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
         userList = findViewById(R.id.borrower_search_book_list);
         dataList = new ArrayList<>();
         userAdapter = new UserList(this, dataList);
@@ -40,9 +41,19 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         final ArrayList<String> userNameList = new ArrayList<String>();
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Users");
+        final CollectionReference collectionReference = db.collection("users");
 
-        collectionReference.whereEqualTo("UserName",message).get()
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(BorrowerSearchUserPage.this,ShowUserDetail.class);
+                User user = dataList.get(i);
+                intent.putExtra(EXTRA_MESSAGE, user);
+                startActivity(intent);
+            }
+        });
+
+        collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -55,10 +66,12 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                                 String userType =  (String) document.getData().get("userType");
                                 String pwd =  (String) document.getData().get("pwd");
                                 String phoneNumber =  (String) document.getData().get("phoneNumber");
-                                if(userType.equals("Borrower")) {
-                                    dataList.add(new Borrower(Username,email, phoneNumber, pwd, userType));
-                                }else{
-                                    dataList.add(new Owner(Username,email, phoneNumber, pwd, userType));
+                                if(Username.contains(message)){
+                                    if(userType.equals("borrower")) {
+                                        dataList.add(new Borrower(Username,email, phoneNumber, pwd, userType));
+                                    }else{
+                                        dataList.add(new Owner(Username,email, phoneNumber, pwd, userType));
+                                    }
                                 }
                             }
                             userAdapter.notifyDataSetChanged();
@@ -67,7 +80,6 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                         }
                     }
                 });
-        collectionReference.whereEqualTo("UserName",message).get();
-
+        collectionReference.get();
     }
 }

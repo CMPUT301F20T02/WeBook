@@ -65,37 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        Drawable image = getResources().getDrawable(R.drawable.empty_user_icon);
-        Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.empty_user_icon);
-        StorageReference imageRef = storageReference.child("images/users/");
-
-        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.empty_user_icon)).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = imageRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
-                toast.show();
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(MainActivity.this, "Incorrect credentials!", duration);
-                toast.show();
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-            }
-        });
 
 
-        Owner user = new Owner("owner2", "test1@test1.com", "111", "111", image1);
+        Owner user = new Owner("owner2", "test1@test1.com", "111", "111", null);
 
         //Borrower user = new Borrower("test1", "test1@test1.com", "111", "145");
         db.collection("users").document(user.getUsername())

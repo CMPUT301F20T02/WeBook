@@ -1,13 +1,28 @@
 package com.example.webook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 public class OwnerHomepage extends AppCompatActivity {
 
@@ -33,7 +48,53 @@ public class OwnerHomepage extends AppCompatActivity {
         owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "accepted");
         owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "accepted");
 <<<<<<< HEAD
-        */
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference imagesRef = storageReference.child("images/" + "book_icon");
+
+        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.book_icon)).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+
+
+        UploadTask uploadTask = imagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(OwnerHomepage.this, "Incorrect credentials!", duration);
+                toast.show();
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(OwnerHomepage.this, "correct credentials!", duration);
+                toast.show();
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         TextView me = findViewById(R.id.owner_me_tab);

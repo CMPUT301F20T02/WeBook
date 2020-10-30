@@ -37,18 +37,19 @@ public class BorrowerBookProfile extends AppCompatActivity {
     requestButton = findViewById(R.id.owner_delete_button);
 
     Intent intent = getIntent();
-    final Request newRequest = (Request) intent.getSerializableExtra("request");
+    final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
 
-    title_text.setText(newRequest.getBook().getTitle());
-    author_text.setText(newRequest.getBook().getAuthor());
-    isbn_text.setText(newRequest.getBook().getISBN());
+    title_text.setText(selectBook.getTitle());
+    author_text.setText(selectBook.getAuthor());
+    isbn_text.setText(selectBook.getISBN());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final Map<String, Object> requests = new HashMap<>();
-    requests.put("first", newRequest);
 
     requestButton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View v) {
+            BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "Requester1", null, null);
+            requests.put("first", newRequest);
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference
                     .document(newRequest.getBook().getISBN())

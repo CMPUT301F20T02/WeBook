@@ -2,17 +2,12 @@ package com.example.webook;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -23,7 +18,6 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView author_text;
     private TextView isbn_text;
     private Button requestButton;
-    private static final String TAG = "Sample";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +29,18 @@ public class OwnerBookProfile extends AppCompatActivity {
         isbn_text = findViewById(R.id.owner_book_profile_isbn_text);
         requestButton = findViewById(R.id.owner_request_button);
 
-        Intent intent = getIntent();
-        final Request newRequest = (Request) intent.getSerializableExtra("request");
+        final Intent intent = getIntent();
+        final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
 
-        title_text.setText(newRequest.getBook().getTitle());
-        author_text.setText(newRequest.getBook().getAuthor());
-        isbn_text.setText(newRequest.getBook().getISBN());
+        title_text.setText(selectBook.getTitle());
+        author_text.setText(selectBook.getAuthor());
+        isbn_text.setText(selectBook.getISBN());
 
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final Map<String, Object> requests = new HashMap<>();
-        requests.put("first", newRequest);
-
+        final Intent intent2 = new Intent(this, SameBookRequestList.class);
         requestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                finish();
+                intent2.putExtra("selectBook", selectBook);
+                startActivity(intent2);
             }
         });
 

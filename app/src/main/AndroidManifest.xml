@@ -16,10 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SameBookRequestList" />
-        <activity
-            android:name=".OwnerBookProfile"
-            android:parentActivityName=".OwnerHomepage" />
         <activity android:name=".OwnerHomepage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SameBookRequestList" />
+        <activity
+            android:name=".OwnerBookProfile"
+            android:parentActivityName=".OwnerHomepage" />
         <activity
             android:name=".BorrowerBookProfile"
             android:parentActivityName=".BorrowerHomepage" />

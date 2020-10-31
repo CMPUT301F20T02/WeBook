@@ -51,7 +51,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OwnerProfileActivity.this, AddBookActivity.class);
-
+                intent.putExtra("user", owner);
                 startActivity(intent);
             }
         });

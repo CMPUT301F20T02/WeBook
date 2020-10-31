@@ -32,6 +32,8 @@ public class OwnerHomepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_owner_homepage);
+
+
         /*
 =======
         setContentView(R.layout.activity_owner_homepage);
@@ -80,20 +82,6 @@ public class OwnerHomepage extends AppCompatActivity {
         });
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

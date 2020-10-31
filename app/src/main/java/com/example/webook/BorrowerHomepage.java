@@ -35,14 +35,14 @@ public class BorrowerHomepage extends AppCompatActivity {
         bookList.setAdapter(bookAdapter);
 
         final Intent intent = new Intent(this, BorrowerBookProfile.class);
-        bookList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        bookList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
                 Book selectBook = dataList.get(position);
                 intent.putExtra("selectBook", selectBook);
                 startActivity(intent);
-            }
-
+                return true;
+                }
         });
     }
 }

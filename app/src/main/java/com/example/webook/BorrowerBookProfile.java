@@ -32,16 +32,16 @@ public class BorrowerBookProfile extends AppCompatActivity {
     setContentView(R.layout.activity_borrower_book_profile);
 
     title_text = findViewById(R.id.owner_book_profile_title_text);
-    author_text = findViewById(R.id.author_text);
-    isbn_text = findViewById(R.id.isbn_text);
-    requestButton = findViewById(R.id.owner_delete_button);
+//    author_text = findViewById(R.id.author_text);
+//    isbn_text = findViewById(R.id.isbn_text);
+    requestButton = findViewById(R.id.request_button);
 
     Intent intent = getIntent();
     final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
 
-    title_text.setText(selectBook.getTitle());
-    author_text.setText(selectBook.getAuthor());
-    isbn_text.setText(selectBook.getISBN());
+//    title_text.setText(selectBook.getTitle());
+//    author_text.setText(selectBook.getAuthor());
+//    isbn_text.setText(selectBook.getISBN());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final Map<String, Object> requests = new HashMap<>();

@@ -20,9 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BorrowerBookProfile extends AppCompatActivity {
-    private TextView title_text;
-    private TextView author_text;
-    private TextView isbn_text;
+    private TextView title;
+    private TextView author;
+    private TextView isbn;
+    private TextView status;
+    private TextView owner;
+    private TextView description;
     private Button requestButton;
     private static final String TAG = "Sample";
 
@@ -31,17 +34,25 @@ public class BorrowerBookProfile extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_borrower_book_profile);
 
-    title_text = findViewById(R.id.owner_book_profile_title_text);
-//    author_text = findViewById(R.id.author_text);
+    title = findViewById(R.id.book_borrower_request_title_text);
+    author = findViewById(R.id.book_borrower_request_author_text);
+    isbn = findViewById(R.id.book_borrower_request_isbn_text);
+    owner = findViewById(R.id.book_borrower_request_owner_text);
+    status = findViewById(R.id.book_borrower_request_status_text);
+    description = findViewById(R.id.book_borrower_request_description_text);
+
 //    isbn_text = findViewById(R.id.isbn_text);
     requestButton = findViewById(R.id.request_button);
 
     Intent intent = getIntent();
     final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
 
-//    title_text.setText(selectBook.getTitle());
-//    author_text.setText(selectBook.getAuthor());
-//    isbn_text.setText(selectBook.getISBN());
+    title.setText(selectBook.getTitle());
+    author.setText(selectBook.getAuthor());
+    isbn.setText(selectBook.getISBN());
+    status.setText(selectBook.getStatus());
+    owner.setText(selectBook.getOwner());
+    status.setText(selectBook.getStatus());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final Map<String, Object> requests = new HashMap<>();

@@ -59,12 +59,12 @@ public class BorrowerBookProfile extends AppCompatActivity {
 
     requestButton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View v) {
-            BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "Requester1", null, null);
-            requests.put("first", newRequest);
+            BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "Peter", null, null);
+            requests.put(newRequest.getRequester(), newRequest);
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference
-                    .document(newRequest.getBook().getISBN())
-                    .set(newRequest)
+                    .document(newRequest.getBook().getTitle())
+                    .set(requests)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

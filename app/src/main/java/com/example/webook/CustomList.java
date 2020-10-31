@@ -33,8 +33,8 @@ public class CustomList extends ArrayAdapter<Book> {
 
         Book book = books.get(position);
 
-        TextView ISBN = view.findViewById(R.id.content_title);
-        ISBN.setText(book.getISBN());
+        TextView title = view.findViewById(R.id.content_title);
+        title.setText(book.getTitle());
 
         TextView request = view.findViewById(R.id.content_status);
         request.setText(book.getStatus());

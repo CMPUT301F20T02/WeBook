@@ -18,6 +18,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -33,7 +39,6 @@ public class SameBookRequestList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests_same_book_list);
-
         sameBookRequestList = findViewById(R.id.same_book_request_list);
 
         final Intent intent = getIntent();

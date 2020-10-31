@@ -52,7 +52,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     isbn.setText(selectBook.getISBN());
     status.setText(selectBook.getStatus());
     owner.setText(selectBook.getOwner());
-    status.setText(selectBook.getStatus());
+    description.setText(selectBook.getDescription());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final Map<String, Object> requests = new HashMap<>();

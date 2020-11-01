@@ -26,9 +26,9 @@ public class OwnerHomepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner__homepage);
 
-        Book book1 = new Book("Book1", "12345","rain","No-requested","Rain",null,"testbook1");
+        Book book1 = new Book("Harry Potter", "123-456-789","J.K.Rowling","Available","Rain",null,"This is a magical book");
         Book book2 = new Book("book2","67890","peter","requested","peter",null,"testbook2");
-        bookList = findViewById(R.id.owner_book_list);
+        bookList = findViewById(R.id.ownerBookList);
         dataList = new ArrayList<>();
         dataList.add(book1);
         dataList.add(book2);

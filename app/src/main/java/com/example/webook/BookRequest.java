@@ -8,6 +8,8 @@ public class BookRequest extends Request {
     private String status;
 
 
+    BookRequest(){}
+
     BookRequest(Book book, String requestee, String requester, Date date, Location geoLocation) {
         super(book, requestee, requester, date, geoLocation);
     }

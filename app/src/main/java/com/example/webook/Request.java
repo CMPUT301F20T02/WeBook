@@ -12,6 +12,8 @@ public abstract class Request implements Serializable{
     private Location geoLocation;
     private Date date;
 
+    public Request(){}
+
     public Request(Book book, String requestee, String requester, Date date){
         this.book = book;
         this.requestee = requestee;

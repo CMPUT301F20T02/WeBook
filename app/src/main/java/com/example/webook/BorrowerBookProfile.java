@@ -14,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,16 +58,16 @@ public class BorrowerBookProfile extends AppCompatActivity {
     description.setText(selectBook.getDescription());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    final Map<String, Object> requests = new HashMap<>();
+//    final HashMap<String, Object> requests = new HashMap<>();
 
     requestButton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View v) {
-            BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "Peter", null, null);
-            requests.put(newRequest.getRequester(), newRequest);
+            final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "Peter", null, null);
+//            requests.put(newRequest.getRequester(), newRequest);
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference
                     .document(newRequest.getBook().getTitle())
-                    .set(requests)
+                    .set(newRequest)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

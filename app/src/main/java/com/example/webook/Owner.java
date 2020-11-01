@@ -42,7 +42,7 @@ public class Owner extends User {
     public ArrayList<Book> getAvailable() {
         ArrayList<Book> available = new ArrayList<Book>();
         for (int i = 0; i < this.bookList.size(); i++) {
-            if (bookList.get(i).getStatus() == "available") {
+            if (bookList.get(i).getStatus().equals("available")) {
                 available.add(bookList.get(i));
             }
 
@@ -54,7 +54,7 @@ public class Owner extends User {
     public ArrayList<Book> getRequested() {
         ArrayList<Book> requested = new ArrayList<Book>();
         for (int i = 0; i < this.bookList.size(); i++) {
-            if (bookList.get(i).getStatus() == "requested") {
+            if (bookList.get(i).getStatus().equals("requested")) {
                 requested.add(bookList.get(i));
             }
 
@@ -66,7 +66,7 @@ public class Owner extends User {
     public ArrayList<Book> getAccepted() {
         ArrayList<Book> accepted = new ArrayList<Book>();
         for (int i = 0; i < this.bookList.size(); i++) {
-            if (bookList.get(i).getStatus() == "accepted") {
+            if (bookList.get(i).getStatus().equals("accepted")) {
                 accepted.add(bookList.get(i));
             }
 
@@ -78,7 +78,7 @@ public class Owner extends User {
     public ArrayList<Book> getBorrowed() {
         ArrayList<Book> borrowed = new ArrayList<Book>();
         for (int i = 0; i < this.bookList.size(); i++) {
-            if (bookList.get(i).getStatus() == "borrowed") {
+            if (bookList.get(i).getStatus().equals("borrowed")) {
                 borrowed.add(bookList.get(i));
             }
 

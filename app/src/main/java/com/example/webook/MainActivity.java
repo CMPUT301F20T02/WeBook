@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         username = findViewById(R.id.username_input);
         pwd = findViewById(R.id.pwd_input);
@@ -56,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 String username_text = username.getText().toString();
                 String pwd_text = pwd.getText().toString();
                 if (username_text.length() != 0 & pwd_text.length() != 0){
-                    int a = username_text.length();
-                    String b = Integer.toString(a);
+                    //int a = username_text.length();
+                    //String b = Integer.toString(a);
                     //username.setText(b);
 
                     authenticate(username_text, pwd_text);
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void authenticate(final String username, final String pwd){
         DocumentReference userRef = db.collection("users").document(username);
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        userRef.get().addOnCompleteListener( new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -173,6 +174,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Failed with: ", task.getException());
                 }
             }
-        });
+        } );
     }
 }

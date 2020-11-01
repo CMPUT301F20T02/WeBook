@@ -2,13 +2,18 @@ package com.example.webook;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.PixelCopy;
 import android.view.View;
@@ -29,10 +34,12 @@ import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 
 public class AddBookActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
+    private static final int CAMERA = 2;
     private TextView title;
     private TextView author;
     private TextView isbn;
@@ -46,6 +53,7 @@ public class AddBookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_book);
         Intent intent = getIntent();
         final Owner owner = (Owner) intent.getSerializableExtra("user");
@@ -97,20 +105,39 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private void imagePiker() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE);
+        AlertDialog.Builder camOrGal = new AlertDialog.Builder(AddBookActivity.this);
+        camOrGal.setTitle("Choose your source");
+        final CharSequence[] selection = {"Camera", "Photo Gallery"};
+        camOrGal.setItems( selection, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if ( selection[which].equals("Camera") ) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, CAMERA);
+                } else if ( selection[which].equals("Photo Gallery") ) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, PICK_IMAGE);
+                }
+            }
+        } );
+        camOrGal.show();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             book_icon.setImageURI(imageUri);
+        }
 
+        else if (requestCode == CAMERA && resultCode == RESULT_OK && data != null && data.getExtras() != null) {
+            Bundle bundle = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) bundle.get("data");
+            book_icon.setImageBitmap(imageBitmap);
         }
     }
 
@@ -120,7 +147,7 @@ public class AddBookActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        uploadImage(book.getISBN());
+                        uploadImage(book.getISBN()); // TODO
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -134,15 +161,18 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private void uploadImage(String isbn){
-        if (imageUri != null){
+        Bitmap bitmap = ( (BitmapDrawable) book_icon.getDrawable() ).getBitmap();
+        if (bitmap != null) {
+            StorageReference imageReference = storageReference.child( "images/" + isbn );
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
 
-            StorageReference imageReference = storageReference.child("images/" + isbn + "." + fileExtension(imageUri));
-
-            imageReference.putFile(imageUri)
+            imageReference.putBytes(byteArray)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
+                            // TODO "clearing"?
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

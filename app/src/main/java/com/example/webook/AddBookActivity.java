@@ -172,7 +172,7 @@ public class AddBookActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // TODO "clearing"?
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -68,14 +68,22 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                                     String description = (String) document.getData().get("description");
                                     String owner = (String) document.getData().get("owner");
 
-                                    if(title.contains(message)){
-                                        dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
-                                    }else if(author.contains(message)){
-                                        dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
-                                    }else if(isbn.contains(message)){
-                                        dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
-                                    }else if(description.contains(message)){
-                                        dataList.add(new Book(title, isbn, author,  status,  owner, null,  description));
+                                    if(title != null){
+                                        if(title.contains(message)) {
+                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        }
+                                    }else if(author != null){
+                                        if (author.contains(message)) {
+                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        }
+                                    }else if(isbn != null){
+                                        if(isbn.contains(message)) {
+                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        }
+                                    }else if(description!= null){
+                                        if(description.contains(description)) {
+                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        }
                                     }
                                 }
                             }

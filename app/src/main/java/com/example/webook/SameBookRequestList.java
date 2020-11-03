@@ -68,7 +68,7 @@ public class SameBookRequestList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Object selectRequest = sameBookRequestList.getItemAtPosition(position);
-                OwnerAcceptDeclineFragment ownerAcceptDeclineFragment = OwnerAcceptDeclineFragment.newInstance((BookRequest) selectRequest);
+                OwnerAcceptDeclineFragment ownerAcceptDeclineFragment = OwnerAcceptDeclineFragment.newInstance((BookRequest) selectRequest, position);
                 ownerAcceptDeclineFragment.show(getSupportFragmentManager(), "Accept or Decline");
             }
         });

@@ -46,10 +46,11 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
 //        }
 //    }
 
-    public static OwnerAcceptDeclineFragment newInstance(BookRequest selectRequest) {
+    public static OwnerAcceptDeclineFragment newInstance(BookRequest selectRequest, int position) {
         OwnerAcceptDeclineFragment fragment = new OwnerAcceptDeclineFragment();
         Bundle args = new Bundle();
         args.putSerializable("selectRequest", selectRequest);
+        args.putInt("position", position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,9 +59,10 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_owner_accept_decline, null);
-        if (getArguments() != null) {
-        }
+//        if (getArguments() != null) {
+//        }
         BookRequest selectRequest = (BookRequest) getArguments().getSerializable("selectRequest");
+        int position = getArguments().getInt("position");
         BookRequestTitleText = view.findViewById(R.id.book_request_title_text);
         BookRequestAuthorText = view.findViewById(R.id.book_request_author_text);
         BookRequestOwnerText = view.findViewById(R.id.book_request_owner_text);
@@ -69,7 +71,7 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
         BookRequestTitleText.setText("Title: " + selectRequest.getBook().getTitle());
         BookRequestAuthorText.setText("Author: " + selectRequest.getBook().getAuthor());
         BookRequestOwnerText.setText("Owner: " + selectRequest.getRequestee());
-        BookRequestRequesteeText.setText("Borrower: " + selectRequest.getRequester());
+        BookRequestRequesteeText.setText("Borrower: " + selectRequest.getRequester().get(position));
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -31,13 +30,13 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.borrower_search_book_result);
+        setContentView(R.layout.search_result);
         final String TAG = "User";
         // User's key for search
         Intent intent = getIntent();
         final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
-        userList = findViewById(R.id.borrower_search_book_list);
-        input = findViewById(R.id.borrower_search_books_res);
+        userList = findViewById(R.id.search_result_list);
+        input = findViewById(R.id.search_book_user_result);
         input.setHint("Search for users");
         dataList = new ArrayList<>();
         userAdapter = new UserList(this, dataList);

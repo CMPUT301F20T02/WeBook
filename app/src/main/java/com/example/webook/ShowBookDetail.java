@@ -10,16 +10,16 @@ public class ShowBookDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_book_detail);
+        setContentView(R.layout.activity_borrower_book_profile);
         Intent intent = getIntent();
         final Book book = (Book)intent.getSerializableExtra(BorrowerSearchBookPage.EXTRA_MESSAGE);
-        final TextView  username = findViewById(R.id.detail_UserName);
-        final TextView  author = findViewById(R.id.detail_UserType);
-        final TextView  isbn = findViewById(R.id.detail_Phone);
-        final TextView  borrower = findViewById(R.id.detailed_borrower);
-        final TextView  status = findViewById(R.id.detailed_status);
-        final TextView  description = findViewById(R.id.detail_UserDescription);
-        final TextView  owner = findViewById(R.id.detailed_UserEmail);
+        final TextView  username = findViewById(R.id.user_username);
+        final TextView  author = findViewById(R.id.user_userType);
+        final TextView  isbn = findViewById(R.id.user_phone);
+        final TextView  borrower = findViewById(R.id.borrower_book_borrower);
+        final TextView  status = findViewById(R.id.borrower_book_status);
+        final TextView  description = findViewById(R.id.user_description);
+        final TextView  owner = findViewById(R.id.user_email);
         username.setText(book.getTitle());
         author.setText(book.getAuthor());
         isbn.setText(book.getISBN());

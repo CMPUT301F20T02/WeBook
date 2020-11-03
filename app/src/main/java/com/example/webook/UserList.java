@@ -34,10 +34,10 @@ public class UserList extends ArrayAdapter<User> {
         }
 
         User user = users.get(position);
-        TextView email = view.findViewById(R.id.Email);
-        TextView userName = view.findViewById(R.id.Username);
-        TextView phoneNumber = view.findViewById(R.id.phoneNumber);
-        ImageView image = view.findViewById(R.id.user_icon_detail);
+        TextView email = view.findViewById(R.id.list_user_email);
+        TextView userName = view.findViewById(R.id.list_user_username);
+        TextView phoneNumber = view.findViewById(R.id.list_user_phone);
+        ImageView image = view.findViewById(R.id.list_user_icon);
         email.setText(user.getEmail());
         phoneNumber.setText(user.getPhoneNumber());
         userName.setText(user.getUsername());

@@ -1,8 +1,6 @@
 package com.example.webook;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -31,12 +28,12 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.borrower_search_book_result);
+        setContentView(R.layout.search_result);
         final String TAG = "Book";
         // User's key for search
         Intent intent = getIntent();
         final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
-        bookList = findViewById(R.id.borrower_search_book_list);
+        bookList = findViewById(R.id.search_result_list);
         dataList = new ArrayList<Book>();
         bookAdapter = new BookList(this, dataList);
         bookList.setAdapter(bookAdapter);

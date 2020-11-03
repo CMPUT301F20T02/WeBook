@@ -36,7 +36,7 @@ public class BookList extends ArrayAdapter<Book> {
         TextView title = view.findViewById(R.id.book_title);
         TextView author = view.findViewById(R.id.book_author);
         TextView status = view.findViewById(R.id.book_status);
-        ImageView image = view.findViewById(R.id.user_icon_detail);
+        ImageView image = view.findViewById(R.id.list_user_icon);
         title.setText(book.getTitle());
         author.setText(book.getAuthor());
         status.setText(book.getStatus());

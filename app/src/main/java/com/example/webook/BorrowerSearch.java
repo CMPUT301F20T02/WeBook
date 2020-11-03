@@ -13,11 +13,11 @@ public class BorrowerSearch extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.borrower_search_page);
-        final EditText newSearch = findViewById(R.id.borrower_search_input);
+        setContentView(R.layout.search_page);
+        final EditText newSearch = findViewById(R.id.search_input);
         // User press back in search page, back to main activity
         // User choose to search books
-        final Button searchBook = findViewById(R.id.borrower_choose_books);
+        final Button searchBook = findViewById(R.id.search_choose_books);
 
         searchBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +30,7 @@ public class BorrowerSearch extends AppCompatActivity {
         });
 
         // User choose to search users
-        final Button searchUser = findViewById(R.id.borrower_choose_users);
+        final Button searchUser = findViewById(R.id.search_choose_users);
         searchUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

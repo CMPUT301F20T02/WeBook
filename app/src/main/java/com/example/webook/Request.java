@@ -3,10 +3,11 @@ package com.example.webook;
 import android.location.Location;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Request implements Serializable{
-    private String requester;
+    private ArrayList<String> requester;
     private String requestee;
     private Book book;
     private Location geoLocation;
@@ -14,14 +15,14 @@ public abstract class Request implements Serializable{
 
     public Request(){}
 
-    public Request(Book book, String requestee, String requester, Date date){
+    public Request(Book book, String requestee, ArrayList<String> requester, Date date){
         this.book = book;
         this.requestee = requestee;
         this.requester = requester;
         this.date = date;
     }
 
-    public Request(Book book, String requestee, String requester, Date date, Location geoLocation){
+    public Request(Book book, String requestee, ArrayList<String> requester, Date date, Location geoLocation){
         this.book = book;
         this.requestee = requestee;
         this.requester = requester;
@@ -29,7 +30,7 @@ public abstract class Request implements Serializable{
         this.geoLocation = geoLocation;
     }
 
-    public String getRequester() {
+    public ArrayList<String> getRequester() {
         return requester;
     }
 

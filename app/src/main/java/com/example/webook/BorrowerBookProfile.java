@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private TextView owner;
     private TextView description;
     private Button requestButton;
+    private ArrayList<String> requesterList;
     private static final String TAG = "Sample";
 
     @Override
@@ -59,10 +61,12 @@ public class BorrowerBookProfile extends AppCompatActivity {
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 //    final HashMap<String, Object> requests = new HashMap<>();
-
+    requesterList = new ArrayList<>();
+    requesterList.add("Peter");
+    requesterList.add("Rain");
     requestButton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View v) {
-            final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "Peter", null, null);
+            final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
 //            requests.put(newRequest.getRequester(), newRequest);
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference

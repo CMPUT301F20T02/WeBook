@@ -55,14 +55,15 @@ public class SameBookRequestList extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 BookRequest request = documentSnapshot.toObject(BookRequest.class);
                 dataList = new ArrayList<>();
-                dataList.add(request);
+                for(int i = 0; i < request.getRequester().size(); i++){
+                    dataList.add(request);
+                }
                 bookAdapter = new BookRequestList(SameBookRequestList.this, dataList);
                 sameBookRequestList.setAdapter(bookAdapter);
 
             }
         });
 
-//        dataList.add(newRequest);
         sameBookRequestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

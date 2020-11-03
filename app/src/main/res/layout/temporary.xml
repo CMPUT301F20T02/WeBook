@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:onClick="scan"
-        android:text="Scane"
+        android:text="Scan"
         android:textColor="#fff" />
 </LinearLayout>

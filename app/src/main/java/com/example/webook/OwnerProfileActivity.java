@@ -43,7 +43,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_profile);
 
         username = findViewById(R.id.owner_username);
-        userType = findViewById(R.id.owner_user_type);
+        userType = findViewById(R.id.owner_userType);
         phone = findViewById(R.id.owner_phone);
         email = findViewById(R.id.owner_email);
         user_pic = findViewById(R.id.owner_image);

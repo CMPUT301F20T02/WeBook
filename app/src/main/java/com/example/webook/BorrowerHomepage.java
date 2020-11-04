@@ -20,6 +20,7 @@ public class BorrowerHomepage extends AppCompatActivity {
     public HashMap<String, String> data = new HashMap<>();
     static ArrayList<Book> dataList; //for test
     private Request currentRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final FirebaseFirestore db;

@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class BookRequest extends Request {
     private String status;
-    private Integer position;
 
     BookRequest(){}
 
@@ -25,11 +24,5 @@ public class BookRequest extends Request {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Integer getPosition() {return position;}
-
-    public void setPosition(Integer position) {
-        this.position = position;
     }
 }

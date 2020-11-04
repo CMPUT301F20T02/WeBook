@@ -70,7 +70,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
 //            requests.put(newRequest.getRequester(), newRequest);
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference
-                    .document(newRequest.getBook().getTitle())
+                    .document(newRequest.getBook().getISBN())
                     .set(newRequest)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

@@ -29,13 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SameBookRequestList extends AppCompatActivity {
+public class SameBookRequestList extends AppCompatActivity implements OwnerAcceptDeclineFragment.OnFragmentInteractionListener{
     private ListView sameBookRequestList;
     private ArrayAdapter<BookRequest> bookAdapter;
     private static ArrayList<BookRequest> dataList;
     private static final String TAG = "Sample";
-    private BookRequest newRequest;
-    private ArrayList<BookRequest> requestArrayList;
+    private Book selectBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,12 @@ public class SameBookRequestList extends AppCompatActivity {
         sameBookRequestList = findViewById(R.id.same_book_request_list);
 
         final Intent intent = getIntent();
-        final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
+        selectBook = (Book) intent.getSerializableExtra("selectBook");
 
 //        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("requests").document(selectBook.getTitle());
+        DocumentReference docRef = db.collection("requests").document(selectBook.getISBN());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -72,5 +71,30 @@ public class SameBookRequestList extends AppCompatActivity {
                 ownerAcceptDeclineFragment.show(getSupportFragmentManager(), "Accept or Decline");
             }
         });
+    }
+
+    @Override
+    public void onAcceptPressed(){
+        finish();
+    }
+
+
+    @Override
+    public void onDeclinePressed(){
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("requests").document(selectBook.getISBN());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                BookRequest request = documentSnapshot.toObject(BookRequest.class);
+                dataList = new ArrayList<>();
+                for(int i = 0; i < request.getRequester().size(); i++){
+                    dataList.add(request);
+                }
+                bookAdapter = new BookRequestList(SameBookRequestList.this, dataList);
+                sameBookRequestList.setAdapter(bookAdapter);
+            }
+        });
+
     }
 }

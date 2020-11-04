@@ -22,7 +22,6 @@ public class OwnerHomepage extends AppCompatActivity {
     private Request currentRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final FirebaseFirestore db;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner__homepage);
 

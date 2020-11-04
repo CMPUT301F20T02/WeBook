@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -89,107 +90,23 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 String phoneText = phoneNumber.getText().toString();
                 String emailText = email.getText().toString();
                 String descriptionText = description.getText().toString();
-                //uploadImage();
+                DocumentReference userRef = db.collection("users").document(user.getUsername());
+                userRef.update("phoneNumber", phoneText);
+                userRef.update("email", emailText);
+                userRef.update("description", descriptionText);
+                finish();
+            }
+        });
 
-
-                //user.editInformation(emailText, phoneText, descriptionText);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
 
+
+
     }
-
-/*
-    private void imagePiker() {
-        AlertDialog.Builder camOrGal = new AlertDialog.Builder(EditUserProfileActivity.this);
-        camOrGal.setTitle("Choose your source");
-        final CharSequence[] selection = {"Camera", "Photo Gallery"};
-        camOrGal.setItems( selection, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if ( selection[which].equals("Camera") ) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, CAMERA);
-                } else if ( selection[which].equals("Photo Gallery") ) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, PICK_IMAGE);
-                }
-            }
-        } );
-        camOrGal.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            userImage.setImageURI(imageUri);
-        }
-
-        else if (requestCode == CAMERA && resultCode == RESULT_OK && data != null && data.getExtras() != null) {
-            Bundle bundle = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) bundle.get("data");
-            userImage.setImageBitmap(imageBitmap);
-        }
-    }
-
-
-    private void uploadImage(){
-        Bitmap bitmap = ( (BitmapDrawable) userImage.getDrawable() ).getBitmap();
-        if (bitmap != null) {
-            final StorageReference imageReference = storageReference.child( "images/" + System.currentTimeMillis());
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            imageReference.putBytes(byteArray)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    url = uri.toString();
-                                    updateUser();
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("Upload image", "Error uploading.", e);
-                            Toast toast = Toast.makeText(AddBookActivity.this,"Failed to add book.", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
-        }
-    }
-
-
-    public void updateUser(){
-        final User user =
-        db.collection("books").document(book.getISBN())
-                .set(book)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateOwnerBookList(owner, book);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Add book", "Error adding book", e);
-                        Toast toast = Toast.makeText(AddBookActivity.this,"Failed to add book.", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
-    }
-
-*/
-
 }

@@ -8,7 +8,7 @@
     tools:context=".AddBookActivity">
 
     <ImageView
-        android:id="@+id/book_icon_add_book"
+        android:id="@+id/owner_book_icon"
         android:layout_width="162dp"
         android:layout_height="260dp"
         android:layout_marginStart="16dp"
@@ -18,8 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextBookTitle"
+    <TextView
+        android:id="@+id/owner_book_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,11 +32,11 @@
         android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_add_book"
+        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextBookAuthor"
+    <TextView
+        android:id="@+id/owner_book_author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -50,11 +50,11 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_add_book"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBookTitle" />
+        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
+        app:layout_constraintTop_toBottomOf="@+id/owner_book_title" />
 
     <EditText
-        android:id="@+id/editTextISBN"
+        android:id="@+id/owner_book_ISBN"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -67,8 +67,8 @@
         android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_add_book"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBookAuthor" />
+        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
+        app:layout_constraintTop_toBottomOf="@+id/owner_book_author" />
 
     <TextView
         android:id="@+id/owner_name_text"
@@ -82,8 +82,8 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_add_book"
-        app:layout_constraintTop_toBottomOf="@+id/editTextISBN" />
+        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
+        app:layout_constraintTop_toBottomOf="@+id/owner_book_ISBN" />
 
     <TextView
         android:id="@+id/borrower_name_text"
@@ -95,7 +95,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_add_book"
+        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
         app:layout_constraintTop_toBottomOf="@+id/owner_name_text" />
 
     <TextView
@@ -108,7 +108,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_add_book"
+        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
         app:layout_constraintTop_toBottomOf="@+id/borrower_name_text" />
 
     <EditText
@@ -129,7 +129,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_icon_add_book" />
+        app:layout_constraintTop_toBottomOf="@+id/owner_book_icon" />
 
     <Button
         android:id="@+id/scan_button"

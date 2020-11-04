@@ -85,6 +85,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
                             Log.d(TAG, "Data addition failed" + e.toString());
                         }
                     });

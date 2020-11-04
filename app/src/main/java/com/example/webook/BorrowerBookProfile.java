@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -62,8 +63,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 //    final HashMap<String, Object> requests = new HashMap<>();
     requesterList = new ArrayList<>();
-    requesterList.add("Peter");
-    requesterList.add("Rain");
+    requesterList.add("Senyu");
     requestButton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View v) {
             final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
@@ -71,7 +71,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference
                     .document(newRequest.getBook().getISBN())
-                    .set(newRequest)
+                    .update("requester", FieldValue.arrayUnion(newRequest.getRequester().get(0)))
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

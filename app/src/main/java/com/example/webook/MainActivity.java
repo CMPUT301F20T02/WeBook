@@ -149,6 +149,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        username.setText("");
+        pwd.setText("");
+    }
 
     public void authenticate(final String username, final String pwd){
         final DocumentReference userRef = db.collection("users").document(username);

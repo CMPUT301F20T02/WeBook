@@ -2,13 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/image_book"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddBookActivity">
 
     <ImageView
-        android:id="@+id/owner_book_icon"
+        android:id="@+id/book_profile_icon"
         android:layout_width="162dp"
         android:layout_height="260dp"
         android:layout_marginStart="16dp"
@@ -19,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/owner_book_title"
+        android:id="@+id/book_profile_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -29,14 +28,13 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/book_title"
-        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/owner_book_author"
+        android:id="@+id/book_profile_author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -46,15 +44,14 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/author"
-        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
-        app:layout_constraintTop_toBottomOf="@+id/owner_book_title" />
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_title" />
 
-    <EditText
-        android:id="@+id/owner_book_ISBN"
+    <TextView
+        android:id="@+id/book_profile_ISBN"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -64,14 +61,13 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/isbn"
-        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
-        app:layout_constraintTop_toBottomOf="@+id/owner_book_author" />
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_author" />
 
     <TextView
-        android:id="@+id/owner_name_text"
+        android:id="@+id/book_profile_owner_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -82,11 +78,11 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
-        app:layout_constraintTop_toBottomOf="@+id/owner_book_ISBN" />
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_ISBN" />
 
     <TextView
-        android:id="@+id/borrower_name_text"
+        android:id="@+id/book_rpofile_borrower_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -95,11 +91,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
-        app:layout_constraintTop_toBottomOf="@+id/owner_name_text" />
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_owner_text" />
 
     <TextView
-        android:id="@+id/status_text"
+        android:id="@+id/book_profile_status_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -108,11 +104,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/owner_book_icon"
-        app:layout_constraintTop_toBottomOf="@+id/borrower_name_text" />
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_rpofile_borrower_text" />
 
-    <EditText
-        android:id="@+id/editTextDescription"
+    <TextView
+        android:id="@+id/book_profile_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -124,33 +120,42 @@
         android:ems="10"
         android:gravity="top"
         android:hint="@string/description"
-        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/owner_book_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_icon" />
 
     <Button
-        android:id="@+id/scan_button"
+        android:id="@+id/owner_delete_book_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/scan"
+        android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/confirm_add_book_button"
+        android:id="@+id/owner_edit_book_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/confirm1"
+        android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/owner_requests_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Requests List"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

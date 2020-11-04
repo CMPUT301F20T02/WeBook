@@ -9,12 +9,12 @@ public class Book {
     private String author;
     private String status;
     private String owner;
-    private Drawable image;
+    private String image;
     private String description;
 
     public Book(){}
 
-    public Book(String title, String ISBN, String author, String status, String owner, Drawable image, String description) {
+    public Book(String title, String ISBN, String author, String status, String owner, String image, String description) {
         this.title = title;
         this.ISBN = ISBN;
         this.author = author;
@@ -64,11 +64,11 @@ public class Book {
         this.owner = owner;
     }
 
-    public Drawable getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

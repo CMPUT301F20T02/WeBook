@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
+/*
         Owner user = new Owner("owner2", "test1@test1.com", "111", "111", null);
 
         //Borrower user = new Borrower("test1", "test1@test1.com", "111", "145");
@@ -85,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+
+ */
 
 
         //Map<String, Object> user = new HashMap<>();
@@ -144,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void authenticate(final String username, final String pwd){
-        DocumentReference userRef = db.collection("users").document(username);
+        final DocumentReference userRef = db.collection("users").document(username);
         userRef.get().addOnCompleteListener( new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -156,13 +163,14 @@ public class MainActivity extends AppCompatActivity {
                         if (document.getString("userType").equals("owner")){
                             intent = new Intent(MainActivity.this, OwnerHomepage.class);
                             Owner owner = new Owner(username, document.getString("email"),
-                                    document.getString("phoneNumber"), document.getString("pwd"), (Bitmap) document.getData().get("user_image"));
+                                    document.getString("phoneNumber"), document.getString("pwd"), document.getString("description"), document.getString("user_image"));
+                            owner.setBookList((ArrayList<String>) document.get("bookList"));
                             intent.putExtra("user", owner);
                             startActivity(intent);
                         }else if (document.getString("userType").equals("borrower")) {
                             intent = new Intent(MainActivity.this, BorrowerHomepage.class);
                             Borrower borrower = new Borrower(username, document.getString("email"),
-                                    document.getString("phoneNumber"), document.getString("pwd"), (Bitmap) document.getData().get("user_image"));
+                                    document.getString("phoneNumber"), document.getString("pwd"), document.getString("description"), document.getString("user_image"));
                             intent.putExtra("user", borrower);
                             startActivity(intent);
                         }

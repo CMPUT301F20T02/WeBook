@@ -5,8 +5,10 @@ import android.graphics.drawable.Drawable;
 
 public class Borrower extends User {
 
-    public Borrower(String username, String email, String phoneNumber, String pwd, Bitmap image) {
-        super(username, email, phoneNumber, pwd, image);
+    public Borrower(){}
+
+    public Borrower(String username, String email, String phoneNumber, String pwd, String description, String image) {
+        super(username, email, phoneNumber, pwd, description, image);
         this.setUserType("borrower");
     }
 }

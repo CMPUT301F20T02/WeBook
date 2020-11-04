@@ -1,103 +1,102 @@
 package com.example.webook;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.util.ArrayList;
 
 public class OwnerHomepage extends AppCompatActivity {
+    private  Owner owner;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final ArrayList<Book> bookArrayList = new ArrayList<Book>();
+    private ListView bookListView;
+    private BookList bookList;
 
+    private TextView all;
+    private TextView available;
+    private TextView requested;
+    private TextView accepted;
+    private TextView borrowed;
+    private BookList bookListAvailable;
+    private BookList bookListRequested;
+    private BookList bookListAccepted;
+    private BookList bookListBorrowed;
 
+    private ArrayList<Book> availableBookArrayList = new ArrayList<>();
+    private ArrayList<Book> requestedBookArrayList = new ArrayList<>();
+    private ArrayList<Book> acceptedBookArrayList = new ArrayList<>();
+    private ArrayList<Book> borrowedBookArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_owner_homepage);
 
+        TextView me = findViewById(R.id.owner_me_tab);
+        TextView books = findViewById(R.id.owner_books_tab);
 
-        /*
-=======
-        setContentView(R.layout.activity_owner_homepage);
->>>>>>> cd752cbf30340312dd0f8f2debf588b89120c9b2
-        Drawable image = getResources().getDrawable(R.drawable.book_icon);
-        final Owner owner = new Owner("asd", "asadsda", "asdsad", "qwewqe");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "available");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "available");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "available");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "borrowed");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "borrowed");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "borrowed");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "requested");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "accepted");
-        owner.addBook("TITLE","ISBN","ASD",image,"sdassd", "accepted");
-<<<<<<< HEAD
+        Intent intent = getIntent();
+        owner = (Owner) intent.getSerializableExtra("user");
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference imagesRef = storageReference.child("images/" + "book_icon");
+        bookList = new BookList( OwnerHomepage.this, bookArrayList);
+        bookListView = findViewById(R.id.owner_book_list);
+        bookListView.setAdapter(bookList);
 
-        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.drawable.book_icon)).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+        String bookname = Integer.toString(bookArrayList.size());
+        Toast toast = Toast.makeText(OwnerHomepage.this, bookname, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.show();
 
+        all = findViewById(R.id.owner_all);
+        available = findViewById(R.id.owner_available);
+        requested = findViewById(R.id.owner_requested);
+        accepted = findViewById(R.id.owner_accepted);
+        borrowed = findViewById(R.id.owner_borrowed);
 
-
-        UploadTask uploadTask = imagesRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+        CollectionReference bookRef = db.collection("books");
+        bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(OwnerHomepage.this, "Incorrect credentials!", duration);
-                toast.show();
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(OwnerHomepage.this, "correct credentials!", duration);
-                toast.show();
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                bookArrayList.clear();
+                downloadBooks(owner.getBookList());
             }
         });
 
-*/
+        bookListAvailable = new BookList(OwnerHomepage.this, availableBookArrayList);
+        bookListRequested = new BookList(OwnerHomepage.this, requestedBookArrayList);
+        bookListAccepted = new BookList(OwnerHomepage.this, acceptedBookArrayList);
+        bookListBorrowed = new BookList(OwnerHomepage.this, borrowedBookArrayList);
 
 
 
-        TextView me = findViewById(R.id.owner_me_tab);
-
-        Intent intent = getIntent();
-        final Owner owner = (Owner) intent.getSerializableExtra("user");
-        final ListView bookListView = findViewById(R.id.owner_book_list);
-        final BookList bookList = new BookList(this, owner.getBookList());
-
-        bookListView.setAdapter(bookList);
-        TextView all = findViewById(R.id.owner_all);
-        TextView available = findViewById(R.id.owner_available);
-        TextView requested = findViewById(R.id.owner_requested);
-        TextView accepted = findViewById(R.id.owner_accepted);
-        TextView borrowed = findViewById(R.id.owner_borrowed);
+        books.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String bookname = Integer.toString(bookArrayList.size());
+                Toast toast = Toast.makeText(OwnerHomepage.this, bookname, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP, 0, 0);
+                toast.show();
+            }
+        });
 
         me.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,37 +117,101 @@ public class OwnerHomepage extends AppCompatActivity {
         available.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookList bookList1 = new BookList(OwnerHomepage.this, owner.getAvailable());
-                bookListView.setAdapter(bookList1);
+                bookListView.setAdapter(bookListAvailable);
             }
         });
 
         requested.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookList bookList2 = new BookList(OwnerHomepage.this, owner.getRequested());
-                bookListView.setAdapter(bookList2);
+                bookListView.setAdapter(bookListRequested);
             }
         });
 
         accepted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookList bookList3 = new BookList(OwnerHomepage.this, owner.getAccepted());
-                bookListView.setAdapter(bookList3);
+                bookListView.setAdapter(bookListAccepted);
             }
         });
 
         borrowed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookList bookList4 = new BookList(OwnerHomepage.this, owner.getBorrowed());
-                bookListView.setAdapter(bookList4);
+                bookListView.setAdapter(bookListBorrowed);
             }
         });
 
+    }
 
+    public void downloadBooks(ArrayList<String> bookisbn) {
 
+        CollectionReference bookRef = db.collection("books");
+        for (int i = 0; i < bookisbn.size(); i++) {
+            DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));
+            bookRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Book book = document.toObject(Book.class);
+                            owner.addBook(book.getISBN());
+                            bookArrayList.add(book);
+                            bookList.notifyDataSetChanged();
+                            getAvailable();
+                            getAccepted();
+                            getRequested();
+                            getBorrowed();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public void getAvailable() {
+        availableBookArrayList.clear();
+        for (int i = 0; i < bookArrayList.size(); i++) {
+            if (bookArrayList.get(i).getStatus().equals("available")) {
+                availableBookArrayList.add(bookArrayList.get(i));
+            }
+        }
+        bookListAvailable.notifyDataSetChanged();
+    }
+
+    public void getRequested() {
+        requestedBookArrayList.clear();
+        for (int i = 0; i < bookArrayList.size(); i++) {
+            if (bookArrayList.get(i).getStatus().equals("requested")) {
+                requestedBookArrayList.add(bookArrayList.get(i));
+            }
+
+        }
+        bookListRequested.notifyDataSetChanged();
+    }
+
+    public void getAccepted() {
+        acceptedBookArrayList.clear();
+        for (int i = 0; i < bookArrayList.size(); i++) {
+            if (bookArrayList.get(i).getStatus().equals("accepted")) {
+                acceptedBookArrayList.add(bookArrayList.get(i));
+            }
+
+        }
+        bookListAccepted.notifyDataSetChanged();
+
+    }
+
+    public void getBorrowed() {
+        borrowedBookArrayList.clear();
+        for (int i = 0; i < bookArrayList.size(); i++) {
+            if (bookArrayList.get(i).getStatus().equals("borrowed")) {
+                borrowedBookArrayList.add(bookArrayList.get(i));
+            }
+
+        }
+        bookListBorrowed.notifyDataSetChanged();
     }
 
 }

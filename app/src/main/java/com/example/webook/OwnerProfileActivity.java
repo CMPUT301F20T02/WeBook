@@ -56,6 +56,15 @@ public class OwnerProfileActivity extends AppCompatActivity {
             }
         });
 
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OwnerProfileActivity.this, EditUserProfileActivity.class);
+                intent.putExtra("user", owner);
+                startActivity(intent);
+            }
+        });
+
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference user_picRef = storageReference.child("images/empty_user_icon.png");
@@ -74,5 +83,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
         Glide.with(OwnerProfileActivity.this)
                 .load(user_picRef)
                 .into(user_pic);
+
+
     }
 }

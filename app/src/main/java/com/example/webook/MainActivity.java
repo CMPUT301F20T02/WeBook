@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
 /*
-        Owner user = new Owner("owner2", "test1@test1.com", "111", "111", null);
+
+        Borrower user = new Borrower("test2", "test2@test2.com", "222", "222", "sss", null);
 
         //Borrower user = new Borrower("test1", "test1@test1.com", "111", "145");
         db.collection("users").document(user.getUsername())
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
- */
+/*
 
 
         //Map<String, Object> user = new HashMap<>();

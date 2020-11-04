@@ -157,8 +157,10 @@ public class OwnerHomepage extends AppCompatActivity {
                         if (document.exists()) {
                             Book book = document.toObject(Book.class);
                             owner.addBook(book.getISBN());
-                            bookArrayList.add(book);
-                            bookList.notifyDataSetChanged();
+                            if (!bookArrayList.contains(book)){
+                                bookArrayList.add(book);
+                                bookList.notifyDataSetChanged();
+                            }
                             getAvailable();
                             getAccepted();
                             getRequested();

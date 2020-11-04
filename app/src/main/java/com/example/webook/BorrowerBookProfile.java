@@ -76,6 +76,10 @@ public class BorrowerBookProfile extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "Data has been added successfully!");
+                            db.collection("books").document(selectBook.getISBN())
+                                    .update(
+                                            "status", "requested"
+                                    );
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

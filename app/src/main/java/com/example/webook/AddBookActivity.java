@@ -50,17 +50,17 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add_book);
+        setContentView(R.layout.activity_add_edit_book);
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
 
         confirmButton = findViewById(R.id.confirm_add_book_button);
-        book_icon = findViewById(R.id.book_icon_add_book);
+        book_icon = findViewById(R.id.book_icon_add_edit);
         title = findViewById(R.id.editTextBookTitle);
         author = findViewById(R.id.editTextBookAuthor);
         isbn = findViewById(R.id.editTextISBN);
         description = findViewById(R.id.editTextDescription);
-        book_icon = findViewById(R.id.book_icon_add_book);
+        book_icon = findViewById(R.id.book_icon_add_edit);
 
         book_icon.setOnClickListener(new View.OnClickListener() {
             @Override

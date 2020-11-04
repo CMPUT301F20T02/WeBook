@@ -15,17 +15,6 @@
         app:srcCompat="@drawable/empty_user_icon" />
 
     <TextView
-        android:id="@+id/list_user_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/list_user_icon"
-        app:layout_constraintTop_toBottomOf="@+id/list_user_username" />
-
-    <TextView
         android:id="@+id/list_user_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,6 +24,17 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/list_user_icon"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/list_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/list_user_icon"
+        app:layout_constraintTop_toBottomOf="@+id/list_user_username" />
 
     <TextView
         android:id="@+id/list_user_phone"

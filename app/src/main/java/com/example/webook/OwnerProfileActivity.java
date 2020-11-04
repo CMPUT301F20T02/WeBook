@@ -1,6 +1,7 @@
 package com.example.webook;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -17,35 +18,57 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Text;
 
 import java.io.File;
 
 public class OwnerProfileActivity extends AppCompatActivity {
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextView username;
+    private TextView userType;
+    private TextView phone;
+    private TextView email;
+    private ImageView user_pic;
+    private Button addButton;
+    private Button editButton;
+    private TextView description;
+    private Owner owner;
+    private DocumentReference userRef;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_profile);
 
-        TextView username = findViewById(R.id.owner_username);
-        TextView userType = findViewById(R.id.owner_user_type);
-        TextView phone = findViewById(R.id.owner_phone);
-        TextView email = findViewById(R.id.owner_email);
-        ImageView user_pic = findViewById(R.id.owner_user_image);
-        Button addButton = findViewById(R.id.addBookButton);
-        Button editButton = findViewById(R.id.owner_editProfile);
-        TextView description = findViewById(R.id.owner_user_description);
+        username = findViewById(R.id.owner_username);
+        userType = findViewById(R.id.owner_user_type);
+        phone = findViewById(R.id.owner_phone);
+        email = findViewById(R.id.owner_email);
+        user_pic = findViewById(R.id.owner_user_image);
+        addButton = findViewById(R.id.addBookButton);
+        editButton = findViewById(R.id.owner_editProfile);
+        description = findViewById(R.id.owner_user_description);
 
 
         Intent intent = getIntent();
-        final Owner owner = (Owner) intent.getSerializableExtra("user");
+        owner = (Owner) intent.getSerializableExtra("user");
+        userRef = db.collection("users").document(owner.getUsername());
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +99,27 @@ public class OwnerProfileActivity extends AppCompatActivity {
         Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.empty_user_icon);
 
         //user_pic.setImageBitmap(image1);
+
+
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                updateUserInfo(value);
+            }
+        });
+
+
+        Glide.with(OwnerProfileActivity.this)
+                .load(user_picRef)
+                .into(user_pic);
+    }
+
+    private void updateUserInfo(DocumentSnapshot document) {
+        owner = document.toObject(Owner.class);
         username.setText(owner.getUsername());
         userType.setText(owner.getUserType());
         phone.setText(owner.getPhoneNumber());
         email.setText(owner.getEmail());
-        Glide.with(OwnerProfileActivity.this)
-                .load(user_picRef)
-                .into(user_pic);
-
-
+        description.setText(owner.getDescription());
     }
 }

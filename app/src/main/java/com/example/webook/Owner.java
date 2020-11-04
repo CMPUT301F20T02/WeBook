@@ -7,6 +7,7 @@ import android.media.Image;
 import java.util.ArrayList;
 
 public class Owner extends User {
+    //private ArrayList<Book> bookList;
     private ArrayList<String> bookList;
     private ArrayList<String> requestList;
 
@@ -18,9 +19,26 @@ public class Owner extends User {
         bookList = new ArrayList<>();
         requestList = new ArrayList<>();
     }
+/*
+    public void addBook(Book book){
+        this.bookList.add(book);
+    }
+
+
+
+    public ArrayList<Book> getBookList() {
+        return this.bookList;
+    }
+
+    public void setBookList(ArrayList<Book> bookList) {
+        this.bookList = bookList;
+    }
+*/
     public void addBook(String book){
         this.bookList.add(book);
     }
+
+
 
     public ArrayList<String> getBookList() {
         return this.bookList;
@@ -29,6 +47,8 @@ public class Owner extends User {
     public void setBookList(ArrayList<String> bookList) {
         this.bookList = bookList;
     }
+
+
 
     public ArrayList<String> getRequestList() {
         return requestList;

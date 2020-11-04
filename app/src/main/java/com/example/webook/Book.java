@@ -3,7 +3,7 @@ package com.example.webook;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 
-public class Book {
+public class Book{
     private String title;
     private String ISBN;
     private String author;

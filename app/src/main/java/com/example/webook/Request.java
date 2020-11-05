@@ -2,16 +2,17 @@ package com.example.webook;
 
 import android.location.Location;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Request {
-    private String requester;
+    private ArrayList<String> requester;
     private String requestee;
     private String book;
     private Location geoLocation;
     private Date date;
 
-    public String getRequester() {
+    public ArrayList<String> getRequester() {
         return requester;
     }
 

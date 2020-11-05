@@ -75,15 +75,6 @@ public class OwnerProfileActivity extends AppCompatActivity {
         });
 
 
-
-
-        //String a = user_picRef.getDownloadUrl().toString();
-        //description.setText(a);
-
-        //Drawable image = getResources().getDrawable(R.drawable.empty_user_icon);
-        //Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.empty_user_icon);
-
-        //user_pic.setImageBitmap(image1);
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference user_picRef = storageReference.child("images/empty_user_icon.png");
 

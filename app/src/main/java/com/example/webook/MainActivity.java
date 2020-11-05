@@ -19,7 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -59,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 String username_text = username.getText().toString();
                 String pwd_text = pwd.getText().toString();
                 if (username_text.length() != 0 & pwd_text.length() != 0){
-                    //int a = username_text.length();
-                    //String b = Integer.toString(a);
-                    //username.setText(b);
-
                     authenticate(username_text, pwd_text);
                 }
 

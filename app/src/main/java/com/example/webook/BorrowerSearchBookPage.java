@@ -24,7 +24,8 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     ListView bookList;
     ArrayList<Book> dataList;
     ArrayAdapter<Book> bookAdapter;
-    public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchBookPage.MESSAGE";
+    public static final String EXTRA_MESSAGE = "selectBook";
+    private Borrower borrower;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +42,15 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("books");
 
+        borrower = (Borrower)intent.getSerializableExtra("borrower");
+
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(BorrowerSearchBookPage.this,ShowBookDetail.class);
+                Intent intent = new Intent(BorrowerSearchBookPage.this,BorrowerBookProfile.class);
                 Book book = dataList.get(i);
                 intent.putExtra(EXTRA_MESSAGE, book);
+                intent.putExtra("borrower", borrower);
                 startActivity(intent);
             }
         });
@@ -64,7 +68,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                                 if(!status.equals("borrowed") && !status.equals("accepted")){
                                     String title = (String) document.getData().get("title");
                                     String author = (String) document.getData().get("author");
-                                    String isbn = (String) document.getData().get("ISBN");
+                                    String isbn = (String) document.getData().get("isbn");
                                     String description = (String) document.getData().get("description");
                                     String owner = (String) document.getData().get("owner");
 

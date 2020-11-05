@@ -34,6 +34,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private Button requestButton;
     private ArrayList<String> requesterList;
     private static final String TAG = "Sample";
+    private Borrower borrower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,35 +62,37 @@ public class BorrowerBookProfile extends AppCompatActivity {
     description.setText(selectBook.getDescription());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    final HashMap<String, Object> requests = new HashMap<>();
+    borrower = (Borrower) intent.getSerializableExtra("borrower");
     requesterList = new ArrayList<>();
-    requesterList.add("Rain");
-    requestButton.setOnClickListener(new View.OnClickListener(){
-        public void onClick(View v) {
-            final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
+    requesterList.add(borrower.getUsername());
+        requestButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
 //            requests.put(newRequest.getRequester(), newRequest);
-            final CollectionReference collectionReference = db.collection("requests");
-            collectionReference
-                    .document(newRequest.getBook().getISBN())
-                    .set(newRequest)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "Data has been added successfully!");
-                            db.collection("books").document(selectBook.getISBN())
-                                    .update(
-                                            "status", "requested"
-                                    );
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
-                            Log.d(TAG, "Data addition failed" + e.toString());
-                        }
-                    });
-            finish();
+                final CollectionReference collectionReference = db.collection("requests");
+                collectionReference
+                        .document(newRequest.getBook().getISBN())
+                        .update("requester", FieldValue.arrayUnion(borrower.getUsername()))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Data has been added successfully!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
+                                Log.d(TAG, "Data addition failed" + e.toString());
+                                db.collection("requests").document(selectBook.getISBN())
+                                        .set(newRequest);
+                                db.collection("books").document(selectBook.getISBN())
+                                        .update(
+                                                "status", "requested"
+                                        );
+                            }
+                        });
+                finish();
             }
         });
     }

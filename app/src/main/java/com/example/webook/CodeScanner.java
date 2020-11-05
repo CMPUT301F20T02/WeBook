@@ -28,10 +28,10 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.temporary);
-
+        scan();
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void scan(View view){
+    public void scan(){
         if (checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
@@ -56,5 +56,9 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
         Toast.makeText(getApplicationContext(),result.getText(),Toast.LENGTH_SHORT).show();
         x = result.getText();
         zXingScannerView.resumeCameraPreview(this);
+        Intent intent = new Intent();
+        intent.putExtra("code", x);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

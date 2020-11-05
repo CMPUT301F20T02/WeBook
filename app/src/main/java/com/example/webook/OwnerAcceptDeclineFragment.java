@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.CreateDocumentRequest;
@@ -34,6 +40,7 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
     private TextView BookRequestOwnerText;
     private TextView BookRequestRequesteeText;
     private OnFragmentInteractionListener listener;
+    private static final String TAG = "Sample";
 
     public interface OnFragmentInteractionListener {
         void onAcceptPressed();
@@ -106,6 +113,52 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
                                 .collection("requests")
                                 .document(selectRequest.getBook().getISBN());
                         document.update("requester", FieldValue.arrayRemove(selectRequest.getRequester().get(position)));
+                        document.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    ArrayList<String> requesterList = (ArrayList<String>) document.get("requester");
+                                    if (requesterList.size() == 0) {
+                                        db.collection("requests").document(selectRequest.getBook().getISBN())
+                                                .delete()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error deleting document", e);
+                                                    }
+                                                });
+                                        db.collection("books").document(selectRequest.getBook().getISBN())
+                                                .update(
+                                                        "status", "available"
+                                                )
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error deleting document", e);
+                                                    }
+                                                });
+                                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                    } else {
+                                        Log.d(TAG, "No such document");
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                            }
+                        });
                         listener.onDeclinePressed();
                     }
                 })

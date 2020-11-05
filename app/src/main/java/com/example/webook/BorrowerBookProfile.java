@@ -64,32 +64,34 @@ public class BorrowerBookProfile extends AppCompatActivity {
 //    final HashMap<String, Object> requests = new HashMap<>();
     requesterList = new ArrayList<>();
     requesterList.add("Peter");
-    requestButton.setOnClickListener(new View.OnClickListener(){
-        public void onClick(View v) {
-            final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
+        requestButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
 //            requests.put(newRequest.getRequester(), newRequest);
-            final CollectionReference collectionReference = db.collection("requests");
-            collectionReference
-                    .document(newRequest.getBook().getISBN())
-                    .set(newRequest)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "Data has been added successfully!");
-                            db.collection("books").document(selectBook.getISBN())
-                                    .update(
-                                            "status", "requested"
-                                    );
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
-                            Log.d(TAG, "Data addition failed" + e.toString());
-                        }
-                    });
-            finish();
+                final CollectionReference collectionReference = db.collection("requests");
+                collectionReference
+                        .document(newRequest.getBook().getISBN())
+                        .update("requester", FieldValue.arrayUnion("Senyu"))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Data has been added successfully!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
+                                Log.d(TAG, "Data addition failed" + e.toString());
+                                db.collection("requests").document(selectBook.getISBN())
+                                        .set(newRequest);
+                                db.collection("books").document(selectBook.getISBN())
+                                        .update(
+                                                "status", "requested"
+                                        );
+                            }
+                        });
+                finish();
             }
         });
     }

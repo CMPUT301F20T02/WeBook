@@ -19,6 +19,12 @@ public class BookList extends ArrayAdapter<Book> {
     private ArrayList<Book> books;
     private Context context;
 
+    public BookList(@NonNull Context context, ArrayList<Book> books){
+        super(context, 0, books);
+        this.books = books;
+        this.context = context;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -41,7 +47,7 @@ public class BookList extends ArrayAdapter<Book> {
         status.setText(book.getStatus());
 
         if (book.getImage() == null){
-            icon.setImageDrawable(view.getResources().getDrawable(R.drawable.book_icon));
+            icon.setImageResource(R.drawable.book_icon);
         }else{
             Glide.with(this.context)
                     .load(book.getImage())
@@ -49,13 +55,6 @@ public class BookList extends ArrayAdapter<Book> {
         }
 
         return view;
-
     }
 
-
-    public BookList(@NonNull Context context, ArrayList<Book> books){
-        super(context, 0, books);
-        this.books = books;
-        this.context = context;
-    }
 }

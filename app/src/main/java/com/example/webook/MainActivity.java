@@ -60,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 if (username_text.length() != 0 & pwd_text.length() != 0){
                     authenticate(username_text, pwd_text);
                 }
-
             }
         });
-
 
     }
 

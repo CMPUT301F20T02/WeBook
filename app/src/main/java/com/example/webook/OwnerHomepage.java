@@ -26,7 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 public class OwnerHomepage extends AppCompatActivity {
-    private  Owner owner;
+    private Owner owner;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final ArrayList<Book> bookArrayList = new ArrayList<Book>();
     private ListView bookListView;

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,17 @@ public class OwnerHomepage extends AppCompatActivity {
         bookList = new BookList( OwnerHomepage.this, bookArrayList);
         bookListView = findViewById(R.id.owner_book_list);
         bookListView.setAdapter(bookList);
+        //This is a comment
+        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(OwnerHomepage.this, OwnerBookProfile.class);
+                Book selectBook = bookArrayList.get(i);
+                intent.putExtra("selectBook", selectBook);
+                startActivity(intent);
+            }
+
+        });
 
         String bookname = Integer.toString(bookArrayList.size());
         Toast toast = Toast.makeText(OwnerHomepage.this, bookname, Toast.LENGTH_SHORT);

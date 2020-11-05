@@ -13,11 +13,11 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CustomList extends ArrayAdapter<Book> {
+public class BookList extends ArrayAdapter<Book> {
     private ArrayList<Book> books;
     private Context context;
 
-    public CustomList(Context context, ArrayList<Book> books) {
+    public BookList(Context context, ArrayList<Book> books) {
         super(context, 0, books);
         this.books = books;
         this.context = context;
@@ -35,8 +35,14 @@ public class CustomList extends ArrayAdapter<Book> {
 
         Book book = books.get(position);
 
-        ImageView img= (ImageView) view.findViewById(R.id.book_icon);
-        img.setImageResource(R.drawable.book_icon);
+        ImageView icon = view.findViewById(R.id.book_icon);
+        if (book.getImage() == null){
+            icon.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this.context)
+                    .load(book.getImage())
+                    .into(icon);
+        }
 
 
         TextView title = view.findViewById(R.id.book_title);

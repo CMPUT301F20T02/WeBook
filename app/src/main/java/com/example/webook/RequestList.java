@@ -13,11 +13,11 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class BookRequestList extends ArrayAdapter<BookRequest> {
+public class RequestList extends ArrayAdapter<BookRequest> {
     private ArrayList<BookRequest> BookRequests;
     private Context context;
 
-    public BookRequestList(Context context, ArrayList<BookRequest> BookRequests) {
+    public RequestList(Context context, ArrayList<BookRequest> BookRequests) {
         super(context, 0, BookRequests);
         this.BookRequests = BookRequests;
         this.context = context;

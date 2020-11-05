@@ -10,12 +10,12 @@ public class Book implements Serializable {
     private String author;
     private String status;
     private String owner;
-    private Image image;
+    private String image;
     private String description;
 
     public Book(){}
 
-    public Book(String title, String ISBN, String author, String status, String owner, Image image, String description) {
+    public Book(String title, String ISBN, String author, String status, String owner, String image, String description) {
         this.title = title;
         this.ISBN = ISBN;
         this.author = author;
@@ -65,11 +65,11 @@ public class Book implements Serializable {
         this.owner = owner;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

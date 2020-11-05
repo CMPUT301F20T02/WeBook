@@ -1,33 +1,20 @@
 package com.example.webook;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SameBookRequestList extends AppCompatActivity implements OwnerAcceptDeclineFragment.OnFragmentInteractionListener{
     private ListView sameBookRequestList;
@@ -57,7 +44,7 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
                 for(int i = 0; i < request.getRequester().size(); i++){
                     dataList.add(request);
                 }
-                bookAdapter = new BookRequestList(SameBookRequestList.this, dataList);
+                bookAdapter = new RequestList(SameBookRequestList.this, dataList);
                 sameBookRequestList.setAdapter(bookAdapter);
 
             }
@@ -91,7 +78,7 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
                 for(int i = 0; i < request.getRequester().size(); i++){
                     dataList.add(request);
                 }
-                bookAdapter = new BookRequestList(SameBookRequestList.this, dataList);
+                bookAdapter = new RequestList(SameBookRequestList.this, dataList);
                 sameBookRequestList.setAdapter(bookAdapter);
             }
         });

@@ -2,15 +2,19 @@ package com.example.webook;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -45,6 +49,7 @@ public class AddBookActivity extends AppCompatActivity {
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String url;
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void imagePiker() {
         AlertDialog.Builder camOrGal = new AlertDialog.Builder(AddBookActivity.this);
         camOrGal.setTitle("Choose your source");
@@ -89,6 +95,13 @@ public class AddBookActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if ( selection[which].equals("Camera") ) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (checkSelfPermission(Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+                    }
+                    else {
+                        // permission has been already granted, you can use camera straight away
+                    }
                     startActivityForResult(intent, CAMERA);
                 } else if ( selection[which].equals("Photo Gallery") ) {
                     Intent intent = new Intent();

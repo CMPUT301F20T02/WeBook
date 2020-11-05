@@ -56,5 +56,9 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
         Toast.makeText(getApplicationContext(),result.getText(),Toast.LENGTH_SHORT).show();
         x = result.getText();
         zXingScannerView.resumeCameraPreview(this);
+        Intent intent = new Intent();
+        intent.putExtra("code", x);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

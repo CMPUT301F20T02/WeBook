@@ -38,6 +38,7 @@ import java.io.ByteArrayOutputStream;
 public class AddBookActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private static final int CAMERA = 2;
+    private static final int SCAN_CODE = 3;
     private TextView title;
     private TextView author;
     private TextView isbn;
@@ -50,6 +51,7 @@ public class AddBookActivity extends AppCompatActivity {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String url;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
+    private Button scanButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class AddBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_book);
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
-
+        scanButton = findViewById(R.id.scan_button);
         confirmButton = findViewById(R.id.confirm_add_book_button);
         book_icon = findViewById(R.id.book_icon_add_edit);
         title = findViewById(R.id.editTextBookTitle);
@@ -79,6 +81,14 @@ public class AddBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadImage();
+            }
+        });
+
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddBookActivity.this, CodeScanner.class);
+                startActivityForResult(intent, SCAN_CODE);
             }
         });
 
@@ -127,6 +137,9 @@ public class AddBookActivity extends AppCompatActivity {
             Bundle bundle = data.getExtras();
             Bitmap imageBitmap = (Bitmap) bundle.get("data");
             book_icon.setImageBitmap(imageBitmap);
+        }else if (requestCode == SCAN_CODE && resultCode == RESULT_OK && data != null && data.getExtras() != null){
+            String isbnString = data.getStringExtra("code");
+            isbn.setText(isbnString);
         }
     }
 

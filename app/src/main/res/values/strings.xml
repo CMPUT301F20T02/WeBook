@@ -13,13 +13,16 @@
     <string name="Search">Search</string>
     <string name="BOOKS">BOOKS</string>
     <string name="REQUESTS">REQUESTS</string>
-    <string name="REQUEST">REQUEST</string>
     <string name="ME">ME</string>
-    <string name="DELETE">DELETE</string>
-    <string name="EDIT">EDIT</string>
-    <string name="ACCEPT">ACCEPT</string>
-    <string name="DECLINE">DECLINE</string>
-    <string name="CANCEL">CANCEL</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_book">ADD BOOK</string>
+    <string name="edit_profile">EDIT PROFILE</string>
+    <string name="book_title">Book Title</string>
+    <string name="isbn">ISBN</string>
+    <string name="owner">Owner:</string>
+    <string name="borrower">Borrower:</string>
+    <string name="status">Status</string>
+    <string name="description">Description</string>
+    <string name="scan">SCAN</string>
+    <string name="confirm1">CONFIRM</string>
+    <string name="author">Author</string>
 </resources>

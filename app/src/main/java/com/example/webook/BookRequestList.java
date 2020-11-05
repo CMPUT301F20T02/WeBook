@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,8 @@ public class BookRequestList extends ArrayAdapter<BookRequest> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 //        return super.getView(position, convertView, parent);
         View view = convertView;
+        ImageView img= (ImageView) view.findViewById(R.id.book_icon);
+        img.setImageResource(R.drawable.book_icon);
 
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.request_list_content, parent, false);

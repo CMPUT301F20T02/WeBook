@@ -40,15 +40,15 @@ public class BorrowerBookProfile extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_borrower_book_profile);
 
-    title = findViewById(R.id.book_borrower_request_title_text);
-    author = findViewById(R.id.book_borrower_request_author_text);
-    isbn = findViewById(R.id.book_borrower_request_isbn_text);
-    owner = findViewById(R.id.book_borrower_request_owner_text);
-    status = findViewById(R.id.book_borrower_request_status_text);
-    description = findViewById(R.id.book_borrower_request_description_text);
+    title = findViewById(R.id.book_profile_title);
+    author = findViewById(R.id.book_profile_author);
+    isbn = findViewById(R.id.book_profile_ISBN);
+    owner = findViewById(R.id.book_profile_owner_text);
+    status = findViewById(R.id.book_profile_status_text);
+    description = findViewById(R.id.book_profile_description);
 
 //    isbn_text = findViewById(R.id.isbn_text);
-    requestButton = findViewById(R.id.request_button);
+    requestButton = findViewById(R.id.borrower_book_request_button);
 
     Intent intent = getIntent();
     final Book selectBook = (Book) intent.getSerializableExtra("selectBook");

@@ -27,7 +27,6 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.temporary);
         scan();
     }
     @RequiresApi(api = Build.VERSION_CODES.M)

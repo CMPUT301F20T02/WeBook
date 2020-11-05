@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.widget.ListView;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,11 +15,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class OwnerHomepage extends AppCompatActivity {
     private ListView bookListView;
     private BookList bookList;
     private final ArrayList<Book> bookArrayList = new ArrayList<Book>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +33,7 @@ public class OwnerHomepage extends AppCompatActivity {
                 intent.putExtra("selectBook", selectBook);
                 startActivity(intent);
             }
-
         });
     }
+
 }

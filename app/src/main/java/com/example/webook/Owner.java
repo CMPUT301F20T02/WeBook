@@ -19,21 +19,7 @@ public class Owner extends User {
         bookList = new ArrayList<>();
         requestList = new ArrayList<>();
     }
-/*
-    public void addBook(Book book){
-        this.bookList.add(book);
-    }
 
-
-
-    public ArrayList<Book> getBookList() {
-        return this.bookList;
-    }
-
-    public void setBookList(ArrayList<Book> bookList) {
-        this.bookList = bookList;
-    }
-*/
     public void addBook(String book){
         this.bookList.add(book);
     }

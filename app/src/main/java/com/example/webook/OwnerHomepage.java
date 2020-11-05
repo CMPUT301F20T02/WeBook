@@ -21,6 +21,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -77,7 +78,31 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 bookArrayList.clear();
-                downloadBooks(owner.getBookList());
+                db.collection("users").document(owner.getUsername()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            bookArrayList.clear();
+                            owner.setBookList(new ArrayList<String>());
+                            DocumentSnapshot document = task.getResult();
+                            ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
+                            downloadBooks(bookisbn);
+                        }
+
+                    }
+                });
+
+            }
+        });
+
+        DocumentReference userRef = db.collection("users").document(owner.getUsername());
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                bookArrayList.clear();
+                owner.setBookList(new ArrayList<String>());
+                ArrayList<String> bookisbn = (ArrayList<String>) value.get("bookList");
+                downloadBooks(bookisbn);
             }
         });
 
@@ -156,8 +181,9 @@ public class OwnerHomepage extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Book book = document.toObject(Book.class);
-                            owner.addBook(book.getISBN());
-                            if (!bookArrayList.contains(book)){
+
+                            if (!owner.getBookList().contains(book.getISBN())){
+                                owner.addBook(book.getISBN());
                                 bookArrayList.add(book);
                                 bookList.notifyDataSetChanged();
                             }

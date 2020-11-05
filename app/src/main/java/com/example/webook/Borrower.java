@@ -11,8 +11,4 @@ public class Borrower extends User {
         super(username, email, phoneNumber, pwd, description, image);
         this.setUserType("borrower");
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/txia

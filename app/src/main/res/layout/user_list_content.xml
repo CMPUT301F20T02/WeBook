@@ -11,18 +11,8 @@
         android:layout_width="99dp"
         android:layout_height="114dp"
         app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
-<<<<<<< HEAD
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/empty_user_icon" />
-=======
+        app:srcCompat="@drawable/empty_user_icon"
         app:layout_constraintTop_toTopOf="parent" />
-
->>>>>>> main
-=======
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/empty_user_icon" />
->>>>>>> origin/txia
 
     <TextView
         android:id="@+id/list_user_username"

@@ -29,14 +29,14 @@ public class BookRequestList extends ArrayAdapter<BookRequest> {
         View view = convertView;
 
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.same_book_requests_list_content, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.request_list_content, parent, false);
         }
 
         BookRequest BookRequest = BookRequests.get(position);
 
-        TextView title_text = view.findViewById(R.id.title_text);
+        TextView title_text = view.findViewById(R.id.book_title);
         title_text.setText(BookRequest.getBook().getTitle());
-        TextView borrow_text = view.findViewById(R.id.borrow_text);
+        TextView borrow_text = view.findViewById(R.id.book_author);
         borrow_text.setText(BookRequest.getRequester().get(position));
 
 

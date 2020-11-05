@@ -28,7 +28,7 @@ public class BorrowerHomepage extends AppCompatActivity {
         setContentView(R.layout.activity_borrower_homepage);
         Book book1 = new Book("Harry Potter", "123-456-789","J.K.Rowling","Available","Rain",null,"This is a magical book");
         Book book2 = new Book("book2","67890","peter","requested","peter",null,"testbook2");
-        bookList = findViewById(R.id.ownerBookList);
+        bookList = findViewById(R.id.borrower_book_list);
         dataList = new ArrayList<>();
         dataList.add(book1);
         dataList.add(book2);

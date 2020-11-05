@@ -27,8 +27,7 @@ public class CustomList extends ArrayAdapter<Book> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 //        return super.getView(position, convertView, parent);
         View view = convertView;
-        ImageView img= (ImageView) view.findViewById(R.id.book_icon);
-        img.setImageResource(R.drawable.book_icon);
+
 
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.book_list_content, parent,false);
@@ -36,6 +35,8 @@ public class CustomList extends ArrayAdapter<Book> {
 
         Book book = books.get(position);
 
+        ImageView img= (ImageView) view.findViewById(R.id.book_icon);
+        img.setImageResource(R.drawable.book_icon);
 
 
         TextView title = view.findViewById(R.id.book_title);

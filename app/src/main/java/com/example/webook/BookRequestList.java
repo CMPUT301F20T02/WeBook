@@ -28,8 +28,7 @@ public class BookRequestList extends ArrayAdapter<BookRequest> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 //        return super.getView(position, convertView, parent);
         View view = convertView;
-        ImageView img= (ImageView) view.findViewById(R.id.book_icon);
-        img.setImageResource(R.drawable.book_icon);
+
 
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.request_list_content, parent, false);
@@ -37,9 +36,12 @@ public class BookRequestList extends ArrayAdapter<BookRequest> {
 
         BookRequest BookRequest = BookRequests.get(position);
 
-        TextView title_text = view.findViewById(R.id.book_title);
+        ImageView img= (ImageView) view.findViewById(R.id.request_book_icon);
+        img.setImageResource(R.drawable.book_icon);
+
+        TextView title_text = view.findViewById(R.id.request_book_title);
         title_text.setText(BookRequest.getBook().getTitle());
-        TextView borrow_text = view.findViewById(R.id.book_author);
+        TextView borrow_text = view.findViewById(R.id.request_book_author);
         borrow_text.setText(BookRequest.getRequester().get(position));
 
 

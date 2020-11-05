@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowBookDetail">
+    tools:context=".OwnerProfileActivity">
 
     <ImageView
-        android:id="@+id/user_icon"
+        android:id="@+id/owner_image"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/user_username"
+        android:id="@+id/owner_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -29,11 +29,11 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_icon"
+        app:layout_constraintStart_toEndOf="@+id/owner_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/user_userType"
+        android:id="@+id/owner_userType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -43,11 +43,11 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_icon"
-        app:layout_constraintTop_toBottomOf="@+id/user_username" />
+        app:layout_constraintStart_toEndOf="@+id/owner_image"
+        app:layout_constraintTop_toBottomOf="@+id/owner_username" />
 
     <TextView
-        android:id="@+id/user_phone"
+        android:id="@+id/owner_phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -57,11 +57,11 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_icon"
-        app:layout_constraintTop_toBottomOf="@+id/user_userType" />
+        app:layout_constraintStart_toEndOf="@+id/owner_image"
+        app:layout_constraintTop_toBottomOf="@+id/owner_userType" />
 
     <TextView
-        android:id="@+id/user_email"
+        android:id="@+id/owner_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -71,12 +71,12 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_icon"
-        app:layout_constraintTop_toBottomOf="@+id/user_phone" />
+        app:layout_constraintStart_toEndOf="@+id/owner_image"
+        app:layout_constraintTop_toBottomOf="@+id/owner_phone" />
 
     <TextView
 
-        android:id="@+id/user_description"
+        android:id="@+id/owner_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -88,6 +88,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/owner_image" />
+
+    <Button
+        android:id="@+id/addBookButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/add_book"
+        app:layout_constraintBottom_toTopOf="@+id/owner_editProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/owner_editProfile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/edit_profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

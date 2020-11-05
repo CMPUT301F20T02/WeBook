@@ -40,6 +40,7 @@ public class BookList extends ArrayAdapter<Book> {
         title.setText(book.getTitle());
         author.setText(book.getAuthor());
         status.setText(book.getStatus());
+
         if (book.getImage() == null){
             icon.setImageResource(R.drawable.book_icon);
         }else{
@@ -47,7 +48,12 @@ public class BookList extends ArrayAdapter<Book> {
                     .load(book.getImage())
                     .into(icon);
         }
+
+        title.setText(book.getTitle());
+        author.setText(book.getAuthor());
+        status.setText(book.getStatus());
         return view;
+
     }
 
 }

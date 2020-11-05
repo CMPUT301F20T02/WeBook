@@ -16,16 +16,7 @@ public class Book implements Serializable {
     private String borrower;
     public Book(){}
 
-    public Book(String title, String ISBN, String author, String status, String owner, String image, String description, String borrower) {
-        this.title = title;
-        this.ISBN = ISBN;
-        this.author = author;
-        this.status = status;
-        this.owner = owner;
-        this.image = image;
-        this.description = description;
-        this.borrower = borrower;
-    }
+
     public Book(String title, String ISBN, String author, String status, String owner, String image, String description) {
         this.title = title;
         this.ISBN = ISBN;
@@ -34,7 +25,7 @@ public class Book implements Serializable {
         this.owner = owner;
         this.image = image;
         this.description = description;
-        this.borrower = "No borrower recently";
+        this.borrower = null;
     }
     public void setTitle(String title) {
         this.title = title;
@@ -55,7 +46,6 @@ public class Book implements Serializable {
     public void setOwner(String owner) {
         this.owner = owner;
     }
-
     public void setImage(String image) {
         this.image = image;
     }

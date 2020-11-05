@@ -7,7 +7,6 @@ import android.media.Image;
 import java.util.ArrayList;
 
 public class Owner extends User {
-    //private ArrayList<Book> bookList;
     private ArrayList<String> bookList;
     private ArrayList<String> requestList;
 
@@ -19,11 +18,9 @@ public class Owner extends User {
         bookList = new ArrayList<>();
         requestList = new ArrayList<>();
     }
-
     public void addBook(String book){
         this.bookList.add(book);
     }
-
 
 
     public ArrayList<String> getBookList() {
@@ -43,6 +40,5 @@ public class Owner extends User {
     public void setRequestList(ArrayList<String> requestList) {
         this.requestList = requestList;
     }
-
 
 }

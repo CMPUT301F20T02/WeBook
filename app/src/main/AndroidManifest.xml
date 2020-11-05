@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.webook">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BorrowerProfileActivity"></activity>
+        <activity android:name=".CodeScanner"/>
+        <activity android:name=".ShowUserDetail"/>
+        <activity android:name=".BorrowerBookProfile"/>
+        <activity android:name=".BorrowerSearch"/>
+        <activity android:name=".BorrowerSearchBookPage"/>
+        <activity android:name=".BorrowerSearchUserPage"/>
+        <activity android:name=".SameBookRequestList"/>
+        <activity android:name=".OwnerBookProfile"/>
+        <activity android:name=".BorrowerProfileActivity"/>
         <activity android:name=".EditUserProfileActivity" />
         <activity android:name=".AddBookActivity" />
         <activity android:name=".OwnerProfileActivity" />

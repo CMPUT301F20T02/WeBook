@@ -13,6 +13,7 @@ public class Book implements Serializable {
     private String owner;
     private String image;
     private String description;
+    private String borrower;
 
     public Book(){}
 
@@ -24,6 +25,7 @@ public class Book implements Serializable {
         this.owner = owner;
         this.image = image;
         this.description = description;
+        this.borrower = null;
     }
 
     public String getTitle() {
@@ -80,5 +82,12 @@ public class Book implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setBorrower(String borrower) {
+        this.borrower = borrower;
+    }
+    public String getBorrower() {
+        return borrower;
     }
 }

@@ -2,15 +2,19 @@ package com.example.webook;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -34,6 +38,7 @@ import java.io.ByteArrayOutputStream;
 public class AddBookActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private static final int CAMERA = 2;
+    private static final int SCAN_CODE = 3;
     private TextView title;
     private TextView author;
     private TextView isbn;
@@ -45,6 +50,8 @@ public class AddBookActivity extends AppCompatActivity {
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String url;
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
+    private Button scanButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,7 @@ public class AddBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit_book);
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
-
+        scanButton = findViewById(R.id.scan_button);
         confirmButton = findViewById(R.id.confirm_add_book_button);
         book_icon = findViewById(R.id.book_icon_add_edit);
         title = findViewById(R.id.editTextBookTitle);
@@ -77,9 +84,18 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
 
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddBookActivity.this, CodeScanner.class);
+                startActivityForResult(intent, SCAN_CODE);
+            }
+        });
+
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void imagePiker() {
         AlertDialog.Builder camOrGal = new AlertDialog.Builder(AddBookActivity.this);
         camOrGal.setTitle("Choose your source");
@@ -89,6 +105,13 @@ public class AddBookActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if ( selection[which].equals("Camera") ) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (checkSelfPermission(Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+                    }
+                    else {
+                        // permission has been already granted, you can use camera straight away
+                    }
                     startActivityForResult(intent, CAMERA);
                 } else if ( selection[which].equals("Photo Gallery") ) {
                     Intent intent = new Intent();
@@ -114,6 +137,9 @@ public class AddBookActivity extends AppCompatActivity {
             Bundle bundle = data.getExtras();
             Bitmap imageBitmap = (Bitmap) bundle.get("data");
             book_icon.setImageBitmap(imageBitmap);
+        }else if (requestCode == SCAN_CODE && resultCode == RESULT_OK && data != null && data.getExtras() != null){
+            String isbnString = data.getStringExtra("code");
+            isbn.setText(isbnString);
         }
     }
 

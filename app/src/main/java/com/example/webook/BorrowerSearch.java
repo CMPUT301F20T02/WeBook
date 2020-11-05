@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class BorrowerSearch extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearch.MESSAGE";
+    private Borrower borrower;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +19,8 @@ public class BorrowerSearch extends AppCompatActivity {
         // User press back in search page, back to main activity
         // User choose to search books
         final Button searchBook = findViewById(R.id.search_choose_books);
+        Intent intent = getIntent();
+        borrower = (Borrower)intent.getSerializableExtra("borrower");
 
         searchBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,6 +28,7 @@ public class BorrowerSearch extends AppCompatActivity {
                 Intent intent = new Intent(BorrowerSearch.this, BorrowerSearchBookPage.class);
                 String search = newSearch.getText().toString();
                 intent.putExtra(EXTRA_MESSAGE, search);
+                intent.putExtra("borrower", borrower);
                 startActivity(intent);
             }
         });

@@ -25,6 +25,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     ArrayList<Book> dataList;
     ArrayAdapter<Book> bookAdapter;
     public static final String EXTRA_MESSAGE = "selectBook";
+    private Borrower borrower;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +42,15 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("books");
 
+        borrower = (Borrower)intent.getSerializableExtra("borrower");
+
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(BorrowerSearchBookPage.this,BorrowerBookProfile.class);
                 Book book = dataList.get(i);
                 intent.putExtra(EXTRA_MESSAGE, book);
+                intent.putExtra("borrower", borrower);
                 startActivity(intent);
             }
         });

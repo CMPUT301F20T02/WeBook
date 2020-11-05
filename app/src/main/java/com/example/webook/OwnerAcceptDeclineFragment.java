@@ -134,6 +134,22 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
                                                         Log.w(TAG, "Error deleting document", e);
                                                     }
                                                 });
+                                        db.collection("books").document(selectRequest.getBook().getISBN())
+                                                .update(
+                                                        "status", "available"
+                                                )
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error deleting document", e);
+                                                    }
+                                                });
                                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                     } else {
                                         Log.d(TAG, "No such document");

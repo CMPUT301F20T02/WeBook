@@ -17,6 +17,7 @@ public class BorrowerHomepage extends AppCompatActivity {
     private ListView bookListView;
     private BookList bookList;
     private static ArrayList<Book> dataList;
+    private Borrower borrower;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -24,11 +25,15 @@ public class BorrowerHomepage extends AppCompatActivity {
         setContentView(R.layout.activity_borrower_homepage);
         bookListView = findViewById(R.id.borrower_book_list);
 
+        Intent intent = getIntent();
+        borrower = (Borrower) intent.getSerializableExtra("user");
+
         final Button searchButton = findViewById(R.id.borrower_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BorrowerHomepage.this, BorrowerSearch.class);
+                intent.putExtra("borrower",borrower);
                 startActivity(intent);
             }
         });

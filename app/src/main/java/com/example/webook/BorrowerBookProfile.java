@@ -34,6 +34,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private Button requestButton;
     private ArrayList<String> requesterList;
     private static final String TAG = "Sample";
+    private Borrower borrower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +62,9 @@ public class BorrowerBookProfile extends AppCompatActivity {
     description.setText(selectBook.getDescription());
 
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    final HashMap<String, Object> requests = new HashMap<>();
+    borrower = (Borrower) intent.getSerializableExtra("borrower");
     requesterList = new ArrayList<>();
-    requesterList.add("Peter");
+    requesterList.add(borrower.getUsername());
         requestButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
@@ -71,7 +72,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
                 final CollectionReference collectionReference = db.collection("requests");
                 collectionReference
                         .document(newRequest.getBook().getISBN())
-                        .update("requester", FieldValue.arrayUnion("Senyu"))
+                        .update("requester", FieldValue.arrayUnion(borrower.getUsername()))
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

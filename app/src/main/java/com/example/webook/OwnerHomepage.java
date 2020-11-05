@@ -47,6 +47,9 @@ public class OwnerHomepage extends AppCompatActivity {
     private ArrayList<Book> requestedBookArrayList = new ArrayList<>();
     private ArrayList<Book> acceptedBookArrayList = new ArrayList<>();
     private ArrayList<Book> borrowedBookArrayList = new ArrayList<>();
+
+    private String currentListView = "all";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +65,6 @@ public class OwnerHomepage extends AppCompatActivity {
         bookList = new BookList( OwnerHomepage.this, bookArrayList);
         bookListView = findViewById(R.id.owner_book_list);
         bookListView.setAdapter(bookList);
-        //This is a comment
-        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(OwnerHomepage.this, OwnerBookProfile.class);
-                Book selectBook = bookArrayList.get(i);
-                intent.putExtra("selectBook", selectBook);
-                startActivity(intent);
-            }
-
-        });
 
         String bookname = Integer.toString(bookArrayList.size());
         Toast toast = Toast.makeText(OwnerHomepage.this, bookname, Toast.LENGTH_SHORT);
@@ -147,6 +139,7 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bookListView.setAdapter(bookList);
+                currentListView = "all";
             }
         });
 
@@ -154,6 +147,7 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bookListView.setAdapter(bookListAvailable);
+                currentListView = "available";
             }
         });
 
@@ -161,6 +155,7 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bookListView.setAdapter(bookListRequested);
+                currentListView = "requested";
             }
         });
 
@@ -168,6 +163,7 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bookListView.setAdapter(bookListAccepted);
+                currentListView = "accepted";
             }
         });
 
@@ -175,7 +171,34 @@ public class OwnerHomepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bookListView.setAdapter(bookListBorrowed);
+                currentListView = "borrowed";
             }
+        });
+
+        //This is a comment
+        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(OwnerHomepage.this, OwnerBookProfile.class);
+                Book selectBook;
+                if (currentListView.equals("all")) {
+                    selectBook = bookArrayList.get(i);
+                } else if (currentListView.equals("available")){
+                    selectBook = availableBookArrayList.get(i);
+                } else if (currentListView.equals("requested")) {
+                    selectBook = requestedBookArrayList.get(i);
+                } else if (currentListView.equals("accepted")) {
+                    selectBook = acceptedBookArrayList.get(i);
+                } else if (currentListView.equals("borrowed")) {
+                    selectBook = borrowedBookArrayList.get(i);
+                } else{
+                    selectBook = null;
+                    System.out.println("Error");
+                }
+                intent.putExtra("selectBook", selectBook);
+                startActivity(intent);
+            }
+
         });
 
     }

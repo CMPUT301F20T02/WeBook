@@ -3,7 +3,9 @@ package com.example.webook;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ShowUserDetail extends AppCompatActivity {
@@ -19,6 +21,8 @@ public class ShowUserDetail extends AppCompatActivity {
         final TextView  phone = findViewById(R.id.user_phone);
         final TextView  email = findViewById(R.id.user_email);
         final TextView description = findViewById(R.id.user_description);
+        final ImageView image = findViewById(R.id.user_icon);
+        image.setImageDrawable(getResources().getDrawable(R.drawable.empty_user_icon));
         username.setText(user.getUsername());
         userType.setText(user.getUserType());
         phone.setText(user.getPhoneNumber());

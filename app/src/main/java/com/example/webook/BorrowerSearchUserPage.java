@@ -66,14 +66,15 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                                 Log.d(TAG, document.getId());
                                 String Username = document.getId();
                                 String email = (String) document.getData().get("email");
-                                String userType =  (String) document.getData().get("userType");
+                                String description =  (String) document.getData().get("description");
                                 String pwd =  (String) document.getData().get("pwd");
                                 String phoneNumber =  (String) document.getData().get("phoneNumber");
+                                String userType = (String) document.getData().get("userType");
                                 if(Username.contains(message)){
                                     if(userType.equals("borrower")) {
-                                        dataList.add(new Borrower(Username,email, phoneNumber, pwd, userType));
+                                        dataList.add(new Borrower(Username,email, phoneNumber, pwd, description,null));
                                     }else{
-                                        dataList.add(new Owner(Username,email, phoneNumber, pwd, userType));
+                                        dataList.add(new Owner(Username,email, phoneNumber, pwd, description,null));
                                     }
                                 }
                             }

@@ -13,7 +13,7 @@ public class BorrowerHomepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_homepage);
-        final Button searchButton = findViewById(R.id.button2);
+        final Button searchButton = findViewById(R.id.borrower_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

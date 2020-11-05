@@ -36,11 +36,17 @@ public class BookList extends ArrayAdapter<Book> {
         TextView title = view.findViewById(R.id.book_title);
         TextView author = view.findViewById(R.id.book_author);
         TextView status = view.findViewById(R.id.book_status);
-        ImageView image = view.findViewById(R.id.list_user_icon);
+        ImageView icon = view.findViewById(R.id.book_icon);
         title.setText(book.getTitle());
         author.setText(book.getAuthor());
         status.setText(book.getStatus());
-        image.setImageDrawable(context.getResources().getDrawable(R.drawable.book_icon));
+        if (book.getImage() == null){
+            icon.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this.context)
+                    .load(book.getImage())
+                    .into(icon);
+        }
         return view;
     }
 

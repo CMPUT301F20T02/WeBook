@@ -1,5 +1,9 @@
 package com.example.webook;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public abstract class User implements Serializable {
@@ -8,31 +12,25 @@ public abstract class User implements Serializable {
     private String phoneNumber;
     private String pwd;
     private String userType;
-    private  String description;
-    public User(String username, String email, String phoneNumber, String pwd, String userType) {
+    private String description;
+    private String user_image;
+
+    public User(){}
+
+    public User(String username, String email, String phoneNumber, String pwd, String description, String user_image){
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.pwd = pwd;
-        this.userType = userType;
-        this.description = "No description";
+        this.description = description;
+        this.user_image = user_image;
     }
 
-    public User(String username, String email, String phoneNumber, String pwd, String userType, String description) {
-        this.username = username;
+    public void editInformation(String email, String phoneNumber, String description, String user_image){
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.pwd = pwd;
-        this.userType = userType;
         this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        this.user_image = user_image;
     }
 
     public String getUsername() {
@@ -73,5 +71,21 @@ public abstract class User implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getUser_image() {
+        return user_image;
+    }
+
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

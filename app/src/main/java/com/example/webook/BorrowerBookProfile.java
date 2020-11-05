@@ -63,7 +63,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 //    final HashMap<String, Object> requests = new HashMap<>();
     requesterList = new ArrayList<>();
-    requesterList.add("Senyu");
+    requesterList.add("Rain");
     requestButton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View v) {
             final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
@@ -71,7 +71,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
             final CollectionReference collectionReference = db.collection("requests");
             collectionReference
                     .document(newRequest.getBook().getISBN())
-                    .update("requester", FieldValue.arrayUnion(newRequest.getRequester().get(0)))
+                    .set(newRequest)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

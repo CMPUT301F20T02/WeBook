@@ -3,108 +3,137 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ShowBookDetail">
 
     <ImageView
-        android:id="@+id/book_icon_detail"
-        android:layout_width="150dp"
-        android:layout_height="266dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/book_icon" />
-
-    <TextView
-        android:id="@+id/book_borrower_request_title_text"
-        android:layout_width="216dp"
-        android:layout_height="26dp"
+        android:id="@+id/book_profile_icon"
+        android:layout_width="162dp"
+        android:layout_height="260dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/book_borrower_request_author_text"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/book_icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/book_borrower_request_author_text"
-        android:layout_width="214dp"
-        android:layout_height="28dp"
+        android:id="@+id/book_profile_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="@string/book_title"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/book_profile_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/book_borrower_request_isbn_text"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
-        app:layout_constraintTop_toBottomOf="@+id/book_borrower_request_title_text" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="@string/author"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_title" />
 
     <TextView
-        android:id="@+id/book_borrower_request_isbn_text"
-        android:layout_width="214dp"
-        android:layout_height="29dp"
+        android:id="@+id/book_profile_ISBN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/book_borrower_request_owner_text"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
-        app:layout_constraintTop_toBottomOf="@+id/book_borrower_request_author_text" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:hint="@string/isbn"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_author" />
 
     <TextView
-        android:id="@+id/book_borrower_request_owner_text"
-        android:layout_width="213dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/book_borrower_request_status_text"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
-        app:layout_constraintTop_toBottomOf="@+id/book_borrower_request_isbn_text" />
-
-    <TextView
-        android:id="@+id/book_borrower_request_status_text"
-        android:layout_width="212dp"
-        android:layout_height="29dp"
+        android:id="@+id/book_profile_owner_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
-        app:layout_constraintTop_toBottomOf="@+id/book_borrower_request_owner_text" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_ISBN" />
 
     <TextView
-        android:id="@+id/book_borrower_request_description_text"
-        android:layout_width="387dp"
-        android:layout_height="166dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="92dp"
-        android:text="TextView"
+        android:id="@+id/book_rpofile_borrower_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_owner_text" />
+
+    <TextView
+        android:id="@+id/book_profile_status_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintTop_toBottomOf="@+id/book_rpofile_borrower_text" />
+
+    <TextView
+        android:id="@+id/book_profile_description"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="100dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/description"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_borrower_request_status_text" />
-
-    <TextView
-        android:id="@+id/detailed_status"
-        android:layout_width="211dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/book_icon_detail"
-        app:layout_constraintTop_toBottomOf="@+id/book_borrower_request_status_text" />
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_icon" />
 
     <Button
-        android:id="@+id/request_button"
+        android:id="@+id/borrower_book_request_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginLeft="164dp"
-        android:layout_marginBottom="44dp"
-        android:text="@string/REQUEST"
+        android:layout_marginBottom="20dp"
+        android:text="Request"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,15 +7,15 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/book_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/list_user_icon"
+        android:layout_width="99dp"
+        android:layout_height="114dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/book_icon" />
+        app:srcCompat="@drawable/empty_user_icon" />
 
     <TextView
-        android:id="@+id/book_title"
+        android:id="@+id/list_user_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -25,35 +25,35 @@
         android:layout_marginRight="20dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center"/>
+        app:layout_constraintStart_toEndOf="@+id/list_user_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:gravity="center"
-        android:id="@+id/book_author"
+        android:id="@+id/list_user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon"
-        app:layout_constraintTop_toBottomOf="@+id/book_title" />
+        app:layout_constraintStart_toEndOf="@+id/list_user_icon"
+        app:layout_constraintTop_toBottomOf="@+id/list_user_username" />
 
     <TextView
-        android:id="@+id/book_status"
+        android:id="@+id/list_user_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="right"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/book_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_icon" />
+        app:layout_constraintStart_toEndOf="@+id/list_user_icon"
+        app:layout_constraintTop_toBottomOf="@+id/list_user_email" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

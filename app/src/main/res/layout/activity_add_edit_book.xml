@@ -7,7 +7,7 @@
     tools:context=".AddBookActivity">
 
     <ImageView
-        android:id="@+id/book_profile_icon"
+        android:id="@+id/book_icon_add_edit"
         android:layout_width="162dp"
         android:layout_height="260dp"
         android:layout_marginStart="16dp"
@@ -17,8 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/book_profile_title"
+    <EditText
+        android:id="@+id/editTextBookTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,13 +28,14 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/book_title"
+        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/book_profile_author"
+    <EditText
+        android:id="@+id/editTextBookAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -44,14 +45,15 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/author"
+        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
-        app:layout_constraintTop_toBottomOf="@+id/book_profile_title" />
+        app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
+        app:layout_constraintTop_toBottomOf="@+id/editTextBookTitle" />
 
-    <TextView
-        android:id="@+id/book_profile_ISBN"
+    <EditText
+        android:id="@+id/editTextISBN"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -61,10 +63,11 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="@string/isbn"
+        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
-        app:layout_constraintTop_toBottomOf="@+id/book_profile_author" />
+        app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
+        app:layout_constraintTop_toBottomOf="@+id/editTextBookAuthor" />
 
     <TextView
         android:id="@+id/book_profile_owner_text"
@@ -78,8 +81,8 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
-        app:layout_constraintTop_toBottomOf="@+id/book_profile_ISBN" />
+        app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
+        app:layout_constraintTop_toBottomOf="@+id/editTextISBN" />
 
     <TextView
         android:id="@+id/book_rpofile_borrower_text"
@@ -91,7 +94,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
         app:layout_constraintTop_toBottomOf="@+id/book_profile_owner_text" />
 
     <TextView
@@ -104,11 +107,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/book_profile_icon"
+        app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
         app:layout_constraintTop_toBottomOf="@+id/book_rpofile_borrower_text" />
 
-    <TextView
-        android:id="@+id/book_profile_description"
+    <EditText
+        android:id="@+id/editTextDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -120,42 +123,33 @@
         android:ems="10"
         android:gravity="top"
         android:hint="@string/description"
+        android:inputType="textPersonName"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_profile_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/book_icon_add_edit" />
 
     <Button
-        android:id="@+id/owner_delete_book_button"
+        android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginBottom="20dp"
-        android:text="Delete"
+        android:text="@string/scan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/owner_edit_book_button"
+        android:id="@+id/confirm_add_book_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
         android:layout_marginBottom="20dp"
-        android:text="Edit"
+        android:text="@string/confirm1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/owner_requests_list_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Requests List"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

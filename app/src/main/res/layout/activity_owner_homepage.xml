@@ -8,7 +8,7 @@
     tools:context=".OwnerHomepage" >
 
     <TextView
-        android:id="@+id/borrower_all"
+        android:id="@+id/owner_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -19,29 +19,40 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/borrower_requested"
+        android:id="@+id/owner_available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/Available"
+        app:layout_constraintEnd_toStartOf="@+id/owner_requested"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/owner_requested"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/Requested"
-        app:layout_constraintEnd_toStartOf="@+id/borrower_accepted"
+        app:layout_constraintEnd_toStartOf="@+id/owner_accepted"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/borrower_accepted"
+        android:id="@+id/owner_accepted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/Accepted"
-        app:layout_constraintEnd_toStartOf="@+id/borrower_borrowed"
+        app:layout_constraintEnd_toStartOf="@+id/owner_borrowed"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/borrower_borrowed"
+        android:id="@+id/owner_borrowed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -52,7 +63,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/borrower_search"
+        android:id="@+id/owner_search"
         android:layout_width="379dp"
         android:layout_height="39dp"
         android:layout_marginStart="16dp"
@@ -60,21 +71,21 @@
         android:layout_marginTop="16dp"
         android:text="@string/Search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/borrower_requested" />
+        app:layout_constraintTop_toBottomOf="@+id/owner_requested" />
 
     <ListView
-        android:id="@+id/borrower_book_list"
+        android:id="@+id/owner_book_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/borrower_requests_tab"
+        app:layout_constraintBottom_toTopOf="@+id/owner_requests_tab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/borrower_search" />
+        app:layout_constraintTop_toBottomOf="@+id/owner_search" />
 
     <TextView
-        android:id="@+id/borrower_books_tab"
+        android:id="@+id/owner_books_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -85,17 +96,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/borrower_requests_tab"
+        android:id="@+id/owner_requests_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/REQUESTS"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/borrower_me_tab"
-        app:layout_constraintStart_toEndOf="@+id/borrower_books_tab" />
+        app:layout_constraintEnd_toStartOf="@+id/owner_me_tab"
+        app:layout_constraintStart_toEndOf="@+id/owner_books_tab" />
 
     <TextView
-        android:id="@+id/borrower_me_tab"
+        android:id="@+id/owner_me_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="80dp"

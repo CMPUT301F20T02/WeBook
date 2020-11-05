@@ -35,10 +35,10 @@ public class OwnerBookProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_book_profile);
 
-        title_text = findViewById(R.id.owner_book_profile_title_text);
-        author_text = findViewById(R.id.owner_book_profile_author_text);
-        isbn_text = findViewById(R.id.owner_book_profile_isbn_text);
-        requestButton = findViewById(R.id.owner_request_button);
+        title_text = findViewById(R.id.book_profile_title);
+        author_text = findViewById(R.id.book_profile_author);
+        isbn_text = findViewById(R.id.book_profile_ISBN);
+        requestButton = findViewById(R.id.owner_requests_list_button);
 
         final Intent intent = getIntent();
         final Book selectBook = (Book) intent.getSerializableExtra("selectBook");

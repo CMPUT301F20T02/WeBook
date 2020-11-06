@@ -87,6 +87,7 @@ public class Book implements Serializable {
     public void setBorrower(String borrower) {
         this.borrower = borrower;
     }
+
     public String getBorrower() {
         return borrower;
     }

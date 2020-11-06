@@ -23,7 +23,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class OwnerProfileActivity extends AppCompatActivity {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView username;
     private TextView userType;
     private TextView phone;
@@ -33,8 +32,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
     private Button editButton;
     private TextView description;
     private Owner owner;
-    private DocumentReference userRef;
-
+    private DataBaseManager dataBaseManager = new DataBaseManager();
 
 
     @Override
@@ -50,11 +48,8 @@ public class OwnerProfileActivity extends AppCompatActivity {
         addButton = findViewById(R.id.addBookButton);
         editButton = findViewById(R.id.owner_editProfile);
         description = findViewById(R.id.owner_description);
-
-
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
-        userRef = db.collection("users").document(owner.getUsername());
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,30 +69,28 @@ public class OwnerProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference user_picRef = storageReference.child("images/empty_user_icon.png");
-
-
-        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                updateUserInfo(value);
-            }
-        });
-
-
-        Glide.with(OwnerProfileActivity.this)
-                .load(user_picRef)
-                .into(user_pic);
+        Drawable empty_user = getResources().getDrawable(R.drawable.empty_user_icon);
+        user_pic.setImageDrawable(empty_user);
+        dataBaseManager.OwnerProfileAddUserSnapShotListener(this, owner.getUsername());
     }
 
-    private void updateUserInfo(DocumentSnapshot document) {
-        owner = document.toObject(Owner.class);
-        username.setText(owner.getUsername());
-        userType.setText(owner.getUserType());
-        phone.setText(owner.getPhoneNumber());
-        email.setText(owner.getEmail());
-        description.setText(owner.getDescription());
+    public void setUsername(String usernameText){
+        this.username.setText(usernameText);
+    }
+
+    public void setUserType(String userTypeText){
+        this.userType.setText(userTypeText);
+    }
+
+    public void setPhone(String phoneText){
+        this.phone.setText(phoneText);
+    }
+
+    public void setEmail(String emailText){
+        this.email.setText(emailText);
+    }
+
+    public void setDescription(String descriptionText){
+        this.description.setText(descriptionText);
     }
 }

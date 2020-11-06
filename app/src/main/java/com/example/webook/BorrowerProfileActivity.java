@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,16 +21,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class BorrowerProfileActivity extends AppCompatActivity {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView username;
     private TextView userType;
     private TextView phone;
     private TextView email;
-    private ImageView user_pic;
+    public ImageView user_pic;
     private Button editButton;
     private TextView description;
     private Borrower borrower;
-    private DocumentReference userRef;
+    private DataBaseManager dataBaseManager = new DataBaseManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +53,14 @@ public class BorrowerProfileActivity extends AppCompatActivity {
             }
         });
 
-
         Intent intent = getIntent();
         borrower = (Borrower) intent.getSerializableExtra("user");
-        userRef = db.collection("users").document(borrower.getUsername());
+        Drawable empty_user = getResources().getDrawable(R.drawable.empty_user_icon);
+        user_pic.setImageDrawable(empty_user);
 
+        dataBaseManager.BorrowerProfileAddUserSnapShotListener(this, borrower.getUsername());
 
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference user_picRef = storageReference.child("images/empty_user_icon.png");
-
-
+/*
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -71,21 +68,29 @@ public class BorrowerProfileActivity extends AppCompatActivity {
             }
         });
 
+ */
 
-        Glide.with(BorrowerProfileActivity.this)
-                .load(user_picRef)
-                .into(user_pic);
+
 
     }
 
-
-    private void updateUserInfo(DocumentSnapshot document) {
-        borrower = document.toObject(Borrower.class);
-        username.setText(borrower.getUsername());
-        userType.setText(borrower.getUserType());
-        phone.setText(borrower.getPhoneNumber());
-        email.setText(borrower.getEmail());
-        description.setText(borrower.getDescription());
+    public void setUsername(String usernameText){
+        this.username.setText(usernameText);
     }
 
+    public void setUserType(String userTypeText){
+        this.userType.setText(userTypeText);
+    }
+
+    public void setPhone(String phoneText){
+        this.phone.setText(phoneText);
+    }
+
+    public void setEmail(String emailText){
+        this.email.setText(emailText);
+    }
+
+    public void setDescription(String descriptionText){
+        this.description.setText(descriptionText);
+    }
 }

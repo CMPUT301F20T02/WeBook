@@ -28,26 +28,17 @@ import java.util.ArrayList;
 
 public class OwnerHomepage extends AppCompatActivity {
     private Owner owner;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public ArrayList<Book> bookArrayList = new ArrayList<Book>();
+    private ArrayList<Book> bookArrayList = new ArrayList<Book>();
     private ListView bookListView;
     private BookList bookList;
-
-    private TextView all;
-    private TextView available;
-    private TextView requested;
-    private TextView accepted;
-    private TextView borrowed;
     private BookList bookListAvailable;
     private BookList bookListRequested;
     private BookList bookListAccepted;
     private BookList bookListBorrowed;
-
     private ArrayList<Book> availableBookArrayList = new ArrayList<>();
     private ArrayList<Book> requestedBookArrayList = new ArrayList<>();
     private ArrayList<Book> acceptedBookArrayList = new ArrayList<>();
     private ArrayList<Book> borrowedBookArrayList = new ArrayList<>();
-
     private String currentListView = "all";
     private DataBaseManager dataBaseManager = new DataBaseManager();
 
@@ -67,11 +58,11 @@ public class OwnerHomepage extends AppCompatActivity {
         bookListView = findViewById(R.id.owner_book_list);
 
 
-        all = findViewById(R.id.owner_all);
-        available = findViewById(R.id.owner_available);
-        requested = findViewById(R.id.owner_requested);
-        accepted = findViewById(R.id.owner_accepted);
-        borrowed = findViewById(R.id.owner_borrowed);
+        TextView all = findViewById(R.id.owner_all);
+        TextView available = findViewById(R.id.owner_available);
+        TextView requested = findViewById(R.id.owner_requested);
+        TextView accepted = findViewById(R.id.owner_accepted);
+        TextView borrowed = findViewById(R.id.owner_borrowed);
 
         dataBaseManager.OwnerHomePageAddBookSnapShotListener(this, owner.getUsername());
         dataBaseManager.OwnerHomePageAddUserSnapShotListener(this, owner.getUsername());
@@ -175,42 +166,12 @@ public class OwnerHomepage extends AppCompatActivity {
 
     }
 
-    public void downloadBooks(ArrayList<String> bookisbn) {
-
-        CollectionReference bookRef = db.collection("books");
-        for (int i = 0; i < bookisbn.size(); i++) {
-            DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));
-            bookRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Book book = document.toObject(Book.class);
-
-                            if (!owner.getBookList().contains(book.getISBN())){
-                                owner.addBook(book.getISBN());
-                                bookArrayList.add(book);
-                                bookList.notifyDataSetChanged();
-                            }
-                            getAvailable();
-                            getAccepted();
-                            getRequested();
-                            getBorrowed();
-                        }
-                    }
-                }
-            });
-        }
-    }
-
     public void setBookList(){
         this.bookList = new BookList(OwnerHomepage.this, this.bookArrayList);
         this.bookListView.setAdapter(bookList);
     }
 
     public void dataChanged(){
-
         this.bookList.notifyDataSetChanged();
     }
 

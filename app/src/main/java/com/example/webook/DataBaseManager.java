@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,14 +39,13 @@ public class DataBaseManager {
     FirebaseFirestore db;
     StorageReference storageReference;
     CollectionReference collectionReference;
-    User user;
     String TAG;
+
+
     public DataBaseManager(){
         db = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
     }
-
-
 
     public void authenticate(final String username, final String pwd, final MainActivity mainActivity){
         final DocumentReference userRef = db.collection("users").document(username);
@@ -123,7 +123,6 @@ public class DataBaseManager {
 
     }
 
-
     public  void BorrowerSearchUser(final String message, final BorrowerSearchUserPage borrowerSearchUserPage){
         collectionReference= db.collection("users");
         collectionReference.get()
@@ -156,10 +155,6 @@ public class DataBaseManager {
                 });
     }
 
-
-
-
-
     public void addBook(Bitmap bitmap, final Book book, final Owner owner){
         if (bitmap != null) {
             final StorageReference imageReference = storageReference.child( "images/" + System.currentTimeMillis());
@@ -189,6 +184,7 @@ public class DataBaseManager {
                     });
         }
     }
+
     private void uploadBook(final Book book, final Owner owner){
         db.collection("books").document(book.getISBN())
                 .set(book)
@@ -205,6 +201,7 @@ public class DataBaseManager {
                     }
                 });
     }
+
     private void updateOwnerBookList(Owner owner, final Book book){
         db.collection("users").document(owner.getUsername())
                 .update("bookList", FieldValue.arrayUnion(book.getISBN()))
@@ -269,7 +266,7 @@ public class DataBaseManager {
             }
         });
     }
-    public  void declinePressed(String isbn, final SameBookRequestList sameBookRequest){
+    public void declinePressed(String isbn, final SameBookRequestList sameBookRequest){
         DocumentReference docRef = db.collection("requests").document(isbn);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -283,7 +280,6 @@ public class DataBaseManager {
             }
         });
     }
-
 
     public void ownerSignUp(final String usernameText, final String emailText,
                             final String phoneText, final String pwdText, final String descriptionText, final SignUpActivity signUpActivity){
@@ -354,7 +350,7 @@ public class DataBaseManager {
         });
     }
 
-    public void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
+    private void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
         CollectionReference bookRef = db.collection("books");
         for (int i = 0; i < bookisbn.size(); i++) {
             DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));
@@ -394,6 +390,46 @@ public class DataBaseManager {
                 downloadBooks(ownerHomepage, bookisbn);
             }
         });
+    }
+
+    public void BorrowerProfileAddUserSnapShotListener(final BorrowerProfileActivity borrowerProfileActivity, final String username){
+        DocumentReference userRef = db.collection("users").document(username);
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                updateBorrowerInfo(value, borrowerProfileActivity);
+            }
+        });
+
+    }
+
+    private void updateBorrowerInfo(DocumentSnapshot document, final BorrowerProfileActivity borrowerProfileActivity) {
+        Borrower borrower = document.toObject(Borrower.class);
+        borrowerProfileActivity.setUsername(borrower.getUsername());
+        borrowerProfileActivity.setUserType(borrower.getUserType());
+        borrowerProfileActivity.setPhone(borrower.getPhoneNumber());
+        borrowerProfileActivity.setEmail(borrower.getEmail());
+        borrowerProfileActivity.setDescription(borrower.getDescription());
+    }
+
+    public void OwnerProfileAddUserSnapShotListener(final OwnerProfileActivity ownerProfileActivity, final String username){
+        DocumentReference userRef = db.collection("users").document(username);
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                updateOwnerInfo(value, ownerProfileActivity);
+            }
+        });
+
+    }
+
+    private void updateOwnerInfo(DocumentSnapshot document, final OwnerProfileActivity ownerProfileActivity) {
+        Borrower borrower = document.toObject(Borrower.class);
+        ownerProfileActivity.setUsername(borrower.getUsername());
+        ownerProfileActivity.setUserType(borrower.getUserType());
+        ownerProfileActivity.setPhone(borrower.getPhoneNumber());
+        ownerProfileActivity.setEmail(borrower.getEmail());
+        ownerProfileActivity.setDescription(borrower.getDescription());
     }
 
 }

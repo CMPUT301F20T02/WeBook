@@ -27,7 +27,6 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView isbn_text;
     private TextView description_text;
     private Button requestButton;
-
     private String status;
     private static final String TAG = "Sample";
 

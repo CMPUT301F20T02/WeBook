@@ -38,39 +38,38 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private  DataBaseManager dataBaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_borrower_book_profile);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_borrower_book_profile);
 
-    title = findViewById(R.id.book_profile_title);
-    author = findViewById(R.id.book_profile_author);
-    isbn = findViewById(R.id.book_profile_ISBN);
-    owner = findViewById(R.id.book_profile_owner_text);
-    status = findViewById(R.id.book_profile_status_text);
-    description = findViewById(R.id.book_profile_description);
-    dataBaseManager = new DataBaseManager();
-//    isbn_text = findViewById(R.id.isbn_text);
-    requestButton = findViewById(R.id.borrower_book_request_button);
+        title = findViewById(R.id.book_profile_title);
+        author = findViewById(R.id.book_profile_author);
+        isbn = findViewById(R.id.book_profile_ISBN);
+        owner = findViewById(R.id.book_profile_owner_text);
+        status = findViewById(R.id.book_profile_status_text);
+        description = findViewById(R.id.book_profile_description);
+        dataBaseManager = new DataBaseManager();
+    //    isbn_text = findViewById(R.id.isbn_text);
+        requestButton = findViewById(R.id.borrower_book_request_button);
 
-    Intent intent = getIntent();
-    final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
+        Intent intent = getIntent();
+        final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
 
-    title.setText(selectBook.getTitle());
-    author.setText(selectBook.getAuthor());
-    isbn.setText(selectBook.getISBN());
-    status.setText(selectBook.getStatus());
-    owner.setText(selectBook.getOwner());
-    description.setText(selectBook.getDescription());
+        title.setText(selectBook.getTitle());
+        author.setText(selectBook.getAuthor());
+        isbn.setText(selectBook.getISBN());
+        status.setText(selectBook.getStatus());
+        owner.setText(selectBook.getOwner());
+        description.setText(selectBook.getDescription());
 
-    final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    borrower = (Borrower) intent.getSerializableExtra("borrower");
-    requesterList = new ArrayList<>();
-    requesterList.add(borrower.getUsername());
-        requestButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-                final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
-                dataBaseManager.sendBookRequest(newRequest,borrower);
-                finish();
-            }
-        });
+        borrower = (Borrower) intent.getSerializableExtra("borrower");
+        requesterList = new ArrayList<>();
+        requesterList.add(borrower.getUsername());
+            requestButton.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v) {
+                    final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
+                    dataBaseManager.sendBookRequest(newRequest,borrower);
+                    finish();
+                }
+            });
     }
 }

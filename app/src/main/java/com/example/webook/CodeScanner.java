@@ -21,7 +21,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class CodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private static final int MY_CAMERA_REQUEST_CODE = 100;
-    public String x;
+    private String x;
     private ZXingScannerView zXingScannerView;
 
     @Override

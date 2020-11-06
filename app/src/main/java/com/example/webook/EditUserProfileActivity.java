@@ -37,8 +37,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 1;
     private static final int CAMERA = 2;
-    private String url;
-    private Uri imageUri;
     private TextView username;
     private TextView userType;
     private EditText phoneNumber;

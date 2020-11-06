@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class OwnerHomepage extends AppCompatActivity {
     private Owner owner;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final ArrayList<Book> bookArrayList = new ArrayList<Book>();
+    public ArrayList<Book> bookArrayList = new ArrayList<Book>();
     private ListView bookListView;
     private BookList bookList;
 
@@ -49,6 +49,7 @@ public class OwnerHomepage extends AppCompatActivity {
     private ArrayList<Book> borrowedBookArrayList = new ArrayList<>();
 
     private String currentListView = "all";
+    private DataBaseManager dataBaseManager = new DataBaseManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,9 @@ public class OwnerHomepage extends AppCompatActivity {
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
 
-        bookList = new BookList( OwnerHomepage.this, bookArrayList);
+
         bookListView = findViewById(R.id.owner_book_list);
-        bookListView.setAdapter(bookList);
+
 
         all = findViewById(R.id.owner_all);
         available = findViewById(R.id.owner_available);
@@ -72,38 +73,11 @@ public class OwnerHomepage extends AppCompatActivity {
         accepted = findViewById(R.id.owner_accepted);
         borrowed = findViewById(R.id.owner_borrowed);
 
-        CollectionReference bookRef = db.collection("books");
-        bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                bookArrayList.clear();
-                db.collection("users").document(owner.getUsername()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if(task.isSuccessful()){
-                            bookArrayList.clear();
-                            owner.setBookList(new ArrayList<String>());
-                            DocumentSnapshot document = task.getResult();
-                            ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
-                            downloadBooks(bookisbn);
-                        }
+        dataBaseManager.OwnerHomePageAddBookSnapShotListener(this, owner.getUsername());
+        dataBaseManager.OwnerHomePageAddUserSnapShotListener(this, owner.getUsername());
 
-                    }
-                });
-            }
-        });
-
-        DocumentReference userRef = db.collection("users").document(owner.getUsername());
-        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                bookArrayList.clear();
-                owner.setBookList(new ArrayList<String>());
-                ArrayList<String> bookisbn = (ArrayList<String>) value.get("bookList");
-                downloadBooks(bookisbn);
-            }
-        });
-
+        bookList = new BookList( OwnerHomepage.this, bookArrayList);
+        bookListView.setAdapter(bookList);
         bookListAvailable = new BookList(OwnerHomepage.this, availableBookArrayList);
         bookListRequested = new BookList(OwnerHomepage.this, requestedBookArrayList);
         bookListAccepted = new BookList(OwnerHomepage.this, acceptedBookArrayList);
@@ -114,10 +88,13 @@ public class OwnerHomepage extends AppCompatActivity {
         books.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bookname = Integer.toString(bookArrayList.size());
-                Toast toast = Toast.makeText(OwnerHomepage.this, bookname, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP, 0, 0);
-                toast.show();
+                System.out.println("printed here "+ owner.getBookList().toString());
+                for (int i = 0; i < 29; i++){
+                    System.out.println(bookArrayList.get(i).getTitle());
+                }
+                bookList = new BookList( OwnerHomepage.this, bookArrayList);
+                bookListView.setAdapter(bookList);
+                bookList.notifyDataSetChanged();
             }
         });
 
@@ -225,6 +202,36 @@ public class OwnerHomepage extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void setBookList(){
+        this.bookList = new BookList(OwnerHomepage.this, this.bookArrayList);
+        this.bookListView.setAdapter(bookList);
+    }
+
+    public void dataChanged(){
+
+        this.bookList.notifyDataSetChanged();
+    }
+
+    public ArrayList<String> getOwnerBookList(){
+        return this.owner.getBookList();
+    }
+
+    public void ownerAddBook(String isbn){
+        this.owner.addBook(isbn);
+    }
+
+    public void ownerSetBookList(ArrayList<String> bookList){
+        this.owner.setBookList(bookList);
+    }
+
+    public void setBookArrayList(ArrayList<Book> bookArrayList){
+        this.bookArrayList = bookArrayList;
+    }
+
+    public void addBookArrayList(Book book){
+        this.bookArrayList.add(book);
     }
 
     public void getAvailable() {

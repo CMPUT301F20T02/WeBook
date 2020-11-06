@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,8 +19,10 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -325,4 +328,72 @@ public class DataBaseManager {
             }
         });
     }
+
+    public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
+
+        final CollectionReference bookRef = db.collection("books");
+        bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                db.collection("users").document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                        if(task.isSuccessful()){
+                            ownerHomepage.setBookArrayList(new ArrayList<Book>());
+                            ownerHomepage.ownerSetBookList(new ArrayList<String>());
+                            DocumentSnapshot document = task.getResult();
+                            final ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
+                            downloadBooks(ownerHomepage, bookisbn);
+
+                        }
+
+                    }
+                });
+            }
+        });
+    }
+
+    public void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
+        CollectionReference bookRef = db.collection("books");
+        for (int i = 0; i < bookisbn.size(); i++) {
+            DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));
+            bookRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Book book = document.toObject(Book.class);
+                            if (!ownerHomepage.getOwnerBookList().contains(book.getISBN())){
+                                ownerHomepage.ownerAddBook(book.getISBN());
+                                ownerHomepage.addBookArrayList(book);
+                                ownerHomepage.setBookList();
+                                ownerHomepage.dataChanged();
+                                ownerHomepage.getAvailable();
+                                ownerHomepage.getAccepted();
+                                ownerHomepage.getRequested();
+                                ownerHomepage.getBorrowed();
+                            }
+
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public void OwnerHomePageAddUserSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
+        DocumentReference userRef = db.collection("users").document(username);
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                ownerHomepage.setBookArrayList(new ArrayList<Book>());
+                ownerHomepage.ownerSetBookList(new ArrayList<String>());
+                ArrayList<String> bookisbn = (ArrayList<String>) value.get("bookList");
+                downloadBooks(ownerHomepage, bookisbn);
+            }
+        });
+    }
+
 }

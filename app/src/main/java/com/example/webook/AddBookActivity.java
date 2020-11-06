@@ -47,9 +47,6 @@ public class AddBookActivity extends AppCompatActivity {
     private Button confirmButton;
     private Uri imageUri;
     private Owner owner;
-    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String url;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     private Button scanButton;
     private DataBaseManager dataBaseManager;
@@ -145,84 +142,5 @@ public class AddBookActivity extends AppCompatActivity {
             String isbnString = data.getStringExtra("code");
             isbn.setText(isbnString);
         }
-    }
-
-    private void updateOwnerBookList(Owner owner, final Book book){
-        db.collection("users").document(owner.getUsername())
-                .update("bookList", FieldValue.arrayUnion(book.getISBN()))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        finish(); // TODO
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("updateUserBookList", "Error updating", e);
-                        Toast toast = Toast.makeText(AddBookActivity.this,"Failed to add book.", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
-    }
-
-    private void uploadImage(){
-        Bitmap bitmap = ( (BitmapDrawable) book_icon.getDrawable() ).getBitmap();
-        if (bitmap != null) {
-            final StorageReference imageReference = storageReference.child( "images/" + isbn );
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-
-            imageReference.putBytes(byteArray)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    url = uri.toString();
-                                    uploadBook();
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w("Upload image", "Error uploading.", e);
-                            Toast toast = Toast.makeText(AddBookActivity.this,"Failed to add book.", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    });
-        }
-    }
-
-
-    public void uploadBook(){
-        final Book book = new Book(title.getText().toString(), isbn.getText().toString(), author.getText().toString(),
-                "available", owner.getUsername(), url, description.getText().toString());
-        db.collection("books").document(book.getISBN())
-                .set(book)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        updateOwnerBookList(owner, book);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Add book", "Error adding book", e);
-                        Toast toast = Toast.makeText(AddBookActivity.this,"Failed to add book.", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                });
-    }
-
-    private String fileExtension(Uri uri){
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }

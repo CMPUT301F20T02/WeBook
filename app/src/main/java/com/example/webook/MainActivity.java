@@ -35,7 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
+/**
+This is the mainactivity shows users' login interface
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Sample";

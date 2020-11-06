@@ -25,7 +25,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
-
+/**
+ * This is an activity shows homepage for usertype = owner
+ */
 public class OwnerHomepage extends AppCompatActivity {
     private Owner owner;
     private ArrayList<Book> bookArrayList = new ArrayList<Book>();

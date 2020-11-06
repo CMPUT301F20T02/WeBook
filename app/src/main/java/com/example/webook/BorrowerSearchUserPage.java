@@ -20,7 +20,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
+/**
+ * This is activity shows search results as a list of user
+ * User click on item in list to jump to profile activity
+ * @pram EXTRA_MESSAGE User item to show in profile
+ */
 public class BorrowerSearchUserPage extends AppCompatActivity {
     ListView userList;
     EditText input;

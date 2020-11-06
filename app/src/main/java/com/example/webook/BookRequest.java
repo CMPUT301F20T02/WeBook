@@ -4,7 +4,9 @@ import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+/**
+ * This is a class for BookRequest object which is a sub class of Request
+ */
 public class BookRequest extends Request {
     private String status;
 

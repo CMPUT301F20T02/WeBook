@@ -7,7 +7,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+ * This is activity shows a user's profile
+ * @pram EXTRA_MESSAGE User item to show in profile, clicked in list by user in formal actvity
+ */
 public class ShowUserDetail extends AppCompatActivity {
 
     @Override

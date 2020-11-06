@@ -7,7 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * This activity shows search interface when search is clicked on the borrower homepage
+ * Borrower click on Books or Users to chose search type and jump to next activity
+ */
 public class BorrowerSearch extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearch.MESSAGE";
     private Borrower borrower;

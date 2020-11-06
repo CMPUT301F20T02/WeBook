@@ -17,6 +17,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * This is an activity shows sign up interface for user
+ * User can click on buttons to choose to sign up as an owner or a borrower
+ */
 public class SignUpActivity extends AppCompatActivity {
     private EditText username;
     private EditText pwd;

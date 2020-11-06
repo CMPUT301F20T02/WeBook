@@ -5,6 +5,16 @@ import android.media.Image;
 
 import java.io.Serializable;
 
+/**
+ * This is a class defines Book item with attibutes
+ * String title
+ * String ISBN
+ * String author
+ * String status
+ * String owner
+ * String descirption
+ * String borrower
+ */
 public class Book implements Serializable {
     private String title;
     private String ISBN;

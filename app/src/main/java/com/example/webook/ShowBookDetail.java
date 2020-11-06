@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
+/**
+ * This is activity shows a book's profile
+ * @pram EXTRA_MESSAGE Books item to show in profile, clicked by user in formal actvity
+ */
 public class ShowBookDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

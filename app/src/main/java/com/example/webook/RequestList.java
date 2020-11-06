@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
+/**
+ * This is a class that keeps track of a list of BookRequests objects
+ */
 public class RequestList extends ArrayAdapter<BookRequest> {
     private ArrayList<BookRequest> BookRequests;
     private Context context;

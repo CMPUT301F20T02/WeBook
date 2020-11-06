@@ -35,6 +35,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This is the class keeps functions handle database operation
+ * Or handling information get from database
+ */
 public class DataBaseManager {
     FirebaseFirestore db;
     StorageReference storageReference;
@@ -47,6 +51,14 @@ public class DataBaseManager {
         storageReference = FirebaseStorage.getInstance().getReference();
     }
 
+
+    /**
+     * This check for username and password consistency in database
+     * If consist and login success, jump to homepage for users with different usertype
+     * @param username
+     * @param pwd
+     * These are username and password you want to check
+     */
     public void authenticate(final String username, final String pwd, final MainActivity mainActivity){
         final DocumentReference userRef = db.collection("users").document(username);
         userRef.get().addOnCompleteListener( new OnCompleteListener<DocumentSnapshot>() {
@@ -79,7 +91,14 @@ public class DataBaseManager {
             }
         } );
     }
+	
 
+    /**
+     * This search books by keyword in multiple fields in database
+     * @param message
+     * @param borrowerSearchBookPage
+     * These are the keyword you want to search and the page you want to show the data
+     */
     public void BorrowerSearchBook(final String message, final BorrowerSearchBookPage borrowerSearchBookPage){
         collectionReference= db.collection("books");
         collectionReference
@@ -123,7 +142,14 @@ public class DataBaseManager {
 
     }
 
-    public  void BorrowerSearchUser(final String message, final BorrowerSearchUserPage borrowerSearchUserPage){
+
+    /**
+     * This search user by username in database
+     * @param message
+     * @param borrowerSearchUserPage
+     * These are the username you want to search and the page you want to show the data
+     */
+    public void BorrowerSearchUser(final String message, final BorrowerSearchUserPage borrowerSearchUserPage){
         collectionReference= db.collection("users");
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -155,6 +181,14 @@ public class DataBaseManager {
                 });
     }
 
+
+    /**
+     * This add a book document in database
+     * @param bitmap
+     * @param book
+     * @param owner
+     * These are the picture, book item and owner information that you want to add into the document
+     */
     public void addBook(Bitmap bitmap, final Book book, final Owner owner){
         if (bitmap != null) {
             final StorageReference imageReference = storageReference.child( "images/" + System.currentTimeMillis());
@@ -185,6 +219,13 @@ public class DataBaseManager {
         }
     }
 
+
+    /**
+     * This change a book document in database
+     * @param book
+     * @param owner
+     * These are book and its owner that the document you want to change have
+     */
     private void uploadBook(final Book book, final Owner owner){
         db.collection("books").document(book.getISBN())
                 .set(book)
@@ -202,6 +243,13 @@ public class DataBaseManager {
                 });
     }
 
+
+    /**
+     * This change the bookList filed in a user document in database
+     * @param owner
+     * @param book
+     * These are user and the book item you want to add into booklist
+     */
     private void updateOwnerBookList(Owner owner, final Book book){
         db.collection("users").document(owner.getUsername())
                 .update("bookList", FieldValue.arrayUnion(book.getISBN()))
@@ -218,6 +266,13 @@ public class DataBaseManager {
                 });
     }
 
+
+    /**
+     * This send a bookRequest into database
+     * @param newRequest
+     * @param borrower
+     * These are request infomation and the user who send this request
+     */
     public void sendBookRequest(final Request newRequest, Borrower borrower){
         collectionReference = db.collection("requests");
         TAG = "";
@@ -245,6 +300,15 @@ public class DataBaseManager {
                 });
     }
 
+
+    /**
+     * This upload a user document in database
+     * @param username
+     * @param phoneText
+     * @param emailText
+     * @param descriptionText
+     * These are new field values you want your document to have
+     */
     public void updateInfo(String username, String phoneText, String emailText, String descriptionText){
         DocumentReference userRef = db.collection("users").document(username);
         userRef.update("phoneNumber", phoneText);
@@ -252,6 +316,13 @@ public class DataBaseManager {
         userRef.update("description", descriptionText);
     }
 
+
+    /**
+     * This search for requests in the database which request for a book and show the list
+     * @param isbn
+     * @param sameBookRequest
+     * These are the isbn code the requested book had and the page you want to show the list
+     */
     public void getSameBookRequest(String isbn, final SameBookRequestList sameBookRequest){
         DocumentReference docRef = db.collection("requests").document(isbn);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -266,7 +337,15 @@ public class DataBaseManager {
             }
         });
     }
-    public void declinePressed(String isbn, final SameBookRequestList sameBookRequest){
+
+
+    /**
+     * This show the updated request list for a book in the database
+     * @param isbn
+     * @param sameBookRequest
+     * These are the isbn code the requested book had and the page you want to show the list
+     */
+    public  void declinePressed(String isbn, final SameBookRequestList sameBookRequest){
         DocumentReference docRef = db.collection("requests").document(isbn);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -281,6 +360,18 @@ public class DataBaseManager {
         });
     }
 
+
+    /**
+     * This check if document with same name exist in database
+     * If not, it add a document into user with usertype owner in database
+     * @param usernameText
+     * @param emailText
+     * @param phoneText
+     * @param pwdText
+     * @param descriptionText
+     * @param signUpActivity
+     * These are the user information your document will have
+     */
     public void ownerSignUp(final String usernameText, final String emailText,
                             final String phoneText, final String pwdText, final String descriptionText, final SignUpActivity signUpActivity){
         final DocumentReference userRef = db.collection("users").document(usernameText);
@@ -302,7 +393,19 @@ public class DataBaseManager {
             }
         });
     }
-
+	
+	
+    /**
+     * This check if document with same name exist in database
+     * If not, it add a document into user with usertype borrower in database
+     * @param usernameText
+     * @param emailText
+     * @param phoneText
+     * @param pwdText
+     * @param descriptionText
+     * @param signUpActivity
+     * These are the user information your document will have
+     */
     public void borrowerSignUp(final String usernameText, final String emailText,
                             final String phoneText, final String pwdText, final String descriptionText, final SignUpActivity signUpActivity){
         final DocumentReference userRef = db.collection("users").document(usernameText);

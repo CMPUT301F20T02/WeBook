@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is an activity shows a book's profile
+ * selectBook books selected to be shown in previous activity
+ */
 public class BorrowerBookProfile extends AppCompatActivity {
     private TextView title;
     private TextView author;

@@ -19,7 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+/**
+ * This is an activity shows interface for borrower's profile with an edit button
+ * User press edit to jump to EditUserProfileActivity
+ */
 public class BorrowerProfileActivity extends AppCompatActivity {
     private TextView username;
     private TextView userType;
@@ -80,6 +83,19 @@ public class BorrowerProfileActivity extends AppCompatActivity {
 
     public void setUserType(String userTypeText){
         this.userType.setText(userTypeText);
+
+    /**
+     * This set text on the profile page
+     * @param document
+     * This is a document contains info of your profile
+     */
+    private void updateUserInfo(DocumentSnapshot document) {
+        borrower = document.toObject(Borrower.class);
+        username.setText(borrower.getUsername());
+        userType.setText(borrower.getUserType());
+        phone.setText(borrower.getPhoneNumber());
+        email.setText(borrower.getEmail());
+        description.setText(borrower.getDescription());
     }
 
     public void setPhone(String phoneText){

@@ -35,6 +35,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * This activity shows book adding interface
+ * Allows users to input book info, picture or sacnning the book's code
+ */
 public class AddBookActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private static final int CAMERA = 2;

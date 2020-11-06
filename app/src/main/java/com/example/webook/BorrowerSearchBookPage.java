@@ -19,7 +19,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
+/**
+ * This is activity shows search results as a list of book
+ * User click on item in list to jump to profile activity
+ * @pram EXTRA_MESSAGE Book item to show in profile
+ * @pram borrower Borrower item keeps user information
+ */
 public class BorrowerSearchBookPage extends AppCompatActivity {
     ListView bookList;
     ArrayList<Book> dataList;

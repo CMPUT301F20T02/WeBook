@@ -69,6 +69,7 @@ public class OwnerHomePageTest {
         assertTrue(solo.searchText("Accept"));
     }
 
+
     @Test
     public void checkAddBook(){
         TextView me = (TextView) solo.getView(R.id.owner_me_tab);

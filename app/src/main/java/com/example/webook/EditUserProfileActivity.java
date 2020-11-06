@@ -48,12 +48,11 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private Button confirm;
     private Button cancel;
     private User user;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
+    private DataBaseManager dataBaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_edit_user_profile);
         Intent intent = getIntent();
@@ -67,7 +66,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
         userImage = findViewById(R.id.editUserImage);
         confirm = findViewById(R.id.editUserConfirm);
         cancel = findViewById(R.id.editUserCancel);
-
+        dataBaseManager = new DataBaseManager();
         username.setText(user.getUsername());
         userType.setText(user.getUserType());
         phoneNumber.setText(user.getPhoneNumber());
@@ -83,17 +82,13 @@ public class EditUserProfileActivity extends AppCompatActivity {
                     .into(userImage);
         }
 
-
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String phoneText = phoneNumber.getText().toString();
                 String emailText = email.getText().toString();
                 String descriptionText = description.getText().toString();
-                DocumentReference userRef = db.collection("users").document(user.getUsername());
-                userRef.update("phoneNumber", phoneText);
-                userRef.update("email", emailText);
-                userRef.update("description", descriptionText);
+                dataBaseManager.updateInfo(user.getUsername(), phoneText, emailText, descriptionText);
                 finish();
             }
         });
@@ -104,8 +99,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
 
 
     }

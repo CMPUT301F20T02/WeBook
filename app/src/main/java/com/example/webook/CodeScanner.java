@@ -34,6 +34,10 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
         if (checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+            zXingScannerView =new ZXingScannerView(getApplicationContext());
+            setContentView(zXingScannerView);
+            zXingScannerView.setResultHandler(this);
+            zXingScannerView.startCamera();
         }
         else {
             // permission has been already granted, you can use camera straight away

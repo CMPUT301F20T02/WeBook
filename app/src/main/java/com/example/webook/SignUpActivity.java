@@ -26,7 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button cancel;
     private Button signUpOwner;
     private Button SignUpBorrower;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DataBaseManager dataBaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
         cancel = findViewById(R.id.signup_cancel_button);
         signUpOwner = findViewById(R.id.signup_owner_button);
         SignUpBorrower = findViewById(R.id.signup_borrower_button);
-
+        dataBaseManager = new DataBaseManager();
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,24 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
                 final String emailText = email.getText().toString();
                 final String descriptionText = description.getText().toString();
                 if (usernameText.length() != 0 && pwdText.length() != 0 && phoneText.length() != 0 && emailText.length() != 0){
-                    final DocumentReference userRef = db.collection("users").document(usernameText);
-                    userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()){
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()){
-                                    Toast toast = Toast.makeText(SignUpActivity.this, "Username already in use!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }else{
-                                    userRef.set(new Owner(usernameText, emailText, phoneText, pwdText, descriptionText, null));
-                                    Toast toast = Toast.makeText(SignUpActivity.this, "Sign up successful!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    finish();
-                                }
-                            }
-                        }
-                    });
+                    dataBaseManager.ownerSignUp(usernameText,emailText,phoneText,pwdText,descriptionText,SignUpActivity.this);
                 }
             }
         });
@@ -89,24 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
                 final String emailText = email.getText().toString();
                 final String descriptionText = description.getText().toString();
                 if (usernameText.length() != 0 && pwdText.length() != 0 && phoneText.length() != 0 && emailText.length() != 0){
-                    final DocumentReference userRef = db.collection("users").document(usernameText);
-                    userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()){
-                                DocumentSnapshot document = task.getResult();
-                                if (document.exists()){
-                                    Toast toast = Toast.makeText(SignUpActivity.this, "Username already in use!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }else{
-                                    userRef.set(new Borrower(usernameText, emailText, phoneText, pwdText, descriptionText, null));
-                                    Toast toast = Toast.makeText(SignUpActivity.this, "Sign up successful!", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    finish();
-                                }
-                            }
-                        }
-                    });
+                    dataBaseManager.borrowerSignUp(usernameText,emailText,phoneText,pwdText,descriptionText,SignUpActivity.this);
                 }
             }
         });

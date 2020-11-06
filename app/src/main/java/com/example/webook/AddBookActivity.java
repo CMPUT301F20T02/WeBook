@@ -52,7 +52,7 @@ public class AddBookActivity extends AppCompatActivity {
     private String url;
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     private Button scanButton;
-
+    private DataBaseManager dataBaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class AddBookActivity extends AppCompatActivity {
         isbn = findViewById(R.id.editTextISBN);
         description = findViewById(R.id.editTextDescription);
         book_icon = findViewById(R.id.book_icon_add_edit);
-
+        dataBaseManager = new DataBaseManager();
         book_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +80,11 @@ public class AddBookActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+                Bitmap bitmap = ( (BitmapDrawable) book_icon.getDrawable() ).getBitmap();
+                Book book = new Book(title.getText().toString(), isbn.getText().toString(), author.getText().toString(),
+                        "available", owner.getUsername(), null, description.getText().toString());
+                dataBaseManager.addBook(bitmap,book,owner);
+                finish();
             }
         });
 

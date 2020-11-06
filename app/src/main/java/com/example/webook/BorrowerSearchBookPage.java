@@ -26,6 +26,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     ArrayAdapter<Book> bookAdapter;
     public static final String EXTRA_MESSAGE = "selectBook";
     private Borrower borrower;
+    private  DataBaseManager dataBaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +39,10 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         dataList = new ArrayList<Book>();
         bookAdapter = new BookList(this, dataList);
         bookList.setAdapter(bookAdapter);
-        final FirebaseFirestore db;
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("books");
+        dataBaseManager = new DataBaseManager();
 
         borrower = (Borrower)intent.getSerializableExtra("borrower");
-
+        dataBaseManager.BorrowerSearchBook(message,this);
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -54,46 +53,5 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        collectionReference
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            dataList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId());
-                                String status = (String) document.getData().get("status");
-                                if(!status.equals("borrowed") && !status.equals("accepted")){
-                                    String title = (String) document.getData().get("title");
-                                    String author = (String) document.getData().get("author");
-                                    String isbn = (String) document.getData().get("isbn");
-                                    String description = (String) document.getData().get("description");
-                                    String owner = (String) document.getData().get("owner");
-
-                                 if(title.contains(message)) {
-                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
-                                    }
-                                        else if (author.contains(message)) {
-                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
-                                    }
-                                        else if(isbn.contains(message)) {
-                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
-                                    }else if(description!= null){
-                                        if(description.contains(message)) {
-                                            dataList.add(new Book(title, isbn, author, status, owner, null, description));
-                                        }
-                                    }
-                                }
-                            }
-                            bookAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-        collectionReference.get();
-
     }
 }

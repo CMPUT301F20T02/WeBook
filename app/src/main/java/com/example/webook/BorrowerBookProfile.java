@@ -35,7 +35,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private ArrayList<String> requesterList;
     private static final String TAG = "Sample";
     private Borrower borrower;
-
+    private  DataBaseManager dataBaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -47,7 +47,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     owner = findViewById(R.id.book_profile_owner_text);
     status = findViewById(R.id.book_profile_status_text);
     description = findViewById(R.id.book_profile_description);
-
+    dataBaseManager = new DataBaseManager();
 //    isbn_text = findViewById(R.id.isbn_text);
     requestButton = findViewById(R.id.borrower_book_request_button);
 
@@ -68,30 +68,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
         requestButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
-//            requests.put(newRequest.getRequester(), newRequest);
-                final CollectionReference collectionReference = db.collection("requests");
-                collectionReference
-                        .document(newRequest.getBook().getISBN())
-                        .update("requester", FieldValue.arrayUnion(borrower.getUsername()))
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "Data has been added successfully!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
-                                Log.d(TAG, "Data addition failed" + e.toString());
-                                db.collection("requests").document(selectBook.getISBN())
-                                        .set(newRequest);
-                                db.collection("books").document(selectBook.getISBN())
-                                        .update(
-                                                "status", "requested"
-                                        );
-                            }
-                        });
+                dataBaseManager.sendBookRequest(newRequest,borrower);
                 finish();
             }
         });

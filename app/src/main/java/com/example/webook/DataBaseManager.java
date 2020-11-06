@@ -93,7 +93,7 @@ public class DataBaseManager {
     /**
      * This search books by keyword in multiple fields in database
      * @param message
-     * @param borrowerSearchUserPage
+     * @param borrowerSearchBookPage
      * These are the keyword you want to search and the page you want to show the data
      */
     public void BorrowerSearchBook(final String message, final BorrowerSearchBookPage borrowerSearchBookPage){

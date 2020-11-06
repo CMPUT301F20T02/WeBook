@@ -66,11 +66,6 @@ public class OwnerHomepage extends AppCompatActivity {
         bookListView = findViewById(R.id.owner_book_list);
         bookListView.setAdapter(bookList);
 
-        String bookname = Integer.toString(bookArrayList.size());
-        Toast toast = Toast.makeText(OwnerHomepage.this, bookname, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, 0);
-        toast.show();
-
         all = findViewById(R.id.owner_all);
         available = findViewById(R.id.owner_available);
         requested = findViewById(R.id.owner_requested);

@@ -1,5 +1,10 @@
 package com.example.webook;
 
+/**
+ * This fragment is created by SameBookRequestsList when the owner chooses to accept or decline a request
+ * it processes the action and the return
+ */
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;

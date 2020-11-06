@@ -1,9 +1,5 @@
 package com.example.webook;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-
 import java.io.Serializable;
 /**
  * This is a class defines User item with attibutes

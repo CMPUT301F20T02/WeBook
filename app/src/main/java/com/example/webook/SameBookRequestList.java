@@ -1,19 +1,16 @@
 package com.example.webook;
+/**
+ * This activity is created by OwnerBookProfile when the owner clicks to view all the requests on a particular book
+ * It will create a  OwnerAcceptDeclineFragment instance to handel the user request
+ * Current issue: When book has no requests, the program will crash
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 
 public class SameBookRequestList extends AppCompatActivity implements OwnerAcceptDeclineFragment.OnFragmentInteractionListener{

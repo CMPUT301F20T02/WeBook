@@ -1,9 +1,5 @@
 package com.example.webook;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
 import java.util.ArrayList;
 /**
  * This is a class for owner object which is a sub class of user

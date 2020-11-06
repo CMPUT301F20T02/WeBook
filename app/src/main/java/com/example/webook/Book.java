@@ -1,8 +1,5 @@
 package com.example.webook;
 
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-
 import java.io.Serializable;
 
 /**

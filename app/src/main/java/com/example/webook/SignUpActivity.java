@@ -1,21 +1,15 @@
 package com.example.webook;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+/**
+ * This activity is created by MainActivity when a user clicks to signup
+ */
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * This is an activity shows sign up interface for user

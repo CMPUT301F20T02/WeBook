@@ -1,5 +1,9 @@
 package com.example.webook;
 
+/**
+ * This activity is created by OwnerHomePage when the owner clicks on a book to view its details
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,8 +1,5 @@
 package com.example.webook;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-
 /**
  * This is a class for borrower object which is a sub class of user
  * Indicates that userType is "borrower"

@@ -67,4 +67,5 @@ public class OwnerHomePageTest {
         solo.clickOnMenuItem("Harry Potter");
         assertTrue(solo.searchText("Accept"));
     }
+
 }

@@ -280,4 +280,49 @@ public class DataBaseManager {
             }
         });
     }
+
+
+    public void ownerSignUp(final String usernameText, final String emailText,
+                            final String phoneText, final String pwdText, final String descriptionText, final SignUpActivity signUpActivity){
+        final DocumentReference userRef = db.collection("users").document(usernameText);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        Toast toast = Toast.makeText(signUpActivity, "Username already in use!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }else{
+                        userRef.set(new Owner(usernameText, emailText, phoneText, pwdText, descriptionText, null));
+                        Toast toast = Toast.makeText(signUpActivity, "Sign up successful!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        signUpActivity.finish();
+                    }
+                }
+            }
+        });
+    }
+
+    public void borrowerSignUp(final String usernameText, final String emailText,
+                            final String phoneText, final String pwdText, final String descriptionText, final SignUpActivity signUpActivity){
+        final DocumentReference userRef = db.collection("users").document(usernameText);
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        Toast toast = Toast.makeText(signUpActivity, "Username already in use!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }else{
+                        userRef.set(new Borrower(usernameText, emailText, phoneText, pwdText, descriptionText, null));
+                        Toast toast = Toast.makeText(signUpActivity, "Sign up successful!", Toast.LENGTH_SHORT);
+                        toast.show();
+                        signUpActivity.finish();
+                    }
+                }
+            }
+        });
+    }
 }

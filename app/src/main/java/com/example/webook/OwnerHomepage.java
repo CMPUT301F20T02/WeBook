@@ -165,38 +165,80 @@ public class OwnerHomepage extends AppCompatActivity {
             }
 
         });
-
     }
 
+
+    /**
+     * This sets the resets the bookList, This step is required for the "all" listView to behave correctly
+     */
     public void setBookList(){
         this.bookList = new BookList(OwnerHomepage.this, this.bookArrayList);
         this.bookListView.setAdapter(bookList);
     }
 
+
+    /**
+     * This updates the listView
+     */
     public void dataChanged(){
         this.bookList.notifyDataSetChanged();
     }
 
+
+    /**
+     * This returns the owner's book list
+     * @return
+     * this is the current owner book list
+     */
     public ArrayList<String> getOwnerBookList(){
         return this.owner.getBookList();
     }
 
+
+    /**
+     * This adds a book to the owner's book list
+     * @param isbn
+     * this is teh isbn of the book to be added
+     */
     public void ownerAddBook(String isbn){
         this.owner.addBook(isbn);
     }
 
+
+    /**
+     * This sets the owner's book list
+     * @param bookList
+     * this is the candidate book list
+     */
     public void ownerSetBookList(ArrayList<String> bookList){
         this.owner.setBookList(bookList);
     }
 
+
+    /**
+     * This sets the bookArrayList variable
+     * @param bookArrayList
+     * this is the candidate bookArrayList
+     */
     public void setBookArrayList(ArrayList<Book> bookArrayList){
         this.bookArrayList = bookArrayList;
     }
 
+
+    /**
+     * This adds a book to the bookArrayList
+     * @param book
+     * this is the candidate book
+     */
     public void addBookArrayList(Book book){
         this.bookArrayList.add(book);
     }
 
+
+    /**
+     * This gets the books that are available
+     * then add them to bookListAvailable
+     */
     public void getAvailable() {
         availableBookArrayList.clear();
         for (int i = 0; i < bookArrayList.size(); i++) {
@@ -207,38 +249,48 @@ public class OwnerHomepage extends AppCompatActivity {
         bookListAvailable.notifyDataSetChanged();
     }
 
+
+    /**
+     * This gets the books that are requested
+     * then add them to bookListRequested
+     */
     public void getRequested() {
         requestedBookArrayList.clear();
         for (int i = 0; i < bookArrayList.size(); i++) {
             if (bookArrayList.get(i).getStatus().equals("requested")) {
                 requestedBookArrayList.add(bookArrayList.get(i));
             }
-
         }
         bookListRequested.notifyDataSetChanged();
     }
 
+
+    /**
+     * This gets the books that are accepted
+     * then add them to bookListAccepted
+     */
     public void getAccepted() {
         acceptedBookArrayList.clear();
         for (int i = 0; i < bookArrayList.size(); i++) {
             if (bookArrayList.get(i).getStatus().equals("accepted")) {
                 acceptedBookArrayList.add(bookArrayList.get(i));
             }
-
         }
         bookListAccepted.notifyDataSetChanged();
-
     }
 
+
+    /**
+     * This gets the books that are borrowed
+     * then add them to bookListBorrowed
+     */
     public void getBorrowed() {
         borrowedBookArrayList.clear();
         for (int i = 0; i < bookArrayList.size(); i++) {
             if (bookArrayList.get(i).getStatus().equals("borrowed")) {
                 borrowedBookArrayList.add(bookArrayList.get(i));
             }
-
         }
         bookListBorrowed.notifyDataSetChanged();
     }
-
 }

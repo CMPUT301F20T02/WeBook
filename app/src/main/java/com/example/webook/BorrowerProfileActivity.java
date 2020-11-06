@@ -62,27 +62,28 @@ public class BorrowerProfileActivity extends AppCompatActivity {
         user_pic.setImageDrawable(empty_user);
 
         dataBaseManager.BorrowerProfileAddUserSnapShotListener(this, borrower.getUsername());
-
-/*
-        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                updateUserInfo(value);
-            }
-        });
-
- */
-
-
-
     }
 
+
+    /**
+     * This sets the username in database manager
+     * @param usernameText
+     * this os the username to be set
+     */
     public void setUsername(String usernameText){
         this.username.setText(usernameText);
     }
 
-    public void setUserType(String userTypeText){
+
+    /**
+     * this sets the usertype in the database manager
+     * @param userTypeText
+     * this is the user type to be set
+     */
+    public void setUserType(String userTypeText) {
         this.userType.setText(userTypeText);
+    }
+
 
     /**
      * This set text on the profile page
@@ -98,14 +99,32 @@ public class BorrowerProfileActivity extends AppCompatActivity {
         description.setText(borrower.getDescription());
     }
 
+
+    /**
+     * This sets the phone number on the profile page
+     * @param phoneText
+     * this is the phone to be set
+     */
     public void setPhone(String phoneText){
         this.phone.setText(phoneText);
     }
 
+
+    /**
+     * This sets the email on the profile page
+     * @param emailText
+     * this is the email to be set
+     */
     public void setEmail(String emailText){
         this.email.setText(emailText);
     }
 
+
+    /**
+     * This sets the description on the profile page
+     * @param descriptionText
+     * this is the description to be set
+     */
     public void setDescription(String descriptionText){
         this.description.setText(descriptionText);
     }

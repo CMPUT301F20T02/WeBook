@@ -74,22 +74,52 @@ public class OwnerProfileActivity extends AppCompatActivity {
         dataBaseManager.OwnerProfileAddUserSnapShotListener(this, owner.getUsername());
     }
 
+
+    /**
+     * This sets the username in database manager
+     * @param usernameText
+     * this os the username to be set
+     */
     public void setUsername(String usernameText){
         this.username.setText(usernameText);
     }
 
+
+    /**
+     * this sets the usertype in the database manager
+     * @param userTypeText
+     * this is the user type to be set
+     */
     public void setUserType(String userTypeText){
         this.userType.setText(userTypeText);
     }
 
+
+    /**
+     * This set the phone number on the profile page
+     * @param phoneText
+     * This is the phone number to be set
+     */
     public void setPhone(String phoneText){
         this.phone.setText(phoneText);
     }
 
+
+    /**
+     * This sets the email on the profile page
+     * @param emailText
+     * this is the email to be set
+     */
     public void setEmail(String emailText){
         this.email.setText(emailText);
     }
 
+
+    /**
+     * This sets the description on the profile page
+     * @param descriptionText
+     * this is the description to be set
+     */
     public void setDescription(String descriptionText){
         this.description.setText(descriptionText);
     }

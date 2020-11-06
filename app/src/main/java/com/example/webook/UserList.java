@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
+/**
+ * This is a class that keeps track of a list of user objects
+ */
 public class UserList extends ArrayAdapter<User> {
     private ArrayList<User> users;
     private Context context;

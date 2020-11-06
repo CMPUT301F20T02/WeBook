@@ -12,7 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
+/**
+ * This is an activity shows homepage for usertype = borrower
+ */
 public class BorrowerHomepage extends AppCompatActivity {
     private ListView bookListView;
     private BookList bookList;

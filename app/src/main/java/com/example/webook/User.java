@@ -5,7 +5,16 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import java.io.Serializable;
-
+/**
+ * This is a class defines User item with attibutes
+ * String username
+ * String email
+ * String phoneNumber
+ * String pwd
+ * String userType
+ * String descirption
+ * String user_image
+ */
 public abstract class User implements Serializable {
     private String username;
     private String email;
@@ -25,7 +34,14 @@ public abstract class User implements Serializable {
         this.description = description;
         this.user_image = user_image;
     }
-
+    /**
+     * This edit a user on a user exists
+     * @param email
+     * @param phoneNumber
+     * @param description
+     * @param user_image
+     * This is a candidate city to delete
+     */
     public void editInformation(String email, String phoneNumber, String description, String user_image){
         this.email = email;
         this.phoneNumber = phoneNumber;

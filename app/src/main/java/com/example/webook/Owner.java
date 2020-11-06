@@ -5,7 +5,10 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 
 import java.util.ArrayList;
-
+/**
+ * This is a class for owner object which is a sub class of user
+ * Indicates that userType is "owner"
+ */
 public class Owner extends User {
     //private ArrayList<Book> bookList;
     private ArrayList<String> bookList;

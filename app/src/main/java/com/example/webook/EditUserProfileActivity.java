@@ -32,7 +32,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-
+/**
+ * This is an activity shows edit interface for user's profile
+ * User can cancel or comfrim changes
+ */
 public class EditUserProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 1;

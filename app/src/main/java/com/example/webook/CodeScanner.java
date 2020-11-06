@@ -19,6 +19,11 @@ import com.google.zxing.integration.android.IntentResult;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+/**
+ * This is an activity that let user to scan a book code to get isbn
+ * @param x isbn code results from scanning
+ */
+
 public class CodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     public String x;

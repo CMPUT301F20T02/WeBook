@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
-
+/**
+ * This is a class that keeps track of a list of book objects
+ */
 public class BookList extends ArrayAdapter<Book> {
     private ArrayList<Book> books;
     private Context context;

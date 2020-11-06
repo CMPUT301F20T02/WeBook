@@ -18,37 +18,25 @@ import java.util.ArrayList;
 
 public class SameBookRequestList extends AppCompatActivity implements OwnerAcceptDeclineFragment.OnFragmentInteractionListener{
     private ListView sameBookRequestList;
-    private ArrayAdapter<BookRequest> bookAdapter;
+    private RequestList bookAdapter;
     private static ArrayList<BookRequest> dataList;
     private static final String TAG = "Sample";
     private Book selectBook;
-
+    private DataBaseManager dataBaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests_same_book_list);
         sameBookRequestList = findViewById(R.id.same_book_request_list);
-
+        dataList = new ArrayList<BookRequest>();
+        bookAdapter = new RequestList(this,dataList);
+        sameBookRequestList.setAdapter(bookAdapter);
         final Intent intent = getIntent();
         selectBook = (Book) intent.getSerializableExtra("selectBook");
-
+        dataBaseManager = new DataBaseManager();
 //        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
+        dataBaseManager.getSameBookRequest(selectBook.getISBN(),this);
 
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("requests").document(selectBook.getISBN());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                BookRequest request = documentSnapshot.toObject(BookRequest.class);
-                dataList = new ArrayList<>();
-                for(int i = 0; i < request.getRequester().size(); i++){
-                    dataList.add(request);
-                }
-                bookAdapter = new RequestList(SameBookRequestList.this, dataList);
-                sameBookRequestList.setAdapter(bookAdapter);
-
-            }
-        });
 
         sameBookRequestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,6 +48,16 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
         });
     }
 
+    public void dataListClear(){
+        dataList.clear();
+    }
+    public void dataListAdd(BookRequest request){
+        dataList.add(request);
+    }
+    public void bookAdapterChanged(){
+        bookAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onAcceptPressed(){
         finish();
@@ -68,20 +66,6 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
 
     @Override
     public void onDeclinePressed(){
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("requests").document(selectBook.getISBN());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                BookRequest request = documentSnapshot.toObject(BookRequest.class);
-                dataList = new ArrayList<>();
-                for(int i = 0; i < request.getRequester().size(); i++){
-                    dataList.add(request);
-                }
-                bookAdapter = new RequestList(SameBookRequestList.this, dataList);
-                sameBookRequestList.setAdapter(bookAdapter);
-            }
-        });
-
+        dataBaseManager.declinePressed(selectBook.getISBN(),this);
     }
 }

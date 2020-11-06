@@ -25,7 +25,9 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView title_text;
     private TextView author_text;
     private TextView isbn_text;
+    private TextView description_text;
     private Button requestButton;
+
     private String status;
     private static final String TAG = "Sample";
 
@@ -39,14 +41,14 @@ public class OwnerBookProfile extends AppCompatActivity {
         author_text = findViewById(R.id.book_profile_author);
         isbn_text = findViewById(R.id.book_profile_ISBN);
         requestButton = findViewById(R.id.owner_requests_list_button);
-
+        description_text = findViewById(R.id.book_profile_description);
         final Intent intent = getIntent();
         final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
 
         title_text.setText(selectBook.getTitle());
         author_text.setText(selectBook.getAuthor());
         isbn_text.setText(selectBook.getISBN());
-
+        description_text.setText(selectBook.getDescription());
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = db.collection("books").document(selectBook.getISBN());

@@ -26,6 +26,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
     EditText input;
     ArrayList<User> dataList;
     ArrayAdapter<User> userAdapter;
+    private DataBaseManager dataBaseManager;
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchUserPage.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,9 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         userAdapter = new UserList(this, dataList);
         userList.setAdapter(userAdapter);
         final ArrayList<String> userNameList = new ArrayList<String>();
-        final FirebaseFirestore db;
-        db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("users");
+        dataBaseManager = new DataBaseManager();
+
+        dataBaseManager.BorrowerSearchUser(message,this);
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -56,34 +57,6 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
             }
         });
 
-        collectionReference.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            dataList.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId());
-                                String Username = document.getId();
-                                String email = (String) document.getData().get("email");
-                                String description =  (String) document.getData().get("description");
-                                String pwd =  (String) document.getData().get("pwd");
-                                String phoneNumber =  (String) document.getData().get("phoneNumber");
-                                String userType = (String) document.getData().get("userType");
-                                if(Username.contains(message)){
-                                    if(userType.equals("borrower")) {
-                                        dataList.add(new Borrower(Username,email, phoneNumber, pwd, description,null));
-                                    }else{
-                                        dataList.add(new Owner(Username,email, phoneNumber, pwd, description,null));
-                                    }
-                                }
-                            }
-                            userAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-        collectionReference.get();
+
     }
 }

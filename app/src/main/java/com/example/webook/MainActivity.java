@@ -3,6 +3,7 @@ package com.example.webook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -60,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 if (username_text.length() != 0 & pwd_text.length() != 0){
                     authenticate(username_text, pwd_text);
                 }
+            }
+        });
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
 

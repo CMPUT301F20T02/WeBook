@@ -43,7 +43,7 @@ public class RequestList extends ArrayAdapter<BookRequest> {
 
         TextView title_text = view.findViewById(R.id.request_book_title);
         title_text.setText(BookRequest.getBook().getTitle());
-        TextView borrow_text = view.findViewById(R.id.request_requester);
+        TextView borrow_text = view.findViewById(R.id.request_requesterORrequestee);
         borrow_text.setText("Requested by " + BookRequest.getRequester().get(position));
 
 

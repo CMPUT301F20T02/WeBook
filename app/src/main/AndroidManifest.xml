@@ -27,6 +27,7 @@
         <activity android:name=".OwnerProfileActivity" />
         <activity android:name=".BorrowerHomepage" />
         <activity android:name=".OwnerHomepage" />
+        <activity android:name=".OwnerBookProfileBookEdit"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

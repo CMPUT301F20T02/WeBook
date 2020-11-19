@@ -535,4 +535,70 @@ public class DataBaseManager {
         ownerProfileActivity.setDescription(borrower.getDescription());
     }
 
+    public void removeBook(Book book){
+        DocumentReference docRef = db.collection("books").document(book.getISBN());
+        docRef.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
+    public void updateBook(final OwnerBookProfile ownerBookProfile, String isbn){
+        DocumentReference docRef = db.collection("books").document(isbn);
+        System.out.println(isbn);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    System.out.println("I'm successful!");
+                    Book selectBook = document.toObject(Book.class);
+                    System.out.println("I'm successful too" + selectBook.getDescription());
+                    if (document.exists()) {
+                        System.out.println("I'm successful too!");
+                        //Book selectBook = document.toObject(Book.class);
+                        ownerBookProfile.setTitle_text(selectBook.getTitle());
+                        ownerBookProfile.setAuthor_text(selectBook.getAuthor());
+                        ownerBookProfile.setDescription_text(selectBook.getDescription());
+                        ownerBookProfile.setIsbn_text(selectBook.getISBN());
+                    }
+                }
+            }
+        });
+    }
+
+    public void BookProfileAddUserSnapShotListener(final OwnerBookProfile ownerBookProfile, final String isbn){
+        DocumentReference bookRef = db.collection("books").document(isbn);
+        bookRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                updateBookInfo(value, ownerBookProfile);
+            }
+        });
+    }
+
+    private void updateBookInfo (DocumentSnapshot documentSnapshot, final OwnerBookProfile ownerBookProfile) {
+        Book book = documentSnapshot.toObject(Book.class);
+        ownerBookProfile.setTitle_text(book.getTitle());
+        ownerBookProfile.setIsbn_text(book.getISBN());
+        ownerBookProfile.setDescription_text(book.getDescription());
+        ownerBookProfile.setAuthor_text(book.getAuthor());
+    }
+
+    public void updateBook (String isbn, String title, String author, String des) {
+        DocumentReference bookRef = db.collection("books").document(isbn);
+        bookRef.update("description",des);
+        bookRef.update("title",title);
+        bookRef.update("author", author);
+    }
+
 }

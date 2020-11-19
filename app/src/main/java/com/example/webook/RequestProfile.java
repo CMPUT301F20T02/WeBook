@@ -37,6 +37,7 @@ public class RequestProfile extends AppCompatActivity {
     private TextView borrower;
     private TextView address;
     private TextView status;
+    private Marker marker;
     private  LatLng locationSelected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,10 @@ public class RequestProfile extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             if(latitude != null) {
                 LatLng latLng =  new LatLng(latitude,longitude);
-                mMap.addMarker(new MarkerOptions().position(latLng)
+                if(marker != null) {
+                    marker.remove();
+                }
+                marker = mMap.addMarker(new MarkerOptions().position(latLng)
                         .title("the chosen place"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                 String text = "latitude: " + Double.toString(latitude) + "longitude: " + Double.toString(longitude);

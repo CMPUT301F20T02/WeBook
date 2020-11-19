@@ -34,7 +34,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
  */
 public class SimpleMapViewActivity extends AppCompatActivity {
 
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 4;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION =  3;
     private MapView mapView;
     private Boolean mLocationPermissionGranted = true;
     private GoogleMap mMap;
@@ -44,7 +44,6 @@ public class SimpleMapViewActivity extends AppCompatActivity {
     PlacesClient placesClient;
     private Marker marker;
     private  LatLng locationSelected;
-    private  Location my;
     private Button confirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,9 @@ public class SimpleMapViewActivity extends AppCompatActivity {
 
                     Location location = locationManager.getLastKnownLocation(locationManager
                             .getBestProvider(criteria, false));
-                    my = location;
+                    if(location == null) {
+                        System.out.println("fuck!!!!!!!");
+                    }
                     LatLng now = new LatLng(location.getLatitude(), location.getLongitude());
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now,18));
                 }

@@ -10,6 +10,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ public class RequestProfile extends AppCompatActivity {
     private TextView borrower;
     private TextView address;
     private TextView status;
+    private Button scan;
     private  LatLng locationSelected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class RequestProfile extends AppCompatActivity {
         borrower = findViewById(R.id.Borrower);
         address = findViewById(R.id.Address);
         status = findViewById(R.id.Status);
+        scan = findViewById(R.id.Scan);
         mapView.onCreate(savedInstanceState);
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -73,7 +77,12 @@ public class RequestProfile extends AppCompatActivity {
             }
         });
 
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
 

@@ -71,30 +71,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/request_profile_borrower" />
 
+    <TextView
+        android:id="@+id/location_instruction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="Return location set by book borrower: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/request_profile_status" />
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/return_location_map"
         android:layout_width="382dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/return_time"
+        app:layout_constraintBottom_toTopOf="@+id/return_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/request_profile_status" />
+        app:layout_constraintTop_toBottomOf="@+id/location_instruction" />
 
     <TextView
-        android:id="@+id/return_time"
+        android:id="@+id/return_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Return Date and Time"
+        android:text="Return Date"
         app:layout_constraintBottom_toTopOf="@+id/request_profile_return_scan"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/return_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="Return Time"
+        app:layout_constraintBottom_toTopOf="@+id/request_profile_return_scan"
+        app:layout_constraintStart_toEndOf="@+id/return_date" />
 
     <Button
         android:id="@+id/request_profile_return_scan"

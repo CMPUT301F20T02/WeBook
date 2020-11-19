@@ -45,8 +45,8 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
 
 
         final ListView requestListView = findViewById(R.id.owner_request_list);
-        TextView me = findViewById(R.id.owner_request_me_tab);
-        TextView books = findViewById(R.id.owner_request_books_tab);
+        TextView me = findViewById(R.id.owner_me_tab);
+        TextView books = findViewById(R.id.owner_books_tab);
         TextView pending = findViewById(R.id.owner_request_pending);
         TextView accepted = findViewById(R.id.owner_request_accepted);
         TextView borrowed = findViewById(R.id.owner_request_borrowed);

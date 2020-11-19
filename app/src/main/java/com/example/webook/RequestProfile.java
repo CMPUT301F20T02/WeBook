@@ -139,7 +139,7 @@ public class RequestProfile extends AppCompatActivity {
                 marker = mMap.addMarker(new MarkerOptions().position(latLng)
                         .title("the chosen place"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-                String text = "latitude: " + Double.toString(latitude) + "longitude: " + Double.toString(longitude);
+                String text = "latitude: " + Double.toString(latitude) + "\n" + "longitude: " + Double.toString(longitude);
                 address.setText(text);
             }
         }

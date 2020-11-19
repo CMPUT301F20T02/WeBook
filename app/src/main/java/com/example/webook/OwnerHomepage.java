@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 /**
  * This is an activity shows homepage for usertype = owner
@@ -35,6 +38,7 @@ public class OwnerHomepage extends AppCompatActivity {
 
         TextView me = findViewById(R.id.owner_me_tab);
         TextView books = findViewById(R.id.owner_books_tab);
+        TextView request = findViewById(R.id.owner_requests_tab);
 
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
@@ -59,6 +63,14 @@ public class OwnerHomepage extends AppCompatActivity {
         bookListAccepted = new BookList(OwnerHomepage.this, acceptedBookArrayList);
         bookListBorrowed = new BookList(OwnerHomepage.this, borrowedBookArrayList);
 
+        requested.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OwnerHomepage.this, OwnerRequestPageActivity.class);
+                intent.putExtra("user", owner);
+                startActivity(intent);
+            }
+        });
 
 
         books.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +94,17 @@ public class OwnerHomepage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OwnerHomepage.this, OwnerRequestPageActivity.class);
+                intent.putExtra("user", owner);
+                startActivity(intent);
+            }
+        });
+
+
 
         all.setOnClickListener(new View.OnClickListener() {
             @Override

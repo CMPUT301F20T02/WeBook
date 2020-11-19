@@ -23,7 +23,7 @@ public class Owner extends User {
         this.bookList.add(book);
     }
 
-
+    public void addRequest(String book){this.requestList.add(book);}
 
     public ArrayList<String> getBookList() {
         return this.bookList;

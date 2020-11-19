@@ -428,6 +428,50 @@ public class DataBaseManager {
         });
     }
 
+    public void OwnerRequestPageRequestSnapShotListener(final OwnerRequestPageActivity ownerRequestPageActivity, final String username){
+        final CollectionReference requestRef = db.collection("requests");
+        requestRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot document) {
+                        final ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
+                        downloadRequests(ownerRequestPageActivity, bookisbn);
+
+                    }
+                });
+            }
+        });
+
+    }
+
+    private void downloadRequests(final OwnerRequestPageActivity ownerRequestPageActivity, final ArrayList<String> bookisbn){
+        CollectionReference requestRef = db.collection("requests");
+        for (int i = 0; i < bookisbn.size(); i++) {
+            final DocumentReference bookRef1 = requestRef.document(bookisbn.get(i));
+            bookRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if(document.exists()){
+                            BookRequest bookRequest = document.toObject(BookRequest.class);
+                            String isbn = bookRequest.getBook().getISBN();
+                            if(!ownerRequestPageActivity.getOwnerRequestList().contains(isbn)){
+                                ownerRequestPageActivity.ownerAddRequest(isbn);
+                                ownerRequestPageActivity.ownerAddRequestArrayList(bookRequest);
+                                ownerRequestPageActivity.getPending();
+                                ownerRequestPageActivity.getAccepted();
+                                ownerRequestPageActivity.getBorrowed();
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
     public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
 
         final CollectionReference bookRef = db.collection("books");

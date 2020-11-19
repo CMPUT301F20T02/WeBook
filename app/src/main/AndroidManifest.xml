@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".OwnerRequestPageActivity"></activity>
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".CodeScanner" />
         <activity android:name=".ShowUserDetail" />
         <activity android:name=".BorrowerBookProfile" />

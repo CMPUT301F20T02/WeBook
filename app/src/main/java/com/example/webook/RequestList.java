@@ -28,7 +28,6 @@ public class RequestList extends ArrayAdapter<BookRequest> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
         View view = convertView;
 
 
@@ -45,6 +44,7 @@ public class RequestList extends ArrayAdapter<BookRequest> {
         title_text.setText(BookRequest.getBook().getTitle());
         TextView borrow_text = view.findViewById(R.id.request_requesterORrequestee);
         borrow_text.setText("Requested by " + BookRequest.getRequester().get(position));
+
 
 
         return view;

@@ -8,7 +8,7 @@ import java.util.Date;
  * This is a class for BookRequest object which is a sub class of Request
  */
 public class BookRequest extends Request {
-    private String status;
+    private String status = "pending";
 
     /**
      * constructor of the BookRequest with no parameter.

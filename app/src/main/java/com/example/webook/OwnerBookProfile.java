@@ -54,6 +54,7 @@ public class OwnerBookProfile extends AppCompatActivity {
         description_text.setText(selectBook.getDescription());
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+// move to database manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         DocumentReference docRef = db.collection("books").document(selectBook.getISBN());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

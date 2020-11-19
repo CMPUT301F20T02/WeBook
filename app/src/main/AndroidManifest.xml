@@ -35,6 +35,7 @@
         <activity android:name=".BorrowerHomepage" />
         <activity android:name=".OwnerHomepage" />
         <activity android:name=".SimpleMapViewActivity" />
+        <activity android:name=".RequestProfile" />
         <activity android:name=".MainActivity">
 
             <intent-filter>

@@ -3,12 +3,15 @@ package com.example.webook;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,16 +44,18 @@ public class SimpleMapViewActivity extends AppCompatActivity {
     PlacesClient placesClient;
     private Marker marker;
     private  LatLng locationSelected;
+    private  Location my;
+    private Button confirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tem);
         mapView = findViewById(R.id.mapView);
+        confirm = findViewById(R.id.button5);
         mapView.onCreate(savedInstanceState);
         getLocationPermission();
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
         placesClient = Places.createClient(this);
-
         mapView.getMapAsync(new OnMapReadyCallback() {
             @SuppressLint("MissingPermission")
             @Override
@@ -81,9 +86,12 @@ public class SimpleMapViewActivity extends AppCompatActivity {
 
                     Location location = locationManager.getLastKnownLocation(locationManager
                             .getBestProvider(criteria, false));
+                    my = location;
                     LatLng now = new LatLng(location.getLatitude(), location.getLongitude());
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now,18));
                 }
+
+
                 // Construct a PlaceDetectionClient.
                 LatLng sydney = new LatLng(-33.852, 151.211);
 
@@ -93,7 +101,20 @@ public class SimpleMapViewActivity extends AppCompatActivity {
             }
         });
 
-
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(locationSelected != null){
+                    Intent intent = new Intent();
+                    intent.putExtra
+                            ("latitude", locationSelected.latitude);
+                    intent.putExtra
+                            ("longitude", locationSelected.longitude);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+        });
     }
 
 

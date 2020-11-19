@@ -31,6 +31,9 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView author_text;
     private TextView isbn_text;
     private TextView description_text;
+    private TextView owned_by;
+    private TextView borrowed_by;
+    private TextView book_status_text;
     private Button requestButton;
     private Button ownerEditBookButton;
     private String status;
@@ -50,9 +53,19 @@ public class OwnerBookProfile extends AppCompatActivity {
         isbn_text = findViewById(R.id.book_profile_ISBN);
         requestButton = findViewById(R.id.owner_requests_list_button);
         ownerEditBookButton = findViewById(R.id.owner_edit_book_button);
+        owned_by = findViewById(R.id.book_profile_owner_text);
+        borrowed_by = findViewById(R.id.book_profile_borrower_text);
+        book_status_text = findViewById(R.id.book_profile_status_text);
         description_text = findViewById(R.id.book_profile_description);
         final Intent intent = getIntent();
         final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
+        owned_by.setText("Owned by " + selectBook.getOwner());
+        if (selectBook.getBorrower() != null) {
+            borrowed_by.setText("Borrowed by " + selectBook.getBorrower());
+        } else {
+            borrowed_by.setText("Borrowed by ");
+        }
+        book_status_text.setText("Book Status: " + selectBook.getStatus());
         owner = (Owner) intent.getSerializableExtra("user");
 
         title_text.setText(selectBook.getTitle());

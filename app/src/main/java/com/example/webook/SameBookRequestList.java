@@ -32,7 +32,7 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
         selectBook = (Book) intent.getSerializableExtra("selectBook");
         dataBaseManager = new DataBaseManager();
 //        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
-        dataBaseManager.getSameBookRequest(selectBook.getISBN(),this);
+//        dataBaseManager.getSameBookRequest(selectBook.getISBN(),this);
 
 
         sameBookRequestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

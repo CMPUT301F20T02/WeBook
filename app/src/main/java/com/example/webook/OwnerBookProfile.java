@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +32,10 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView isbn_text;
     private TextView description_text;
     private Button requestButton;
+    private Button ownerEditBookButton;
     private String status;
+    private Owner owner;
+    private DataBaseManager dataBaseManager;
     private static final String TAG = "Sample";
 
 
@@ -40,13 +44,16 @@ public class OwnerBookProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_book_profile);
 
+        dataBaseManager = new DataBaseManager();
         title_text = findViewById(R.id.book_profile_title);
         author_text = findViewById(R.id.book_profile_author);
         isbn_text = findViewById(R.id.book_profile_ISBN);
         requestButton = findViewById(R.id.owner_requests_list_button);
+        ownerEditBookButton = findViewById(R.id.owner_edit_book_button);
         description_text = findViewById(R.id.book_profile_description);
         final Intent intent = getIntent();
         final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
+        owner = (Owner) intent.getSerializableExtra("user");
 
         title_text.setText(selectBook.getTitle());
         author_text.setText(selectBook.getAuthor());
@@ -54,8 +61,7 @@ public class OwnerBookProfile extends AppCompatActivity {
         description_text.setText(selectBook.getDescription());
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-// move to database manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        DocumentReference docRef = db.collection("books").document(selectBook.getISBN());
+        final DocumentReference docRef = db.collection("books").document(selectBook.getISBN());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -92,5 +98,45 @@ public class OwnerBookProfile extends AppCompatActivity {
             }
         });
 
+        final Intent intent3 = new Intent(this, OwnerBookProfileBookEdit.class);
+        ownerEditBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!status.equals("available")){
+                    Context context = getApplicationContext();
+                    CharSequence text = "This book currently unavailable to change!";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                } else {
+                    intent3.putExtra("selectBook", selectBook);
+                    intent3.putExtra("user",owner);
+                    startActivity(intent3);
+                }
+            }
+        });
+        dataBaseManager.BookProfileAddUserSnapShotListener(OwnerBookProfile.this, isbn_text.getText().toString());
     }
+
+
+
+    public void setTitle_text(String title_text) {
+        this.title_text.setText(title_text);
+    }
+
+    public void setAuthor_text(String author_text) {
+        this.author_text.setText(author_text);
+    }
+
+    public void setIsbn_text(String isbn_text) {
+        this.isbn_text.setText(isbn_text);
+    }
+
+    public void setDescription_text(String description_text) {
+        this.description_text.setText(description_text);
+    }
+
+
+
 }

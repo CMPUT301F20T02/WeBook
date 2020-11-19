@@ -167,6 +167,7 @@ public class OwnerHomepage extends AppCompatActivity {
                     System.out.println("Error");
                 }
                 intent.putExtra("selectBook", selectBook);
+                intent.putExtra("user", owner);
                 startActivity(intent);
             }
 

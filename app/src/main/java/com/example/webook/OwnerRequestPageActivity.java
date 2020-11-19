@@ -51,9 +51,9 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         TextView accepted = findViewById(R.id.owner_request_accepted);
         TextView borrowed = findViewById(R.id.owner_request_borrowed);
 
-        requestListPending = new RequestList(this, pendingRequests);
-        requestListAccepted = new RequestList(this, acceptedRequests);
-        requestListBorrowed = new RequestList(this, borrowedRequests);
+        requestListPending = new RequestList(this, pendingRequests, 0);
+        requestListAccepted = new RequestList(this, acceptedRequests, 0);
+        requestListBorrowed = new RequestList(this, borrowedRequests, 0);
 
         requestListView.setAdapter(requestListPending);
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,6 +141,14 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
             }
         }
         requestListBorrowed.notifyDataSetChanged();
+    }
+
+
+    public void clearList(){
+        this.requestArrayList.clear();
+        this.pendingRequests.clear();
+        this.acceptedRequests.clear();
+        this.borrowedRequests.clear();
     }
 
     @Override

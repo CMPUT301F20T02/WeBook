@@ -18,11 +18,13 @@ import java.util.ArrayList;
 public class RequestList extends ArrayAdapter<BookRequest> {
     private ArrayList<BookRequest> BookRequests;
     private Context context;
+    private int mode;
 
-    public RequestList(Context context, ArrayList<BookRequest> BookRequests) {
+    public RequestList(Context context, ArrayList<BookRequest> BookRequests, int mode) {
         super(context, 0, BookRequests);
         this.BookRequests = BookRequests;
         this.context = context;
+        this.mode = mode;
     }
 
     @NonNull
@@ -43,9 +45,9 @@ public class RequestList extends ArrayAdapter<BookRequest> {
         TextView title_text = view.findViewById(R.id.request_book_title);
         title_text.setText(BookRequest.getBook().getTitle());
         TextView borrow_text = view.findViewById(R.id.request_requesterORrequestee);
-        borrow_text.setText("Requested by " + BookRequest.getRequester().get(position));
-
-
+        if (this.mode == 1){
+            borrow_text.setText("Requested by " + BookRequest.getRequester().get(position));
+        }
 
         return view;
     }

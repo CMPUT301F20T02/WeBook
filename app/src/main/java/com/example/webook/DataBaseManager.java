@@ -456,6 +456,7 @@ public class DataBaseManager {
                     if (task.isSuccessful()){
                         DocumentSnapshot document = task.getResult();
                         if(document.exists()){
+                            //ownerRequestPageActivity.clearList();
                             BookRequest bookRequest = document.toObject(BookRequest.class);
                             String isbn = bookRequest.getBook().getISBN();
                             if(!ownerRequestPageActivity.getOwnerRequestList().contains(isbn)){

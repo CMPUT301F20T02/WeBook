@@ -24,6 +24,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.MetadataChanges;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -429,48 +431,23 @@ public class DataBaseManager {
     }
 
     public void OwnerRequestPageRequestSnapShotListener(final OwnerRequestPageActivity ownerRequestPageActivity, final String username){
-        final CollectionReference requestRef = db.collection("requests");
-        requestRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                db.collection("users").document(username).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        CollectionReference requestRef = db.collection("requests");
+        requestRef
+                .whereEqualTo("requestee", username)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot document) {
-                        final ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
-                        downloadRequests(ownerRequestPageActivity, bookisbn);
-
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        assert value != null;
+                        List<DocumentSnapshot> documents = value.getDocuments();
+                        ArrayList<BookRequest> bookRequests = new ArrayList<>();
+                        for (int i = 0; i < documents.size(); i++){
+                            System.out.println(documents.get(i).toObject(BookRequest.class).getRequestee());
+                            BookRequest temp = documents.get(i).toObject(BookRequest.class);
+                            bookRequests.add(temp);
+                        }
+                        ownerRequestPageActivity.setArrayList(bookRequests);
                     }
                 });
-            }
-        });
-
-    }
-
-    private void downloadRequests(final OwnerRequestPageActivity ownerRequestPageActivity, final ArrayList<String> bookisbn){
-        CollectionReference requestRef = db.collection("requests");
-        for (int i = 0; i < bookisbn.size(); i++) {
-            final DocumentReference bookRef1 = requestRef.document(bookisbn.get(i));
-            bookRef1.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()){
-                        DocumentSnapshot document = task.getResult();
-                        if(document.exists()){
-                            //ownerRequestPageActivity.clearList();
-                            BookRequest bookRequest = document.toObject(BookRequest.class);
-                            String isbn = bookRequest.getBook().getISBN();
-                            if(!ownerRequestPageActivity.getOwnerRequestList().contains(isbn)){
-                                ownerRequestPageActivity.ownerAddRequest(isbn);
-                                ownerRequestPageActivity.ownerAddRequestArrayList(bookRequest);
-                                ownerRequestPageActivity.getPending();
-                                ownerRequestPageActivity.getAccepted();
-                                ownerRequestPageActivity.getBorrowed();
-                            }
-                        }
-                    }
-                }
-            });
-        }
     }
 
     public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){

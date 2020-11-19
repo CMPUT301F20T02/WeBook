@@ -26,8 +26,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class RequestProfile extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 4;
@@ -40,6 +45,7 @@ public class RequestProfile extends AppCompatActivity {
     private TextView address;
     private TextView status;
     private Button scan;
+    private Marker marker;
     private  LatLng locationSelected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,18 @@ public class RequestProfile extends AppCompatActivity {
         scan = findViewById(R.id.Scan);
         mapView.onCreate(savedInstanceState);
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
+        Intent intent1 = getIntent();
+        String owner_name = "Owner: " + intent1.getStringExtra("owner_name");
+        String borrower_name = "Borrower: " + intent1.getStringExtra("borrower_name");
+        String book_isbn = "ISBN: " + intent1.getStringExtra("isbn");
+        String book_title = "Title: " + intent1.getStringExtra("book_title");
+        String book_status = "Status: accepted";
+        owner.setText(owner_name);
+        borrower.setText(borrower_name);
+        isbn.setText(book_isbn);
+        title.setText(book_title);
+        status.setText(book_status);
+        address.setText("Please click the map to select the deliver location.");
         mapView.getMapAsync(new OnMapReadyCallback() {
             @SuppressLint("MissingPermission")
             @Override
@@ -81,6 +99,8 @@ public class RequestProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(RequestProfile.this,CodeScanner.class);
+                startActivityForResult(intent,2);
             }
         });
     }
@@ -136,16 +156,43 @@ public class RequestProfile extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Double latitude =  (Double) data.getSerializableExtra("latitude");
-        Double longitude =  (Double) data.getSerializableExtra("longitude");
-        if(resultCode == RESULT_OK) {
-            if(latitude != null) {
-                LatLng latLng =  new LatLng(latitude,longitude);
-                mMap.addMarker(new MarkerOptions().position(latLng)
-                        .title("the chosen place"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-                String text = "latitude: " + Double.toString(latitude) + "longitude: " + Double.toString(longitude);
-                address.setText(text);
+        if(requestCode== 1) {
+            if(resultCode == RESULT_OK){
+                Double latitude =  (Double) data.getSerializableExtra("latitude");
+                Double longitude =  (Double) data.getSerializableExtra("longitude");
+                if(latitude != null) {
+                    LatLng latLng =  new LatLng(latitude,longitude);
+                    if(marker != null) {
+                        marker.remove();
+                    }
+                    marker = mMap.addMarker(new MarkerOptions().position(latLng)
+                            .title("the chosen place"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+                    String text = "latitude: " + Double.toString(latitude) + "\n" + "longitude: " + Double.toString(longitude);
+                    address.setText(text);
+                }
+            }
+        }
+        if (requestCode == 2){
+            if(resultCode == RESULT_OK){
+                final String code = (String) data.getSerializableExtra("code");
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("requests").document(code).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if(documentSnapshot.exists()){
+                                BookRequest bookRequest = documentSnapshot.toObject(BookRequest.class);
+                                if(bookRequest.getStatus() != null){
+                                    if(bookRequest.getStatus().equals("accepted")){
+                                        db.collection("requests").document(code).update("status","waiting");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
             }
         }
     }

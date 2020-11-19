@@ -101,7 +101,8 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
                         final FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("requests").document(selectRequest.getBook().getISBN())
                                 .update(
-                                        "requester", acceptRequester
+                                        "requester", acceptRequester,
+                                        "status", "accepted"
                                 );
                         db.collection("books").document(selectRequest.getBook().getISBN())
                                 .update(

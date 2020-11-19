@@ -42,7 +42,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
 
-        dataBaseManager.OwnerRequestPageRequestSnapShotListener(this, owner.getUsername());
+
 
         final ListView requestListView = findViewById(R.id.owner_request_list);
         TextView me = findViewById(R.id.owner_request_me_tab);
@@ -52,8 +52,9 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         TextView borrowed = findViewById(R.id.owner_request_borrowed);
 
         requestListPending = new RequestList(this, pendingRequests, 0);
-        requestListAccepted = new RequestList(this, acceptedRequests, 0);
-        requestListBorrowed = new RequestList(this, borrowedRequests, 0);
+        requestListAccepted = new RequestList(this, acceptedRequests, 1);
+        requestListBorrowed = new RequestList(this, borrowedRequests, 1);
+        dataBaseManager.OwnerRequestPageRequestSnapShotListener(this, owner.getUsername());
 
         requestListView.setAdapter(requestListPending);
         requestListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,16 +63,28 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
                 BookRequest selectRequest = null;
                 if (currentView.equals("pending")) {
                     selectRequest = pendingRequests.get(position);
+                    Book selectBook = selectRequest.getBook();
+                    Intent intent = new Intent(OwnerRequestPageActivity.this, SameBookRequestList.class);
+                    intent.putExtra("selectBook", selectBook);
+                    startActivity(intent);
                 }else if (currentView.equals("accepted")){
                     selectRequest = acceptedRequests.get(position);
+                    String isbn_text = selectRequest.getBook().getISBN();
+                    String book_title = selectRequest.getBook().getTitle();
+                    String owner_name = selectRequest.getRequestee();
+                    String borrower_name = selectRequest.getRequester().get(0);
+
+                    Intent intent = new Intent(OwnerRequestPageActivity.this, RequestProfile.class);
+                    intent.putExtra("isbn", isbn_text);
+                    intent.putExtra("book_title", book_title);
+                    intent.putExtra("owner_name", owner_name);
+                    intent.putExtra("borrower_name", borrower_name);
+                    startActivity(intent);
+
                 }else if(currentView.equals("borrowed")){
                     selectRequest = borrowedRequests.get(position);
                 }
-                assert selectRequest != null;
-                Book selectBook = selectRequest.getBook();
-                Intent intent = new Intent(OwnerRequestPageActivity.this, SameBookRequestList.class);
-                intent.putExtra("selectBook", selectBook);
-                startActivity(intent);
+
             }
         });
 
@@ -80,6 +93,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
             public void onClick(View v) {
                 requestListView.setAdapter(requestListPending);
                 currentView = "pending";
+                System.out.println("pending 2 size"+pendingRequests.size());
             }
         });
 
@@ -98,6 +112,30 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
                 currentView = "borrowed";
             }
         });
+
+        books.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OwnerRequestPageActivity.this, OwnerProfileActivity.class);
+                intent.putExtra("user", owner);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void setArrayList(ArrayList<BookRequest> bookRequests){
+        this.requestArrayList = bookRequests;
+        System.out.println("whole size" + requestArrayList.size());
+        getPending();
+        getBorrowed();
+        getAccepted();
     }
 
     public ArrayList<String> getOwnerRequestList(){
@@ -108,9 +146,6 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         owner.addRequest(isbn);
     }
 
-    public void ownerAddRequestArrayList(BookRequest bookRequest){
-        this.requestArrayList.add(bookRequest);
-    }
 
 
     public void getPending(){
@@ -118,9 +153,12 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         for (int i = 0; i < this.requestArrayList.size(); i++){
             if (requestArrayList.get(i).getStatus().equals("pending")){
                 pendingRequests.add(requestArrayList.get(i));
+
             }
         }
+        System.out.println("pending size" + pendingRequests.size());
         requestListPending.notifyDataSetChanged();
+
     }
 
     public void getAccepted(){
@@ -128,9 +166,11 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         for (int i = 0; i < this.requestArrayList.size(); i++){
             if (requestArrayList.get(i).getStatus().equals("accepted")){
                 acceptedRequests.add(requestArrayList.get(i));
+
             }
         }
         requestListAccepted.notifyDataSetChanged();
+
     }
 
     public void getBorrowed(){
@@ -138,17 +178,17 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         for (int i = 0; i < this.requestArrayList.size(); i++){
             if (requestArrayList.get(i).getStatus().equals("borrowed")){
                 borrowedRequests.add(requestArrayList.get(i));
+
             }
         }
         requestListBorrowed.notifyDataSetChanged();
+
     }
 
 
     public void clearList(){
-        this.requestArrayList.clear();
-        this.pendingRequests.clear();
-        this.acceptedRequests.clear();
-        this.borrowedRequests.clear();
+        this.requestArrayList = new ArrayList<BookRequest>();
+        this.owner.setBookList(new ArrayList<String>());
     }
 
     @Override

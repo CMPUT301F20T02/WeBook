@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This is an activity shows homepage for usertype = borrower
@@ -40,6 +42,8 @@ public class BorrowerHomepage extends AppCompatActivity {
     private ArrayList<Book> borrowedBooks;
     private ArrayList<Book> requestedBooks;
     private ArrayList<Book> acceptedBooks;
+    private ArrayList<ListenerRegistration> listenerRegistrations;
+    private ArrayList<String> Isbns;
     private BookList allBookList;
     private BookList borrowedBookList;
     private BookList requestedBookList;
@@ -72,6 +76,9 @@ public class BorrowerHomepage extends AppCompatActivity {
         accepted = findViewById(R.id.borrower_accepted);
         requested = findViewById(R.id.borrower_requested);
         borrowed = findViewById(R.id.borrower_borrowed);
+
+        listenerRegistrations = new ArrayList<ListenerRegistration>();
+        Isbns = new ArrayList<String>();
 
         allBooks = new ArrayList<>();
         borrowedBooks = new ArrayList<>();
@@ -134,15 +141,17 @@ public class BorrowerHomepage extends AppCompatActivity {
                     List<DocumentSnapshot> list = querySnapshot.getDocuments();
                     for(int i = 0; i < list.size();i++){
                         final BookRequest bookRequest = list.get(i).toObject(BookRequest.class);
+                        final String isbnHere = bookRequest.getBook().getISBN();
                         if(bookRequest.getRequester().contains(borrower.getUsername())){
-                             db.collection("requests").document(bookRequest.getBook().getISBN()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            ListenerRegistration listenerRegistration = db.collection("requests").document(bookRequest.getBook().getISBN()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                 @Override
                                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                                     if(value.get("time") != null){
                                         if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
                                             if(value.getString("status").equals("accepted")) {
+                                                String sentence = "Owner have already set the deliver data Isbn \n ISBN = " + bookRequest.getBook().getISBN();
                                                 Toast toast = Toast.makeText(BorrowerHomepage.this,
-                                                        "Owner have already set the deliver data", Toast.LENGTH_LONG);
+                                                        sentence, Toast.LENGTH_LONG);
                                                 toast.show();
                                             }
                                         }
@@ -150,7 +159,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                     if(value.getString("status").equals("accepted")){
                                         if(value.get("time") == null){
                                             if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
-                                                String sentence = "Owner have accepted you request  ISBN = " + bookRequest.getBook().getISBN();
+                                                String sentence = "Owner have accepted you request \n ISBN = " + bookRequest.getBook().getISBN();
                                                 Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
                                                 toast.show();
                                             }
@@ -158,12 +167,111 @@ public class BorrowerHomepage extends AppCompatActivity {
                                     }
                                 }
                             });
+                            listenerRegistrations.add(listenerRegistration);
+                            Isbns.add(isbnHere);
                         }
                     }
                 }
             }
         });
+        db.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    System.err.println("Listen failed: " + e);
+                    return;
+                }
+
+                for (final DocumentChange dc : value.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            final String isbnHere = dc.getDocument().getId();
+                            if (((ArrayList<String>)dc.getDocument().get("requester")).contains(borrower.getUsername())){
+                                ListenerRegistration listenerRegistration = db.collection("requests").document(isbnHere).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                        if(value.get("time") != null){
+                                            if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
+                                                if(value.getString("status").equals("accepted")) {
+                                                    BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
+                                                    Book bookHere = requestHere.getBook();
+                                                    String sentence = "Owner have already set the deliver data Isbn \n ISBN = " + bookHere.getISBN();
+                                                    Toast toast = Toast.makeText(BorrowerHomepage.this,
+                                                            sentence, Toast.LENGTH_LONG);
+                                                    toast.show();
+                                                }
+                                            }
+                                        }
+                                        if(Objects.equals(value.getString("status"), "accepted")){
+                                            if(value.get("time") == null){
+                                                if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
+                                                    BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
+                                                    Book bookHere = requestHere.getBook();
+                                                    String sentence = "Owner have accepted you request \n ISBN = " + bookHere.getISBN();
+                                                    Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
+                                                    toast.show();
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                                listenerRegistrations.add(listenerRegistration);
+                                Isbns.add(isbnHere);
+                            }
+                            break;
+                        case MODIFIED:
+                            final String isbnHere1 = dc.getDocument().getId();
+                            if(Isbns.contains(isbnHere1)) {
+                                if (!((ArrayList<String>) dc.getDocument().get("requester")).contains(borrower.getUsername())) {
+                                    int index = Isbns.indexOf(isbnHere1);
+                                    ListenerRegistration listenerRegistrationHere = listenerRegistrations.get(index);
+                                    listenerRegistrationHere.remove();
+                                    Isbns.remove(index);
+                                    listenerRegistrations.remove(index);
+                                }
+                            }else{
+                                if (((ArrayList<String>) dc.getDocument().get("requester")).contains(borrower.getUsername())) {
+                                    ListenerRegistration listenerRegistration = db.collection("requests").document(isbnHere1).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                            if(value.get("time") != null){
+                                                if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
+                                                    if(value.getString("status").equals("accepted")) {
+                                                        String sentence = "Owner have already set the deliver data Isbn \n ISBN = " + isbnHere1;
+                                                        Toast toast = Toast.makeText(BorrowerHomepage.this,
+                                                                sentence, Toast.LENGTH_LONG);
+                                                        toast.show();
+                                                    }
+                                                }
+                                            }
+                                            if(value.getString("status").equals("accepted")){
+                                                if(value.get("time") == null){
+                                                    if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
+                                                        String sentence = "Owner have accepted you request \n ISBN = " + isbnHere1;
+                                                        Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
+                                                        toast.show();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+                                    listenerRegistrations.add(listenerRegistration);
+                                    Isbns.add(isbnHere1);
+                                }
+                            }
+
+                            break;
+                        case REMOVED:
+                            System.out.println("Removed city: " + dc.getDocument().getData());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
     }
+
 
 
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {

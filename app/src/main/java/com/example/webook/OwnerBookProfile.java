@@ -5,6 +5,7 @@ package com.example.webook;
  */
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,8 +36,6 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView owned_by;
     private TextView borrowed_by;
     private TextView book_status_text;
-    private Button requestButton;
-    private Button ownerEditBookButton;
     private String status;
     private Owner owner;
     private DataBaseManager dataBaseManager;
@@ -47,12 +47,15 @@ public class OwnerBookProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_book_profile);
 
+        Button requestButton = findViewById(R.id.owner_requests_list_button);
+        Button ownerEditBookButton = findViewById(R.id.owner_edit_book_button);
+        Button ownerDeleteBookButton = findViewById(R.id.owner_delete_book_button);
+
         dataBaseManager = new DataBaseManager();
         title_text = findViewById(R.id.book_profile_title);
         author_text = findViewById(R.id.book_profile_author);
         isbn_text = findViewById(R.id.book_profile_ISBN);
-        requestButton = findViewById(R.id.owner_requests_list_button);
-        ownerEditBookButton = findViewById(R.id.owner_edit_book_button);
+
         owned_by = findViewById(R.id.book_profile_owner_text);
         borrowed_by = findViewById(R.id.book_profile_borrower_text);
         book_status_text = findViewById(R.id.book_profile_status_text);
@@ -127,6 +130,22 @@ public class OwnerBookProfile extends AppCompatActivity {
                     intent3.putExtra("user",owner);
                     startActivity(intent3);
                 }
+            }
+        });
+        ownerDeleteBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(OwnerBookProfile.this)
+                        .setMessage("Are you sure you want to delete this book?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dataBaseManager.deleteBook(OwnerBookProfile.this, selectBook.getISBN());
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel", null);
+                alertDialog.show();
             }
         });
         dataBaseManager.BookProfileAddUserSnapShotListener(OwnerBookProfile.this, isbn_text.getText().toString());

@@ -608,7 +608,9 @@ public class DataBaseManager {
         bookRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                updateBookInfo(value, ownerBookProfile);
+                if (value.exists()){
+                    updateBookInfo(value, ownerBookProfile);
+                }
             }
         });
     }
@@ -671,6 +673,25 @@ public class DataBaseManager {
             }
         });
 
+    }
+
+    public void deleteBook(final OwnerBookProfile ownerBookProfile, String isbn){
+        db.collection("books").document(isbn)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast toast = Toast.makeText(ownerBookProfile, "Deleted successfully", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast toast = Toast.makeText(ownerBookProfile, "Delete failed", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
     }
 
 }

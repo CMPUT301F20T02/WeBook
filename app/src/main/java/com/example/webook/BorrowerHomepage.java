@@ -65,6 +65,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                 Intent intent = new Intent(BorrowerHomepage.this, BorrowerSearch.class);
                 intent.putExtra("borrower",borrower);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
 

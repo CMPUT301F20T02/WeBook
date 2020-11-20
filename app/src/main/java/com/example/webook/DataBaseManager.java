@@ -1,5 +1,6 @@
 package com.example.webook;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -78,12 +79,14 @@ public class DataBaseManager {
                             owner.setBookList((ArrayList<String>) document.get("bookList"));
                             intent.putExtra("user", owner);
                             mainActivity.startActivity(intent);
+                            ((Activity)mainActivity).overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                         }else if (document.getString("userType").equals("borrower")) {
                             intent = new Intent(mainActivity, BorrowerHomepage.class);
                             Borrower borrower = new Borrower(username, document.getString("email"),
                                     document.getString("phoneNumber"), document.getString("pwd"), document.getString("description"), document.getString("user_image"));
                             intent.putExtra("user", borrower);
                             mainActivity.startActivity(intent);
+                            ((Activity)mainActivity).overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                         }
                     } else {
                     }
@@ -456,6 +459,7 @@ public class DataBaseManager {
                         Toast toast = Toast.makeText(signUpActivity, "Sign up successful!", Toast.LENGTH_SHORT);
                         toast.show();
                         signUpActivity.finish();
+                        ((Activity)signUpActivity).overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
                 }
             }
@@ -490,6 +494,7 @@ public class DataBaseManager {
                         Toast toast = Toast.makeText(signUpActivity, "Sign up successful!", Toast.LENGTH_SHORT);
                         toast.show();
                         signUpActivity.finish();
+                        ((Activity)signUpActivity).overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
                     }
                 }
             }

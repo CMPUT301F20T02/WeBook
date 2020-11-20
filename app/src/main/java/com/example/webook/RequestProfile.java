@@ -2,6 +2,7 @@ package com.example.webook;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class RequestProfile extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 4;
     private MapView mapView;
@@ -46,7 +52,9 @@ public class RequestProfile extends AppCompatActivity {
     private TextView status;
     private Button scan;
     private Marker marker;
+    private TextView date;
     private  LatLng locationSelected;
+    private Calendar myCalendar; //initialize a calender object
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +67,19 @@ public class RequestProfile extends AppCompatActivity {
         address = findViewById(R.id.Address);
         status = findViewById(R.id.Status);
         scan = findViewById(R.id.Scan);
+        date = findViewById(R.id.Date);
+        myCalendar = Calendar.getInstance();
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(RequestProfile.this, date_c, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
         mapView.onCreate(savedInstanceState);
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
         Intent intent1 = getIntent();
@@ -106,6 +127,28 @@ public class RequestProfile extends AppCompatActivity {
     }
 
 
+
+
+    DatePickerDialog.OnDateSetListener date_c = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        } // set the  listener of the calender
+
+
+    };
+
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        date.setText(sdf.format(myCalendar.getTime()));
+    } // set the date format
 
 
 
@@ -158,9 +201,13 @@ public class RequestProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode== 1) {
             if(resultCode == RESULT_OK){
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
                 Double latitude =  (Double) data.getSerializableExtra("latitude");
                 Double longitude =  (Double) data.getSerializableExtra("longitude");
                 if(latitude != null) {
+                    Location location = new Location("tem");
+                    location.setLatitude(latitude);
+                    location.setLongitude(longitude);
                     LatLng latLng =  new LatLng(latitude,longitude);
                     if(marker != null) {
                         marker.remove();
@@ -170,6 +217,8 @@ public class RequestProfile extends AppCompatActivity {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     String text = "latitude: " + Double.toString(latitude) + "\n" + "longitude: " + Double.toString(longitude);
                     address.setText(text);
+                    String tem_isbn = (String)isbn.getText();
+                    db.collection("requests").document(tem_isbn).update("geoLocation",location);
                 }
             }
         }

@@ -45,6 +45,7 @@ public class SimpleMapViewActivity extends AppCompatActivity {
     private Marker marker;
     private  LatLng locationSelected;
     private Button confirm;
+    private Location location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,11 +84,12 @@ public class SimpleMapViewActivity extends AppCompatActivity {
                         }
                     });
 
-                    Location location = locationManager.getLastKnownLocation(locationManager
-                            .getBestProvider(criteria, false));
-                    if(location == null) {
-                        System.out.println("fuck!!!!!!!");
+
+                    while(location == null) {
+                    location = locationManager.getLastKnownLocation(locationManager
+                                .getBestProvider(criteria, false));
                     }
+
                     LatLng now = new LatLng(location.getLatitude(), location.getLongitude());
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(now,18));
                 }

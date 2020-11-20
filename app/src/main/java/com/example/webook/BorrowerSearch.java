@@ -42,7 +42,7 @@ public class BorrowerSearch extends AppCompatActivity {
         searchUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BorrowerSearch.this, BorrowerSearchUserPage.class);
+                Intent intent = new Intent(BorrowerSearch.this, BorrowerRequestDelivery.class);
                 String search = newSearch.getText().toString();
                 intent.putExtra(EXTRA_MESSAGE, search);
                 startActivity(intent);

@@ -39,6 +39,7 @@
         <activity android:name=".OwnerBookProfileBookEdit"/>
         <activity android:name=".SimpleMapViewActivity" />
         <activity android:name=".RequestProfile" />
+        <activity android:name=".BorrowerRequestDelivery" />
         <activity android:name=".MainActivity">
 
             <intent-filter>

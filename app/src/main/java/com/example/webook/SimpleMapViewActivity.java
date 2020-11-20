@@ -45,13 +45,15 @@ public class SimpleMapViewActivity extends AppCompatActivity {
     private Marker marker;
     private  LatLng locationSelected;
     private Button confirm;
+    private Button cancel;
     private Location location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tem);
         mapView = findViewById(R.id.mapView);
-        confirm = findViewById(R.id.button5);
+        confirm = findViewById(R.id.map_confirm_button);
+        cancel = findViewById(R.id.map_cancel_button);
         mapView.onCreate(savedInstanceState);
         getLocationPermission();
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
@@ -116,6 +118,13 @@ public class SimpleMapViewActivity extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                     finish();
                 }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

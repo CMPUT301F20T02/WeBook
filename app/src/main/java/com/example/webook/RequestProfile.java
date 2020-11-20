@@ -58,16 +58,16 @@ public class RequestProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acticity_request_profile_owner);
-        mapView = findViewById(R.id.mapView2);
-        title = findViewById(R.id.Title);
-        isbn  = findViewById(R.id.ISBN);
-        owner = findViewById(R.id.Owner);
-        borrower = findViewById(R.id.Borrower);
-        address = findViewById(R.id.Address);
-        status = findViewById(R.id.Status);
-        scan = findViewById(R.id.Scan);
-        date = findViewById(R.id.Date);
+        setContentView(R.layout.request_profile_borrower_deliver);
+        mapView = findViewById(R.id.deliver_location_map);
+        title = findViewById(R.id.request_profile_book_title);
+        isbn  = findViewById(R.id.request_profile_owner);
+//        owner = findViewById(R.id.Owner);
+        borrower = findViewById(R.id.request_profile_borrower);
+        address = findViewById(R.id.location_instruction);
+        status = findViewById(R.id.request_profile_status);
+        scan = findViewById(R.id.request_profile_deliver_scan);
+        date = findViewById(R.id.deliver_date);
         myCalendar = Calendar.getInstance();
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,7 @@ public class RequestProfile extends AppCompatActivity {
         String book_isbn = "ISBN: " + intent1.getStringExtra("isbn");
         String book_title = "Title: " + intent1.getStringExtra("book_title");
         String book_status = "Status: accepted";
-        owner.setText(owner_name);
+//        owner.setText(owner_name);
         borrower.setText(borrower_name);
         isbn.setText(book_isbn);
         title.setText(book_title);

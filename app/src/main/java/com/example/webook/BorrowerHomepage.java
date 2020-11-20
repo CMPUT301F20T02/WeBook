@@ -150,7 +150,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                     if(value.getString("status").equals("accepted")){
                                         if(value.get("time") == null){
                                             if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
-                                                String sentence = "Owner have accepted you request \n ISBN = " + bookRequest.getBook().getISBN();
+                                                String sentence = "Owner have accepted you request  ISBN = " + bookRequest.getBook().getISBN();
                                                 Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
                                                 toast.show();
                                             }

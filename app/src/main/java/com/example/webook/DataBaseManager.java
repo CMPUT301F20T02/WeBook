@@ -280,7 +280,10 @@ public class DataBaseManager {
         TAG = "";
         collectionReference
                 .document(newRequest.getBook().getISBN())
-                .update("requester", FieldValue.arrayUnion(borrower.getUsername()))
+                .update(
+                        "requester", FieldValue.arrayUnion(borrower.getUsername()),
+                        "book.status", "requested"
+                )
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -291,9 +294,12 @@ public class DataBaseManager {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         collectionReference.document(newRequest.getBook().getISBN()).set(newRequest);
+
+                        db.collection("requests").document(newRequest.getBook().getISBN()).update(
+                                "book.status", "requested"
+                        );
                         Log.d(TAG, "Data addition failed" + e.toString());
-                        db.collection("requests").document(newRequest.getBook().getISBN())
-                                .set(newRequest);
+
                         db.collection("books").document(newRequest.getBook().getISBN())
                                 .update(
                                         "status", "requested"
@@ -621,6 +627,51 @@ public class DataBaseManager {
         bookRef.update("description",des);
         bookRef.update("title",title);
         bookRef.update("author", author);
+    }
+
+    public void BorrowerHomepageBookAddSnapShotListener(final BorrowerHomepage borrowerHomepage, final String username){
+        db.collection("books")
+                .whereEqualTo("borrower", username)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        List<DocumentSnapshot> documents = value.getDocuments();
+                        ArrayList<Book> books = new ArrayList<>();
+                        for (int i = 0; i < documents.size(); i++){
+                            Book temp = documents.get(i).toObject(Book.class);
+                            books.add(temp);
+                        }
+                        borrowerHomepage.setBorrowedBooks(books);
+                        borrowerHomepage.updateAllBooks();
+
+                    }
+                });
+        db.collection("requests").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    QuerySnapshot snapshot = task.getResult();
+                    List<DocumentSnapshot> documents = snapshot.getDocuments();
+                    ArrayList<Book> requestedBooks = new ArrayList<>();
+                    ArrayList<Book> acceptedBooks = new ArrayList<>();
+                    for (int i = 0; i < documents.size(); i++){
+                        BookRequest request = documents.get(i).toObject(BookRequest.class);
+                        ArrayList<String> requester = request.getRequester();
+                        if (request.getStatus().equals("pending") && requester.contains(username)){
+                            requestedBooks.add(request.getBook());
+                            System.out.println("pending "+request.getBook().getTitle() );
+                        }else if (request.getStatus().equals("accepted") && requester.contains(username)){
+                            acceptedBooks.add(request.getBook());
+                            System.out.println("accepted "+ request.getBook().getTitle());
+                        }
+                    }
+                    borrowerHomepage.setRequestedBooks(requestedBooks);
+                    borrowerHomepage.setAcceptedBooks(acceptedBooks);
+                    borrowerHomepage.updateAllBooks();
+                }
+            }
+        });
+
     }
 
 }

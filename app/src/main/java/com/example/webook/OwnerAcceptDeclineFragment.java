@@ -102,7 +102,8 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
                         db.collection("requests").document(selectRequest.getBook().getISBN())
                                 .update(
                                         "requester", acceptRequester,
-                                        "status", "accepted"
+                                        "status", "accepted",
+                                        "book.status", "accepted"
                                 );
                         db.collection("books").document(selectRequest.getBook().getISBN())
                                 .update(

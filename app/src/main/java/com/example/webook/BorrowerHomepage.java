@@ -133,7 +133,7 @@ public class BorrowerHomepage extends AppCompatActivity {
         });
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("requests").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        /*db.collection("requests").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
@@ -143,6 +143,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                         final BookRequest bookRequest = list.get(i).toObject(BookRequest.class);
                         final String isbnHere = bookRequest.getBook().getISBN();
                         if(bookRequest.getRequester().contains(borrower.getUsername())){
+                            System.out.println("goosdsasdasdd");
                             ListenerRegistration listenerRegistration = db.collection("requests").document(bookRequest.getBook().getISBN()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                 @Override
                                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -173,7 +174,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
         db.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
@@ -217,6 +218,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                 });
                                 listenerRegistrations.add(listenerRegistration);
                                 Isbns.add(isbnHere);
+                                System.out.println("ncie");
                             }
                             break;
                         case MODIFIED:
@@ -255,6 +257,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                             }
                                         }
                                     });
+                                    System.out.println("good");
                                     listenerRegistrations.add(listenerRegistration);
                                     Isbns.add(isbnHere1);
                                 }

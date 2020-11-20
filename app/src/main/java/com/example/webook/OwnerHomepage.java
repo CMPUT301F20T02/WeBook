@@ -69,6 +69,7 @@ public class OwnerHomepage extends AppCompatActivity {
                 Intent intent = new Intent(OwnerHomepage.this, OwnerRequestPageActivity.class);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 
@@ -79,6 +80,7 @@ public class OwnerHomepage extends AppCompatActivity {
                 Intent intent = new Intent(OwnerHomepage.this, OwnerProfileActivity.class);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 
@@ -88,6 +90,7 @@ public class OwnerHomepage extends AppCompatActivity {
                 Intent intent = new Intent(OwnerHomepage.this, OwnerRequestPageActivity.class);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 
@@ -156,6 +159,7 @@ public class OwnerHomepage extends AppCompatActivity {
                 intent.putExtra("selectBook", selectBook);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
 
         });

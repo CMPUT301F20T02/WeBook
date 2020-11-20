@@ -49,6 +49,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(OwnerProfileActivity.this, AddBookActivity.class);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
 
@@ -58,6 +59,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(OwnerProfileActivity.this, EditUserProfileActivity.class);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
 

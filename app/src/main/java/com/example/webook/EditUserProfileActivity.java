@@ -69,6 +69,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 String descriptionText = description.getText().toString();
                 dataBaseManager.updateInfo(user.getUsername(), phoneText, emailText, descriptionText);
                 finish();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
 
@@ -76,6 +77,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
 

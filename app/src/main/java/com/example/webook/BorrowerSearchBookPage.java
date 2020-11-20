@@ -56,6 +56,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                 intent.putExtra(EXTRA_MESSAGE, book);
                 intent.putExtra("borrower", borrower);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
     }

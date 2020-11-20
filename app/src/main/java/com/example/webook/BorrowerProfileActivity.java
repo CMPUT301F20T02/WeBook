@@ -43,6 +43,7 @@ public class BorrowerProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(BorrowerProfileActivity.this, EditUserProfileActivity.class);
                 intent.putExtra("user", borrower);
                 startActivity(intent);
+
             }
         });
 

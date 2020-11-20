@@ -40,6 +40,7 @@
         <activity android:name=".SimpleMapViewActivity" />
         <activity android:name=".RequestProfile" />
         <activity android:name=".BorrowerRequestDelivery" />
+        <activity android:name=".TimePickerActivity" />
         <activity android:name=".MainActivity">
 
             <intent-filter>

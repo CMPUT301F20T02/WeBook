@@ -10,8 +10,8 @@ public abstract class Request implements Serializable{
     private ArrayList<String> requester;
     private String requestee;
     private Book book;
-    private Location geoLocation;
-    private Date date;
+    private ArrayList<Double> geoLocation;
+    private ArrayList<Integer> date;
 
     /**
      * Constructor of the request with no parameter.
@@ -27,7 +27,7 @@ public abstract class Request implements Serializable{
      * @param date
      * @param geoLocation
      */
-    public Request(Book book, String requestee, ArrayList<String> requester, Date date, Location geoLocation){
+    public Request(Book book, String requestee, ArrayList<String> requester, ArrayList<Integer> date, ArrayList<Double> geoLocation){
         this.book = book;
         this.requestee = requestee;
         this.requester = requester;
@@ -64,7 +64,7 @@ public abstract class Request implements Serializable{
      * this function will be achieve later.
      * @return return a location
      */
-    public Location getGeoLocation() {
+    public ArrayList<Double> getGeoLocation() {
         return geoLocation;
     }
 
@@ -72,7 +72,7 @@ public abstract class Request implements Serializable{
      * get the date when borrower and owner transfer the book.
      * @return return a date
      */
-    public Date getDate() {
+    public ArrayList<Integer> getDate() {
         return date;
     }
 
@@ -80,7 +80,7 @@ public abstract class Request implements Serializable{
      * setter of the location where owner and borrower transfer the book.
      * @param geoLocation
      */
-    public void setGeoLocation(Location geoLocation) {
+    public void setGeoLocation(ArrayList<Double> geoLocation) {
         this.geoLocation = geoLocation;
     }
 
@@ -88,7 +88,7 @@ public abstract class Request implements Serializable{
      * setter of the date when owner and borrower transfer the book.
      * @param date
      */
-    public void setDate(Date date) {
+    public void setDate(ArrayList<Integer> date) {
         this.date = date;
     }
 }

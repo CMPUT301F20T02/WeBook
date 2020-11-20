@@ -1,0 +1,124 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.webook\">\r\n\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <meta-data\r\n            android:name=\"com.google.android.geo.API_KEY\"\r\n            android:value=\"AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw\"/>\r\n        <meta-data\r\n            android:name=\"com.google.android.gms.version\"\r\n            android:value=\"@integer/google_play_services_version\" />\r\n\r\n        <activity android:name=\".SignUpActivity\"></activity>\r\n        <activity android:name=\".OwnerRequestPageActivity\"></activity>\r\n        <activity android:name=\".CodeScanner\" />\r\n        <activity android:name=\".ShowUserDetail\" />\r\n        <activity android:name=\".BorrowerBookProfile\" />\r\n        <activity android:name=\".BorrowerSearch\" />\r\n        <activity android:name=\".BorrowerSearchBookPage\" />\r\n        <activity android:name=\".BorrowerSearchUserPage\" />\r\n        <activity android:name=\".SameBookRequestList\" />\r\n        <activity android:name=\".OwnerBookProfile\" />\r\n        <activity android:name=\".BorrowerProfileActivity\" />\r\n        <activity android:name=\".EditUserProfileActivity\" />\r\n        <activity android:name=\".AddBookActivity\" />\r\n        <activity android:name=\".OwnerProfileActivity\" />\r\n        <activity android:name=\".BorrowerHomepage\" />\r\n        <activity android:name=\".OwnerHomepage\" />\r\n        <activity android:name=\".OwnerBookProfileBookEdit\"/>\r\n        <activity android:name=\".SimpleMapViewActivity\" />\r\n        <activity android:name=\".RequestProfile\" />\r\n        <activity android:name=\".BorrowerRequestDelivery\" />\r\n        <activity android:name=\".MainActivity\">\r\n\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 702ca8733346b781f6fced65e74ed2905a1fd760)
++++ app/src/main/AndroidManifest.xml	(date 1605842338752)
+@@ -40,6 +40,7 @@
+         <activity android:name=".SimpleMapViewActivity" />
+         <activity android:name=".RequestProfile" />
+         <activity android:name=".BorrowerRequestDelivery" />
++        <activity android:name=".TimePickerActivity" />
+         <activity android:name=".MainActivity">
+ 
+             <intent-filter>
+Index: app/src/main/java/com/example/webook/BorrowerSearch.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webook;\r\n\r\nimport android.content.Intent;\r\nimport android.location.Location;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n/**\r\n * This activity shows search interface when search is clicked on the borrower homepage\r\n * Borrower click on Books or Users to chose search type and jump to next activity\r\n */\r\npublic class BorrowerSearch extends AppCompatActivity {\r\n    public static final String EXTRA_MESSAGE = \"com.example.BorrowerSearch.MESSAGE\";\r\n    private Borrower borrower;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.search_page);\r\n        final EditText newSearch = findViewById(R.id.search_input);\r\n        // User press back in search page, back to main activity\r\n        // User choose to search books\r\n        final Button searchBook = findViewById(R.id.search_choose_books);\r\n        Intent intent = getIntent();\r\n        borrower = (Borrower)intent.getSerializableExtra(\"borrower\");\r\n\r\n        searchBook.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent(BorrowerSearch.this, BorrowerSearchBookPage.class);\r\n                String search = newSearch.getText().toString();\r\n                intent.putExtra(EXTRA_MESSAGE, search);\r\n                intent.putExtra(\"borrower\", borrower);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        // User choose to search users\r\n        final Button searchUser = findViewById(R.id.search_choose_users);\r\n        searchUser.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent intent = new Intent(BorrowerSearch.this, BorrowerRequestDelivery.class);\r\n                String search = newSearch.getText().toString();\r\n                intent.putExtra(EXTRA_MESSAGE, search);\r\n                startActivity(intent);\r\n                //startActivity(intent);\r\n            }\r\n        });\r\n\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/webook/BorrowerSearch.java	(revision 702ca8733346b781f6fced65e74ed2905a1fd760)
++++ app/src/main/java/com/example/webook/BorrowerSearch.java	(date 1605842260101)
+@@ -42,7 +42,7 @@
+         searchUser.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                Intent intent = new Intent(BorrowerSearch.this, BorrowerRequestDelivery.class);
++                Intent intent = new Intent(BorrowerSearch.this, TimePickerActivity.class);
+                 String search = newSearch.getText().toString();
+                 intent.putExtra(EXTRA_MESSAGE, search);
+                 startActivity(intent);
+Index: app/src/main/res/layout/tem2.xml
+===================================================================
+--- app/src/main/res/layout/tem2.xml	(date 1605842935398)
++++ app/src/main/res/layout/tem2.xml	(date 1605842935398)
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <TimePicker
++        android:id="@+id/timePicker1"
++        android:layout_width="430dp"
++        android:layout_height="626dp"
++        android:layout_marginBottom="32dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <Button
++        android:id="@+id/SetTime"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginBottom="32dp"
++        android:text="Set Time"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/webook/TimePickerActivity.java
+===================================================================
+--- app/src/main/java/com/example/webook/TimePickerActivity.java	(date 1605844462929)
++++ app/src/main/java/com/example/webook/TimePickerActivity.java	(date 1605844462929)
+@@ -0,0 +1,51 @@
++package com.example.webook;
++
++import android.content.res.Resources;
++import android.os.Bundle;
++import android.text.NoCopySpan;
++import android.view.View;
++import android.widget.Button;
++import android.widget.TimePicker;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import java.util.Calendar;
++
++public class TimePickerActivity extends AppCompatActivity {
++    private TimePicker timePicker;
++    private Button setTime;
++    private String format = "";
++    private Calendar calendar;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.tem2);
++        timePicker = (TimePicker)findViewById(R.id.timePicker1);
++        setTime = findViewById(R.id.SetTime);
++        calendar = Calendar.getInstance();
++
++        setTime.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                int hour = timePicker.getHour();
++                int min = timePicker.getMinute();
++                System.out.println(showTime(hour, min));
++            }
++        });
++    }
++    public String showTime(int hour, int min) {
++        if (hour == 0) {
++            hour += 12;
++            format = "AM";
++        } else if (hour == 12) {
++            format = "PM";
++        } else if (hour > 12) {
++            hour -= 12;
++            format = "PM";
++        } else {
++            format = "AM";
++        }
++        String finalTime = new StringBuilder().append(hour).append(" : ").append(min).append(" ").append(format).toString();
++        return  finalTime;
++    }
++}

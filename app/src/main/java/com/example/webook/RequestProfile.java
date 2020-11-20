@@ -63,11 +63,11 @@ public class RequestProfile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.request_profile_borrower_deliver);
+        setContentView(R.layout.request_profile_owner_deliver);
         mapView = findViewById(R.id.deliver_location_map);
         title = findViewById(R.id.request_profile_book_title);
-        isbn  = findViewById(R.id.request_profile_owner);
-//        owner = findViewById(R.id.Owner);
+        isbn  = findViewById(R.id.request_profile_ISBN);
+        owner = findViewById(R.id.request_profile_owner);
         borrower = findViewById(R.id.request_profile_borrower);
         address = findViewById(R.id.location_instruction);
         status = findViewById(R.id.request_profile_status);
@@ -102,7 +102,7 @@ public class RequestProfile extends AppCompatActivity {
         String book_isbn = "ISBN: " + isbn_base;
         String book_title = "Title: " + intent1.getStringExtra("book_title");
         String book_status = "Status: accepted";
-//        owner.setText(owner_name);
+        owner.setText(owner_name);
         borrower.setText(borrower_name);
         isbn.setText(book_isbn);
         title.setText(book_title);

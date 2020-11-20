@@ -73,19 +73,6 @@ public class OwnerHomepage extends AppCompatActivity {
         });
 
 
-        books.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("printed here "+ owner.getBookList().toString());
-                for (int i = 0; i < 29; i++){
-                    System.out.println(bookArrayList.get(i).getTitle());
-                }
-                bookList = new BookList( OwnerHomepage.this, bookArrayList);
-                bookListView.setAdapter(bookList);
-                bookList.notifyDataSetChanged();
-            }
-        });
-
         me.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

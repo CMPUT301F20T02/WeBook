@@ -26,7 +26,7 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
         setContentView(R.layout.activity_requests_same_book_list);
         sameBookRequestList = findViewById(R.id.same_book_request_list);
         dataList = new ArrayList<BookRequest>();
-        bookAdapter = new RequestList(this,dataList, 1);
+        bookAdapter = new RequestList(this, dataList, null, 0);
         sameBookRequestList.setAdapter(bookAdapter);
         final Intent intent = getIntent();
         selectBook = (Book) intent.getSerializableExtra("selectBook");
@@ -64,5 +64,6 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
     @Override
     public void onDeclinePressed(){
         dataBaseManager.declinePressed(selectBook.getISBN(),this);
+
     }
 }

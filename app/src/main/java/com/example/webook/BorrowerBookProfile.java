@@ -74,12 +74,12 @@ public class BorrowerBookProfile extends AppCompatActivity {
         borrower = (Borrower) intent.getSerializableExtra("borrower");
         requesterList = new ArrayList<>();
         requesterList.add(borrower.getUsername());
-            requestButton.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v) {
-                    final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
-                    dataBaseManager.sendBookRequest(newRequest,borrower);
-                    finish();
-                }
-            });
+        requestButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+            final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
+            dataBaseManager.sendBookRequest(newRequest,borrower);
+            finish();
+            }
+        });
     }
 }

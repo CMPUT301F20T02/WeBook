@@ -24,6 +24,8 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
     private ArrayList<BookRequest> acceptedRequests;
     private ArrayList<BookRequest> borrowedRequests;
     private DataBaseManager dataBaseManager;
+    private ArrayList<String> borrowedList;
+    private ArrayList<String> acceptedList;
     private String currentView = "pending";
 
 
@@ -50,10 +52,12 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         TextView pending = findViewById(R.id.owner_request_pending);
         TextView accepted = findViewById(R.id.owner_request_accepted);
         TextView borrowed = findViewById(R.id.owner_request_borrowed);
+        borrowedList = new ArrayList<>();
+        acceptedList = new ArrayList<>();
 
-        requestListPending = new RequestList(this, pendingRequests, 0);
-        requestListAccepted = new RequestList(this, acceptedRequests, 1);
-        requestListBorrowed = new RequestList(this, borrowedRequests, 1);
+        requestListPending = new RequestList(this, pendingRequests, null, 2);
+        requestListAccepted = new RequestList(this, acceptedRequests, acceptedList, 1);
+        requestListBorrowed = new RequestList(this, borrowedRequests, borrowedList, 1);
         dataBaseManager.OwnerRequestPageRequestSnapShotListener(this, owner.getUsername());
 
         requestListView.setAdapter(requestListPending);
@@ -153,20 +157,19 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         for (int i = 0; i < this.requestArrayList.size(); i++){
             if (requestArrayList.get(i).getStatus().equals("pending")){
                 pendingRequests.add(requestArrayList.get(i));
-
             }
         }
-        System.out.println("pending size" + pendingRequests.size());
         requestListPending.notifyDataSetChanged();
 
     }
 
     public void getAccepted(){
         this.acceptedRequests.clear();
+        this.acceptedList.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
             if (requestArrayList.get(i).getStatus().equals("accepted")){
                 acceptedRequests.add(requestArrayList.get(i));
-
+                acceptedList.add(requestArrayList.get(i).getRequester().get(0));
             }
         }
         requestListAccepted.notifyDataSetChanged();
@@ -175,10 +178,11 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
 
     public void getBorrowed(){
         this.borrowedRequests.clear();
+        this.borrowedList.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
             if (requestArrayList.get(i).getStatus().equals("borrowed")){
                 borrowedRequests.add(requestArrayList.get(i));
-
+                borrowedList.add(requestArrayList.get(i).getRequester().get(0));
             }
         }
         requestListBorrowed.notifyDataSetChanged();

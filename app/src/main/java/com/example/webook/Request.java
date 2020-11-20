@@ -13,6 +13,7 @@ public abstract class Request implements Serializable{
     private ArrayList<Double> geoLocation;
     private ArrayList<Integer> date;
 
+
     /**
      * Constructor of the request with no parameter.
      * @param
@@ -28,6 +29,7 @@ public abstract class Request implements Serializable{
      * @param geoLocation
      */
     public Request(Book book, String requestee, ArrayList<String> requester, ArrayList<Integer> date, ArrayList<Double> geoLocation){
+
         this.book = book;
         this.requestee = requestee;
         this.requester = requester;

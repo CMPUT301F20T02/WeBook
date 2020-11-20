@@ -275,7 +275,7 @@ public class DataBaseManager {
      * @param borrower
      * These are request infomation and the user who send this request
      */
-    public void sendBookRequest(final Request newRequest, Borrower borrower){
+    public void sendBookRequest(final Request newRequest, final Borrower borrower){
         collectionReference = db.collection("requests");
         TAG = "";
         collectionReference
@@ -288,6 +288,37 @@ public class DataBaseManager {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "Data has been added successfully!");
+                        db.collection("users").document(newRequest.getBook().getOwner()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                System.out.println("in onComplete");
+                                if (task.isSuccessful()) {
+                                    System.out.println("in first if");
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    if (documentSnapshot.exists()){
+                                        System.out.println("in second if");
+                                        ArrayList<String> requestList = (ArrayList<String>) documentSnapshot.get("requestList");
+                                        requestList.add(newRequest.getBook().getISBN());
+                                        db.collection("users").document(newRequest.getBook().getOwner())
+                                                .update(
+                                                        "requestList", requestList
+                                                )
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        System.out.println("haha");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        System.out.println("fuck");
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -304,6 +335,35 @@ public class DataBaseManager {
                                 .update(
                                         "status", "requested"
                                 );
+                        db.collection("users").document(newRequest.getBook().getOwner()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                System.out.println("in onComplete");
+                                if (task.isSuccessful()) {
+                                    System.out.println("in first if");
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    if (documentSnapshot.exists()){
+                                        System.out.println("in second if");
+                                        ArrayList<String> requestList = (ArrayList<String>) documentSnapshot.get("requestList");
+                                        requestList.add(newRequest.getBook().getISBN());
+                                        db.collection("users").document(newRequest.getBook().getOwner())
+                                                .update(
+                                                        "requestList", requestList
+                                                )
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                    }
+                                                });
+                                    }
+                                }
+                            }
+                        });
                     }
                 });
     }

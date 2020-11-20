@@ -196,7 +196,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                                 if(value.getString("status").equals("accepted")) {
                                                     BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
                                                     Book bookHere = requestHere.getBook();
-                                                    String sentence = "Owner have already set the deliver data Isbn \n ISBN = " + bookHere.getISBN();
+                                                    String sentence = "Owner have already set the deliver data Isbn \n Book: " + bookHere.getTitle();
                                                     Toast toast = Toast.makeText(BorrowerHomepage.this,
                                                             sentence, Toast.LENGTH_LONG);
                                                     toast.show();
@@ -208,7 +208,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                                 if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
                                                     BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
                                                     Book bookHere = requestHere.getBook();
-                                                    String sentence = "Owner have accepted you request \n ISBN = " + bookHere.getISBN();
+                                                    String sentence = "Owner have accepted you request \n Book: " + bookHere.getTitle();
                                                     Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
                                                     toast.show();
                                                 }
@@ -223,6 +223,8 @@ public class BorrowerHomepage extends AppCompatActivity {
                             break;
                         case MODIFIED:
                             final String isbnHere1 = dc.getDocument().getId();
+                            final BookRequest bookRequestHere = dc.getDocument().toObject(BookRequest.class);
+                            final Book bookHere = bookRequestHere.getBook();
                             if(Isbns.contains(isbnHere1)) {
                                 if (!((ArrayList<String>) dc.getDocument().get("requester")).contains(borrower.getUsername())) {
                                     int index = Isbns.indexOf(isbnHere1);
@@ -239,7 +241,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                             if(value.get("time") != null){
                                                 if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
                                                     if(value.getString("status").equals("accepted")) {
-                                                        String sentence = "Owner have already set the deliver data Isbn \n ISBN = " + isbnHere1;
+                                                        String sentence = "Owner have already set the deliver data Isbn \n Book: " + bookHere.getTitle();
                                                         Toast toast = Toast.makeText(BorrowerHomepage.this,
                                                                 sentence, Toast.LENGTH_LONG);
                                                         toast.show();
@@ -249,7 +251,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                             if(value.getString("status").equals("accepted")){
                                                 if(value.get("time") == null){
                                                     if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
-                                                        String sentence = "Owner have accepted you request \n ISBN = " + isbnHere1;
+                                                        String sentence = "Owner have accepted you request \n Book: " + bookHere.getTitle();
                                                         Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
                                                         toast.show();
                                                     }

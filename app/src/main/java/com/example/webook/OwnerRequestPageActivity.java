@@ -73,16 +73,8 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
                     startActivity(intent);
                 }else if (currentView.equals("accepted")){
                     selectRequest = acceptedRequests.get(position);
-                    String isbn_text = selectRequest.getBook().getISBN();
-                    String book_title = selectRequest.getBook().getTitle();
-                    String owner_name = selectRequest.getRequestee();
-                    String borrower_name = selectRequest.getRequester().get(0);
-
                     Intent intent = new Intent(OwnerRequestPageActivity.this, RequestProfile.class);
-                    intent.putExtra("isbn", isbn_text);
-                    intent.putExtra("book_title", book_title);
-                    intent.putExtra("owner_name", owner_name);
-                    intent.putExtra("borrower_name", borrower_name);
+                    intent.putExtra("request", selectRequest);
                     startActivity(intent);
 
                 }else if(currentView.equals("borrowed")){

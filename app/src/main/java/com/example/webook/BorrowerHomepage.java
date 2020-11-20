@@ -196,7 +196,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                                 if(value.getString("status").equals("accepted")) {
                                                     BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
                                                     Book bookHere = requestHere.getBook();
-                                                    String sentence = "Owner have already set the deliver data Isbn \n Book: " + bookHere.getTitle();
+                                                    String sentence = "Owner have already set the deliver data \n Book: " + bookHere.getTitle();
                                                     Toast toast = Toast.makeText(BorrowerHomepage.this,
                                                             sentence, Toast.LENGTH_LONG);
                                                     toast.show();
@@ -241,7 +241,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                             if(value.get("time") != null){
                                                 if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
                                                     if(value.getString("status").equals("accepted")) {
-                                                        String sentence = "Owner have already set the deliver data Isbn \n Book: " + bookHere.getTitle();
+                                                        String sentence = "Owner have already set the deliver data  \n Book: " + bookHere.getTitle();
                                                         Toast toast = Toast.makeText(BorrowerHomepage.this,
                                                                 sentence, Toast.LENGTH_LONG);
                                                         toast.show();

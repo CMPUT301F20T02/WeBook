@@ -1,0 +1,167 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.webook\">\r\n\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <meta-data\r\n            android:name=\"com.google.android.geo.API_KEY\"\r\n            android:value=\"AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw\"/>\r\n        <meta-data\r\n            android:name=\"com.google.android.gms.version\"\r\n            android:value=\"@integer/google_play_services_version\" />\r\n\r\n        <activity android:name=\".SignUpActivity\"></activity>\r\n        <activity android:name=\".OwnerRequestPageActivity\"></activity>\r\n        <activity android:name=\".CodeScanner\" />\r\n        <activity android:name=\".ShowUserDetail\" />\r\n        <activity android:name=\".BorrowerBookProfile\" />\r\n        <activity android:name=\".BorrowerSearch\" />\r\n        <activity android:name=\".BorrowerSearchBookPage\" />\r\n        <activity android:name=\".BorrowerSearchUserPage\" />\r\n        <activity android:name=\".SameBookRequestList\" />\r\n        <activity android:name=\".OwnerBookProfile\" />\r\n        <activity android:name=\".BorrowerProfileActivity\" />\r\n        <activity android:name=\".EditUserProfileActivity\" />\r\n        <activity android:name=\".AddBookActivity\" />\r\n        <activity android:name=\".OwnerProfileActivity\" />\r\n        <activity android:name=\".BorrowerHomepage\" />\r\n        <activity android:name=\".OwnerHomepage\" />\r\n        <activity android:name=\".OwnerBookProfileBookEdit\"/>\r\n        <activity android:name=\".SimpleMapViewActivity\" />\r\n        <activity android:name=\".RequestProfile\" />\r\n        <activity android:name=\".BorrowerRequestDelivery\" />\r\n        <activity android:name=\".MainActivity\">\r\n\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 31ddd939044fdcf45321b8197748c644ade881c6)
++++ app/src/main/AndroidManifest.xml	(date 1605845498751)
+@@ -40,6 +40,7 @@
+         <activity android:name=".SimpleMapViewActivity" />
+         <activity android:name=".RequestProfile" />
+         <activity android:name=".BorrowerRequestDelivery" />
++        <activity android:name=".TimePickerActivity" />
+         <activity android:name=".MainActivity">
+ 
+             <intent-filter>
+Index: app/src/main/java/com/example/webook/RequestProfile.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.webook;\r\n\r\nimport android.Manifest;\r\nimport android.annotation.SuppressLint;\r\nimport android.app.DatePickerDialog;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.content.pm.PackageManager;\r\nimport android.location.Criteria;\r\nimport android.location.Location;\r\nimport android.location.LocationManager;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.DatePicker;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.app.ActivityCompat;\r\nimport androidx.core.content.ContextCompat;\r\n\r\nimport com.google.android.gms.maps.CameraUpdateFactory;\r\nimport com.google.android.gms.maps.GoogleMap;\r\nimport com.google.android.gms.maps.MapView;\r\nimport com.google.android.gms.maps.OnMapReadyCallback;\r\nimport com.google.android.gms.maps.model.LatLng;\r\nimport com.google.android.gms.maps.model.Marker;\r\nimport com.google.android.gms.maps.model.MarkerOptions;\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.libraries.places.api.Places;\r\nimport com.google.android.libraries.places.api.net.PlacesClient;\r\nimport com.google.firebase.firestore.DocumentSnapshot;\r\nimport com.google.firebase.firestore.FirebaseFirestore;\r\nimport com.google.firebase.storage.FirebaseStorage;\r\n\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.Calendar;\r\nimport java.util.Locale;\r\n\r\npublic class RequestProfile extends AppCompatActivity {\r\n    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 4;\r\n    private MapView mapView;\r\n    private GoogleMap mMap;\r\n    private TextView title;\r\n    private TextView isbn;\r\n    private TextView owner;\r\n    private TextView borrower;\r\n    private TextView address;\r\n    private TextView status;\r\n    private Button scan;\r\n    private Marker marker;\r\n    private TextView date;\r\n    private  LatLng locationSelected;\r\n    private Calendar myCalendar; //initialize a calender object\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.request_profile_borrower_deliver);\r\n        mapView = findViewById(R.id.deliver_location_map);\r\n        title = findViewById(R.id.request_profile_book_title);\r\n        isbn  = findViewById(R.id.request_profile_owner);\r\n//        owner = findViewById(R.id.Owner);\r\n        borrower = findViewById(R.id.request_profile_borrower);\r\n        address = findViewById(R.id.location_instruction);\r\n        status = findViewById(R.id.request_profile_status);\r\n        scan = findViewById(R.id.request_profile_deliver_scan);\r\n        date = findViewById(R.id.deliver_date);\r\n        myCalendar = Calendar.getInstance();\r\n\r\n        date.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                new DatePickerDialog(RequestProfile.this, date_c, myCalendar\r\n                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),\r\n                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();\r\n            }\r\n        });\r\n\r\n\r\n        mapView.onCreate(savedInstanceState);\r\n        Places.initialize(getApplicationContext(), \"AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw\");\r\n        Intent intent1 = getIntent();\r\n        String owner_name = \"Owner: \" + intent1.getStringExtra(\"owner_name\");\r\n        String borrower_name = \"Borrower: \" + intent1.getStringExtra(\"borrower_name\");\r\n        String book_isbn = \"ISBN: \" + intent1.getStringExtra(\"isbn\");\r\n        String book_title = \"Title: \" + intent1.getStringExtra(\"book_title\");\r\n        String book_status = \"Status: accepted\";\r\n//        owner.setText(owner_name);\r\n        borrower.setText(borrower_name);\r\n        isbn.setText(book_isbn);\r\n        title.setText(book_title);\r\n        status.setText(book_status);\r\n        address.setText(\"Please click the map to select the deliver location.\");\r\n        mapView.getMapAsync(new OnMapReadyCallback() {\r\n            @SuppressLint(\"MissingPermission\")\r\n            @Override\r\n            public void onMapReady(final GoogleMap googleMap) {\r\n                // Add a marker in Sydney, Australia,\r\n                // and move the map's camera to the same location.\r\n                mMap = googleMap;\r\n                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {\r\n                    @Override\r\n                    public void onMapClick(LatLng latLng) {\r\n                        Intent intent = new Intent(RequestProfile.this,SimpleMapViewActivity.class);\r\n                        startActivityForResult(intent,1);\r\n                    }\r\n                });\r\n                Places.isInitialized();\r\n                LatLng xiamen = new LatLng(24.58505466160215,118.09337005019188);\r\n                googleMap.addMarker(new MarkerOptions().position(xiamen)\r\n                        .title(\"Marker in Xiamen\"));\r\n                googleMap.moveCamera(CameraUpdateFactory.newLatLng(xiamen));\r\n            }\r\n        });\r\n\r\n        scan.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n\r\n                Intent intent = new Intent(RequestProfile.this,CodeScanner.class);\r\n                startActivityForResult(intent,2);\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n\r\n\r\n    DatePickerDialog.OnDateSetListener date_c = new DatePickerDialog.OnDateSetListener() {\r\n\r\n        @Override\r\n        public void onDateSet(DatePicker view, int year, int monthOfYear,\r\n                              int dayOfMonth) {\r\n            // TODO Auto-generated method stub\r\n            myCalendar.set(Calendar.YEAR, year);\r\n            myCalendar.set(Calendar.MONTH, monthOfYear);\r\n            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);\r\n            updateLabel();\r\n        } // set the  listener of the calender\r\n\r\n\r\n    };\r\n\r\n    private void updateLabel() {\r\n        String myFormat = \"yyyy-MM-dd\"; //In which you need put here\r\n        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);\r\n        date.setText(sdf.format(myCalendar.getTime()));\r\n    } // set the date format\r\n\r\n\r\n\r\n    // Add the mapView lifecycle to the activity's lifecycle methods\r\n    @Override\r\n    public void onResume() {\r\n        super.onResume();\r\n        mapView.onResume();\r\n    }\r\n\r\n    @Override\r\n    protected void onStart() {\r\n        super.onStart();\r\n        mapView.onStart();\r\n    }\r\n\r\n    @Override\r\n    protected void onStop() {\r\n        super.onStop();\r\n        mapView.onStop();\r\n    }\r\n\r\n    @Override\r\n    public void onPause() {\r\n        super.onPause();\r\n        mapView.onPause();\r\n    }\r\n\r\n    @Override\r\n    public void onLowMemory() {\r\n        super.onLowMemory();\r\n        mapView.onLowMemory();\r\n    }\r\n\r\n    @Override\r\n    protected void onDestroy() {\r\n        super.onDestroy();\r\n        mapView.onDestroy();\r\n    }\r\n\r\n    @Override\r\n    protected void onSaveInstanceState(Bundle outState) {\r\n        super.onSaveInstanceState(outState);\r\n        mapView.onSaveInstanceState(outState);\r\n    }\r\n\r\n\r\n    @Override\r\n    public void onActivityResult(int requestCode, int resultCode, Intent data) {\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        if(requestCode== 1) {\r\n            if(resultCode == RESULT_OK){\r\n                final FirebaseFirestore db = FirebaseFirestore.getInstance();\r\n                Double latitude =  (Double) data.getSerializableExtra(\"latitude\");\r\n                Double longitude =  (Double) data.getSerializableExtra(\"longitude\");\r\n                if(latitude != null) {\r\n                    Location location = new Location(\"tem\");\r\n                    location.setLatitude(latitude);\r\n                    location.setLongitude(longitude);\r\n                    LatLng latLng =  new LatLng(latitude,longitude);\r\n                    if(marker != null) {\r\n                        marker.remove();\r\n                    }\r\n                    marker = mMap.addMarker(new MarkerOptions().position(latLng)\r\n                            .title(\"the chosen place\"));\r\n                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));\r\n                    String text = \"latitude: \" + Double.toString(latitude) + \"\\n\" + \"longitude: \" + Double.toString(longitude);\r\n                    address.setText(text);\r\n                    String tem_isbn = (String)isbn.getText();\r\n                    db.collection(\"requests\").document(tem_isbn).update(\"geoLocation\",location);\r\n                }\r\n            }\r\n        }\r\n        if (requestCode == 2){\r\n            if(resultCode == RESULT_OK){\r\n                final String code = (String) data.getSerializableExtra(\"code\");\r\n                final FirebaseFirestore db = FirebaseFirestore.getInstance();\r\n                db.collection(\"requests\").document(code).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {\r\n                        if(task.isSuccessful()){\r\n                            DocumentSnapshot documentSnapshot = task.getResult();\r\n                            if(documentSnapshot.exists()){\r\n                                BookRequest bookRequest = documentSnapshot.toObject(BookRequest.class);\r\n                                if(bookRequest.getStatus() != null){\r\n                                    if(bookRequest.getStatus().equals(\"accepted\")){\r\n                                        db.collection(\"requests\").document(code).update(\"status\",\"waiting\");\r\n                                    }\r\n                                }\r\n                            }\r\n                        }\r\n                    }\r\n                });\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/webook/RequestProfile.java	(revision 31ddd939044fdcf45321b8197748c644ade881c6)
++++ app/src/main/java/com/example/webook/RequestProfile.java	(date 1605845975146)
+@@ -53,6 +53,7 @@
+     private Button scan;
+     private Marker marker;
+     private TextView date;
++    private TextView time;
+     private  LatLng locationSelected;
+     private Calendar myCalendar; //initialize a calender object
+     @Override
+@@ -68,6 +69,7 @@
+         status = findViewById(R.id.request_profile_status);
+         scan = findViewById(R.id.request_profile_deliver_scan);
+         date = findViewById(R.id.deliver_date);
++        time = findViewById(R.id.deliver_time);
+         myCalendar = Calendar.getInstance();
+ 
+         date.setOnClickListener(new View.OnClickListener() {
+@@ -79,6 +81,13 @@
+             }
+         });
+ 
++        time.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                Intent intent = new Intent(RequestProfile.this,TimePickerActivity.class);
++                startActivityForResult(intent,3);
++            }
++        });
+ 
+         mapView.onCreate(savedInstanceState);
+         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
+@@ -242,6 +251,15 @@
+                         }
+                     }
+                 });
++            }
++        }
++        if (requestCode == 3){
++            if(resultCode == RESULT_OK){
++                final String time = (String) data.getSerializableExtra("time");
++                final FirebaseFirestore db = FirebaseFirestore.getInstance();
++                String tem_isbn = (String)isbn.getText();
++                db.document("")
++
+             }
+         }
+     }
+Index: app/src/main/java/com/example/webook/TimePickerActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/webook/TimePickerActivity.java	(date 1605844462929)
++++ app/src/main/java/com/example/webook/TimePickerActivity.java	(date 1605844462929)
+@@ -0,0 +1,51 @@
++package com.example.webook;
++
++import android.content.res.Resources;
++import android.os.Bundle;
++import android.text.NoCopySpan;
++import android.view.View;
++import android.widget.Button;
++import android.widget.TimePicker;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import java.util.Calendar;
++
++public class TimePickerActivity extends AppCompatActivity {
++    private TimePicker timePicker;
++    private Button setTime;
++    private String format = "";
++    private Calendar calendar;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.tem2);
++        timePicker = (TimePicker)findViewById(R.id.timePicker1);
++        setTime = findViewById(R.id.SetTime);
++        calendar = Calendar.getInstance();
++
++        setTime.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                int hour = timePicker.getHour();
++                int min = timePicker.getMinute();
++                System.out.println(showTime(hour, min));
++            }
++        });
++    }
++    public String showTime(int hour, int min) {
++        if (hour == 0) {
++            hour += 12;
++            format = "AM";
++        } else if (hour == 12) {
++            format = "PM";
++        } else if (hour > 12) {
++            hour -= 12;
++            format = "PM";
++        } else {
++            format = "AM";
++        }
++        String finalTime = new StringBuilder().append(hour).append(" : ").append(min).append(" ").append(format).toString();
++        return  finalTime;
++    }
++}
+Index: app/src/main/res/layout/tem2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/tem2.xml	(date 1605842935398)
++++ app/src/main/res/layout/tem2.xml	(date 1605842935398)
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <TimePicker
++        android:id="@+id/timePicker1"
++        android:layout_width="430dp"
++        android:layout_height="626dp"
++        android:layout_marginBottom="32dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <Button
++        android:id="@+id/SetTime"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginBottom="32dp"
++        android:text="Set Time"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file

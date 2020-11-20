@@ -37,7 +37,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class RequestProfile extends AppCompatActivity {
@@ -53,6 +55,9 @@ public class RequestProfile extends AppCompatActivity {
     private Button scan;
     private Marker marker;
     private TextView date;
+    private String isbn_base;
+    Date dateSelected = new Date();
+    private TextView time;
     private  LatLng locationSelected;
     private Calendar myCalendar; //initialize a calender object
     @Override
@@ -68,6 +73,7 @@ public class RequestProfile extends AppCompatActivity {
         status = findViewById(R.id.request_profile_status);
         scan = findViewById(R.id.request_profile_deliver_scan);
         date = findViewById(R.id.deliver_date);
+        time = findViewById(R.id.deliver_time);
         myCalendar = Calendar.getInstance();
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +85,21 @@ public class RequestProfile extends AppCompatActivity {
             }
         });
 
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RequestProfile.this,TimePickerActivity.class);
+                startActivityForResult(intent,3);
+            }
+        });
 
         mapView.onCreate(savedInstanceState);
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
         Intent intent1 = getIntent();
         String owner_name = "Owner: " + intent1.getStringExtra("owner_name");
         String borrower_name = "Borrower: " + intent1.getStringExtra("borrower_name");
-        String book_isbn = "ISBN: " + intent1.getStringExtra("isbn");
+        isbn_base = intent1.getStringExtra("isbn");
+        String book_isbn = "ISBN: " + isbn_base;
         String book_title = "Title: " + intent1.getStringExtra("book_title");
         String book_status = "Status: accepted";
         owner.setText(owner_name);
@@ -135,9 +149,15 @@ public class RequestProfile extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             // TODO Auto-generated method stub
+            final FirebaseFirestore db = FirebaseFirestore.getInstance();
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            ArrayList<Integer> dateSelected = new ArrayList<Integer>();
+            dateSelected.add(0,year);
+            dateSelected.add(1,monthOfYear);
+            dateSelected.add(2,dayOfMonth);
+            db.collection("requests").document(isbn_base).update("date",dateSelected);
             updateLabel();
         } // set the  listener of the calender
 
@@ -214,11 +234,14 @@ public class RequestProfile extends AppCompatActivity {
                     }
                     marker = mMap.addMarker(new MarkerOptions().position(latLng)
                             .title("the chosen place"));
+                    System.out.println("here is nice");
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     String text = "latitude: " + Double.toString(latitude) + "\n" + "longitude: " + Double.toString(longitude);
                     address.setText(text);
-                    String tem_isbn = (String)isbn.getText();
-                    db.collection("requests").document(tem_isbn).update("geoLocation",location);
+                    ArrayList<Double> latlong = new ArrayList<Double>();
+                    latlong.add(0,latitude);
+                    latlong.add(1,longitude);
+                    db.collection("requests").document(isbn_base).update("geoLocation",latlong);
                 }
             }
         }
@@ -242,6 +265,14 @@ public class RequestProfile extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        }
+        if (requestCode == 3){
+            if(resultCode == RESULT_OK){
+                final String timeChosen = (String) data.getSerializableExtra("time");
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("requests").document(isbn_base).update("time",timeChosen);
+                time.setText(timeChosen);
             }
         }
     }

@@ -447,7 +447,6 @@ public class DataBaseManager {
                         List<DocumentSnapshot> documents = value.getDocuments();
                         ArrayList<BookRequest> bookRequests = new ArrayList<>();
                         for (int i = 0; i < documents.size(); i++){
-                            System.out.println(documents.get(i).toObject(BookRequest.class).getRequestee());
                             BookRequest temp = documents.get(i).toObject(BookRequest.class);
                             bookRequests.add(temp);
                         }

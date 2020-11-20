@@ -10,7 +10,7 @@ public abstract class Request implements Serializable{
     private ArrayList<String> requester;
     private String requestee;
     private Book book;
-    private Location geoLocation;
+    private ArrayList<Double> geoLocation;
     private Date date;
 
     /**
@@ -27,7 +27,7 @@ public abstract class Request implements Serializable{
      * @param date
      * @param geoLocation
      */
-    public Request(Book book, String requestee, ArrayList<String> requester, Date date, Location geoLocation){
+    public Request(Book book, String requestee, ArrayList<String> requester, Date date, ArrayList<Double> geoLocation){
         this.book = book;
         this.requestee = requestee;
         this.requester = requester;
@@ -64,7 +64,7 @@ public abstract class Request implements Serializable{
      * this function will be achieve later.
      * @return return a location
      */
-    public Location getGeoLocation() {
+    public ArrayList<Double> getGeoLocation() {
         return geoLocation;
     }
 
@@ -80,7 +80,7 @@ public abstract class Request implements Serializable{
      * setter of the location where owner and borrower transfer the book.
      * @param geoLocation
      */
-    public void setGeoLocation(Location geoLocation) {
+    public void setGeoLocation(ArrayList<Double> geoLocation) {
         this.geoLocation = geoLocation;
     }
 

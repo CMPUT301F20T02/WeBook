@@ -23,7 +23,7 @@ public class BookRequest extends Request {
      * @param date
      * @param geoLocation
      */
-    BookRequest(Book book, String requestee, ArrayList<String> requester, Date date, Location geoLocation) {
+    BookRequest(Book book, String requestee, ArrayList<String> requester, Date date, ArrayList<Double> geoLocation) {
         super(book, requestee, requester, date, geoLocation);
     }
 

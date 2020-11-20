@@ -33,7 +33,8 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private TextView author;
     private TextView isbn;
     private TextView status;
-    private TextView owner;
+    private TextView owned_by;
+    private TextView borrowed_by;
     private TextView description;
     private Button requestButton;
     private ArrayList<String> requesterList;
@@ -48,11 +49,11 @@ public class BorrowerBookProfile extends AppCompatActivity {
         title = findViewById(R.id.book_profile_title);
         author = findViewById(R.id.book_profile_author);
         isbn = findViewById(R.id.book_profile_ISBN);
-        owner = findViewById(R.id.book_profile_owner_text);
+        owned_by = findViewById(R.id.book_profile_owner_text);
+        borrowed_by = findViewById(R.id.book_profile_borrower_text);
         status = findViewById(R.id.book_profile_status_text);
         description = findViewById(R.id.book_profile_description);
         dataBaseManager = new DataBaseManager();
-    //    isbn_text = findViewById(R.id.isbn_text);
         requestButton = findViewById(R.id.borrower_book_request_button);
 
         Intent intent = getIntent();
@@ -61,8 +62,13 @@ public class BorrowerBookProfile extends AppCompatActivity {
         title.setText(selectBook.getTitle());
         author.setText(selectBook.getAuthor());
         isbn.setText(selectBook.getISBN());
-        status.setText(selectBook.getStatus());
-        owner.setText(selectBook.getOwner());
+        owned_by.setText("Owned by " + selectBook.getOwner());
+        if (selectBook.getBorrower() != null) {
+            borrowed_by.setText("Borrowed by " + selectBook.getBorrower());
+        } else {
+            borrowed_by.setText("Borrowed by ");
+        }
+        status.setText("Book Status: " + selectBook.getStatus());
         description.setText(selectBook.getDescription());
 
         borrower = (Borrower) intent.getSerializableExtra("borrower");

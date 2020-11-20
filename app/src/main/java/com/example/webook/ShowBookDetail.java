@@ -19,7 +19,7 @@ public class ShowBookDetail extends AppCompatActivity {
         final TextView  tile = findViewById(R.id.book_profile_title);
         final TextView  author = findViewById(R.id.book_profile_author);
         final TextView  isbn = findViewById(R.id.book_profile_ISBN);
-        final TextView  borrower = findViewById(R.id.book_rpofile_borrower_text);
+        final TextView  borrower = findViewById(R.id.book_profile_borrower_text);
         final TextView  status = findViewById(R.id.book_profile_status_text);
         final TextView  description = findViewById(R.id.book_profile_description);
         final TextView  owner = findViewById(R.id.book_profile_owner_text);

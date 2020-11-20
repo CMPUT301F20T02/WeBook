@@ -85,14 +85,12 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextISBN" />
 
     <TextView
-        android:id="@+id/book_rpofile_borrower_text"
+        android:id="@+id/book_profile_borrower_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
         app:layout_constraintTop_toBottomOf="@+id/book_profile_owner_text" />
@@ -108,7 +106,7 @@
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/book_icon_add_edit"
-        app:layout_constraintTop_toBottomOf="@+id/book_rpofile_borrower_text" />
+        app:layout_constraintTop_toBottomOf="@+id/book_profile_borrower_text" />
 
     <EditText
         android:id="@+id/editTextDescription"

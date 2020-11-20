@@ -104,17 +104,14 @@ public class RequestProfile extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(scaned){
-                    if (timeChosen != null) {
-                        if(!latlong.isEmpty()) {
-                            if(!dateSelected.isEmpty()) {
-                                final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                db.collection("requests").document(isbn_base).update("time", timeChosen);
-                                db.collection("requests").document(isbn_base).update("geoLocation", latlong);
-                                db.collection("requests").document(isbn_base).update("date", dateSelected);
-                                db.collection("requests").document(isbn_base).update("status", "waiting");
-                                finish();
-                            }
+                if (timeChosen != null) {
+                    if(!latlong.isEmpty()) {
+                        if(!dateSelected.isEmpty()) {
+                            final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("requests").document(isbn_base).update("time", timeChosen);
+                            db.collection("requests").document(isbn_base).update("geoLocation", latlong);
+                            db.collection("requests").document(isbn_base).update("date", dateSelected);
+                            finish();
                         }
                     }
                 }
@@ -311,7 +308,8 @@ public class RequestProfile extends AppCompatActivity {
                                 if(bookRequest.getStatus() != null){
                                     if(bookRequest.getStatus().equals("accepted")){
                                         //if (isbn_base.equals(bookRequest.getBook().getISBN())){
-                                            scaned = true;
+                                        db.collection("requests").document(isbn_base).update("status", "waiting");
+                                        scaned = true;
                                         //}
                                     }
                                 }

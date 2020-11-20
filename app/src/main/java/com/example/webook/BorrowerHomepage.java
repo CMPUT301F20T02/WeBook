@@ -1,5 +1,7 @@
 package com.example.webook;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,9 +12,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This is an activity shows homepage for usertype = borrower
  */
@@ -41,7 +55,6 @@ public class BorrowerHomepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_homepage);
         bookListView = findViewById(R.id.borrower_book_list);
-
         Intent intent = getIntent();
         borrower = (Borrower) intent.getSerializableExtra("user");
 
@@ -111,7 +124,47 @@ public class BorrowerHomepage extends AppCompatActivity {
                 currentView = "borrowed";
             }
         });
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("requests").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<DocumentSnapshot> list = querySnapshot.getDocuments();
+                    for(int i = 0; i < list.size();i++){
+                        final BookRequest bookRequest = list.get(i).toObject(BookRequest.class);
+                        if(bookRequest.getRequester().contains(borrower.getUsername())){
+                             db.collection("requests").document(bookRequest.getBook().getISBN()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                    if(value.get("time") != null){
+                                        if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
+                                            if(value.getString("status").equals("accepted")) {
+                                                Toast toast = Toast.makeText(BorrowerHomepage.this,
+                                                        "Owner have already set the deliver data", Toast.LENGTH_LONG);
+                                                toast.show();
+                                            }
+                                        }
+                                    }
+                                    if(value.getString("status").equals("accepted")){
+                                        if(value.get("time") == null){
+                                            if(((ArrayList<String>)value.get("requester")).contains(borrower.getUsername())){
+                                                String sentence = "Owner have accepted you request \n ISBN = " + bookRequest.getBook().getISBN();
+                                                Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
+                                                toast.show();
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
     }
+
 
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
         this.borrowedBooks.clear();
@@ -138,4 +191,6 @@ public class BorrowerHomepage extends AppCompatActivity {
         this.allBooks.addAll(this.borrowedBooks);
         allBookList.notifyDataSetChanged();
     }
+
+
 }

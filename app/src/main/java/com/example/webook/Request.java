@@ -12,8 +12,7 @@ public abstract class Request implements Serializable{
     private Book book;
     private ArrayList<Double> geoLocation;
     private ArrayList<Integer> date;
-
-
+    private String time;
     /**
      * Constructor of the request with no parameter.
      * @param
@@ -92,5 +91,9 @@ public abstract class Request implements Serializable{
      */
     public void setDate(ArrayList<Integer> date) {
         this.date = date;
+    }
+
+    public String getTime(){
+        return this.time;
     }
 }

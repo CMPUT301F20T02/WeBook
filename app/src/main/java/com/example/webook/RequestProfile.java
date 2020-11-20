@@ -53,12 +53,16 @@ public class RequestProfile extends AppCompatActivity {
     private TextView address;
     private TextView status;
     private Button scan;
+    private Button confirm;
     private Marker marker;
     private TextView date;
     private String isbn_base;
-    Date dateSelected = new Date();
     private TextView time;
+    private ArrayList<Double> latlong;
+    private ArrayList<Integer> dateSelected;
+    private String timeChosen;
     private  LatLng locationSelected;
+    private Boolean scaned;
     private Calendar myCalendar; //initialize a calender object
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,11 @@ public class RequestProfile extends AppCompatActivity {
         scan = findViewById(R.id.request_profile_deliver_scan);
         date = findViewById(R.id.deliver_date);
         time = findViewById(R.id.deliver_time);
+        confirm = findViewById(R.id.confirm_button);
         myCalendar = Calendar.getInstance();
+        dateSelected = new ArrayList<Integer>();
+        latlong = new ArrayList<Double>();
+        scaned = false;
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,21 +101,56 @@ public class RequestProfile extends AppCompatActivity {
             }
         });
 
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(scaned){
+                    if (timeChosen != null) {
+                        if(!latlong.isEmpty()) {
+                            if(!dateSelected.isEmpty()) {
+                                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db.collection("requests").document(isbn_base).update("time", timeChosen);
+                                db.collection("requests").document(isbn_base).update("geoLocation", latlong);
+                                db.collection("requests").document(isbn_base).update("date", dateSelected);
+                                db.collection("requests").document(isbn_base).update("status", "waiting");
+                                finish();
+                            }
+                        }
+                    }
+                }
+            }
+        });
         mapView.onCreate(savedInstanceState);
         Places.initialize(getApplicationContext(), "AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw");
         Intent intent1 = getIntent();
-        String owner_name = "Owner: " + intent1.getStringExtra("owner_name");
-        String borrower_name = "Borrower: " + intent1.getStringExtra("borrower_name");
-        isbn_base = intent1.getStringExtra("isbn");
-        String book_isbn = "ISBN: " + isbn_base;
-        String book_title = "Title: " + intent1.getStringExtra("book_title");
-        String book_status = "Status: accepted";
+        final BookRequest bookRequest = (BookRequest) intent1.getSerializableExtra("request");
+        String owner_name = "Owner: " + bookRequest.getRequestee();
+        String borrower_name = "Borrower: " + bookRequest.getRequester().get(0);
+        isbn_base = bookRequest.getBook().getISBN();
+        final String book_isbn = "ISBN: " + isbn_base;
+        String book_title = "Title: " + bookRequest.getBook().getTitle();
+        String book_status = "Status: " + bookRequest.getStatus();
         owner.setText(owner_name);
         borrower.setText(borrower_name);
         isbn.setText(book_isbn);
         title.setText(book_title);
         status.setText(book_status);
         address.setText("Please click the map to select the deliver location.");
+
+        if(bookRequest.getTime() != null){
+            time.setText(bookRequest.getTime());
+            timeChosen = bookRequest.getTime();
+            scaned = true;
+        }
+        if(bookRequest.getDate() != null){
+            Integer year = bookRequest.getDate().get(0);
+            Integer month = bookRequest.getDate().get(1);
+            Integer day = bookRequest.getDate().get(2);
+            dateSelected = bookRequest.getDate();
+            String dateHere= Integer.toString(year) + "-" + Integer.toString(month) + "-"
+                    + Integer.toString(day);
+            date.setText(dateHere);
+        }
         mapView.getMapAsync(new OnMapReadyCallback() {
             @SuppressLint("MissingPermission")
             @Override
@@ -123,10 +166,20 @@ public class RequestProfile extends AppCompatActivity {
                     }
                 });
                 Places.isInitialized();
-                LatLng xiamen = new LatLng(24.58505466160215,118.09337005019188);
-                googleMap.addMarker(new MarkerOptions().position(xiamen)
-                        .title("Marker in Xiamen"));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(xiamen));
+                if(bookRequest.getGeoLocation() != null){
+                    Double latitude = bookRequest.getGeoLocation().get(0);
+                    Double longitude = bookRequest.getGeoLocation().get(1);
+                    latlong = bookRequest.getGeoLocation();
+                    LatLng selected = new LatLng(latitude,longitude);
+                    marker = googleMap.addMarker(new MarkerOptions().position(selected)
+                            .title("Chosen place"));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selected,15));
+                }else {
+                    LatLng xiamen = new LatLng(24.58505466160215,118.09337005019188);
+                    marker = googleMap.addMarker(new MarkerOptions().position(xiamen)
+                            .title("Marker in Xiamen"));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(xiamen));
+                }
             }
         });
 
@@ -153,11 +206,11 @@ public class RequestProfile extends AppCompatActivity {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            ArrayList<Integer> dateSelected = new ArrayList<Integer>();
+
             dateSelected.add(0,year);
             dateSelected.add(1,monthOfYear);
             dateSelected.add(2,dayOfMonth);
-            db.collection("requests").document(isbn_base).update("date",dateSelected);
+
             updateLabel();
         } // set the  listener of the calender
 
@@ -221,7 +274,7 @@ public class RequestProfile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode== 1) {
             if(resultCode == RESULT_OK){
-                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                 Double latitude =  (Double) data.getSerializableExtra("latitude");
                 Double longitude =  (Double) data.getSerializableExtra("longitude");
                 if(latitude != null) {
@@ -238,10 +291,9 @@ public class RequestProfile extends AppCompatActivity {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     String text = "latitude: " + Double.toString(latitude) + "\n" + "longitude: " + Double.toString(longitude);
                     address.setText(text);
-                    ArrayList<Double> latlong = new ArrayList<Double>();
                     latlong.add(0,latitude);
                     latlong.add(1,longitude);
-                    db.collection("requests").document(isbn_base).update("geoLocation",latlong);
+
                 }
             }
         }
@@ -258,7 +310,9 @@ public class RequestProfile extends AppCompatActivity {
                                 BookRequest bookRequest = documentSnapshot.toObject(BookRequest.class);
                                 if(bookRequest.getStatus() != null){
                                     if(bookRequest.getStatus().equals("accepted")){
-                                        db.collection("requests").document(code).update("status","waiting");
+                                        //if (isbn_base.equals(bookRequest.getBook().getISBN())){
+                                            scaned = true;
+                                        //}
                                     }
                                 }
                             }
@@ -269,9 +323,7 @@ public class RequestProfile extends AppCompatActivity {
         }
         if (requestCode == 3){
             if(resultCode == RESULT_OK){
-                final String timeChosen = (String) data.getSerializableExtra("time");
-                final FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("requests").document(isbn_base).update("time",timeChosen);
+                timeChosen = (String) data.getSerializableExtra("time");
                 time.setText(timeChosen);
             }
         }

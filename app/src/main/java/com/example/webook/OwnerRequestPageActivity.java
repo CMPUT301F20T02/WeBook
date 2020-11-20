@@ -159,7 +159,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         this.acceptedRequests.clear();
         this.acceptedList.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
-            if (requestArrayList.get(i).getStatus().equals("accepted")){
+            if (requestArrayList.get(i).getStatus().equals("accepted") | requestArrayList.get(i).getStatus().equals("waiting")){
                 acceptedRequests.add(requestArrayList.get(i));
                 acceptedList.add(requestArrayList.get(i).getRequester().get(0));
             }

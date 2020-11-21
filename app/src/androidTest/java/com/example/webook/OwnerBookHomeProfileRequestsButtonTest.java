@@ -35,7 +35,7 @@ public class OwnerBookHomeProfileRequestsButtonTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
         dataBaseTestManager = new DataBaseTestManager();
         dataBaseTestManager.createTestData();
-        solo.sleep(5000);
+        solo.sleep(7000);
     }
 
     @After
@@ -47,6 +47,5 @@ public class OwnerBookHomeProfileRequestsButtonTest {
     @Test
     public void checkRequestsButton() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-
     }
 }

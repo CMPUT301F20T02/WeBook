@@ -486,47 +486,147 @@ public class DataBaseTestManager {
 
         collectionReference = db.collection("books");
         collectionReference
-                .document("100000000000")
+                .document("1000000000000")
                 .set(TestBook1);
         collectionReference
-                .document("200000000000")
+                .document("2000000000000")
                 .set(TestBook2);
         collectionReference
-                .document("300000000000")
+                .document("3000000000000")
                 .set(TestBook3);
         collectionReference
-                .document("400000000000")
+                .document("4000000000000")
                 .set(TestBook4);
         collectionReference
-                .document("500000000000")
+                .document("5000000000000")
                 .set(TestBook5);
         collectionReference
-                .document("600000000000")
+                .document("6000000000000")
                 .set(TestBook6);
         collectionReference
-                .document("700000000000")
+                .document("7000000000000")
                 .set(TestBook7);
         collectionReference
-                .document("800000000000")
+                .document("8000000000000")
                 .set(TestBook8);
         collectionReference
-                .document("900000000000")
+                .document("9000000000000")
                 .set(TestBook9);
         collectionReference
-                .document("010000000000")
+                .document("0100000000000")
                 .set(TestBook10);
         collectionReference
-                .document("110000000000")
+                .document("1100000000000")
                 .set(TestBook11);
         collectionReference
-                .document("120000000000")
+                .document("1200000000000")
                 .set(TestBook12);
+
+        Borrower borrower1 = new Borrower("borrower1","ThisIsATestEmailForBorrower1@gmail.com","6472409903","111","Hello, I'm TestBorrower1",null);
+        Borrower borrower2 = new Borrower("borrower2","ThisIsATestEmailForBorrower2@gmail.com","6465546873","111","Hello, I'm TestBorrower2",null);
+        Borrower borrower3 = new Borrower("borrower3","ThisIsATestEmailForBorrower3@gmail.com","7803664579","111","Hello, I'm TestBorrower3",null);
+        collectionReference = db.collection("users");
+        collectionReference
+                .document("borrower1")
+                .set(borrower1);
+        collectionReference
+                .document("borrower2")
+                .set(borrower2);
+        collectionReference
+                .document("borrower3")
+                .set(borrower3);
     }
 
     public void deleteTestData(){
         collectionReference = db.collection("requests");
-        //collectionReference
-                //.document("1000000000000")
-                //.delete();
+        collectionReference
+                .document("1000000000000")
+                .delete();
+        collectionReference
+                .document("2000000000000")
+                .delete();
+        collectionReference
+                .document("3000000000000")
+                .delete();
+        collectionReference
+                .document("4000000000000")
+                .delete();
+        collectionReference
+                .document("5000000000000")
+                .delete();
+        collectionReference
+                .document("6000000000000")
+                .delete();
+        collectionReference
+                .document("7000000000000")
+                .delete();
+        collectionReference
+                .document("8000000000000")
+                .delete();
+        collectionReference
+                .document("9000000000000")
+                .delete();
+        collectionReference
+                .document("0100000000000")
+                .delete();
+        collectionReference
+                .document("1100000000000")
+                .delete();
+        collectionReference
+                .document("1200000000000")
+                .delete();
+
+        collectionReference = db.collection("books");
+        collectionReference
+                .document("1000000000000")
+                .delete();
+        collectionReference
+                .document("2000000000000")
+                .delete();
+        collectionReference
+                .document("3000000000000")
+                .delete();
+        collectionReference
+                .document("4000000000000")
+                .delete();
+        collectionReference
+                .document("5000000000000")
+                .delete();
+        collectionReference
+                .document("6000000000000")
+                .delete();
+        collectionReference
+                .document("7000000000000")
+                .delete();
+        collectionReference
+                .document("8000000000000")
+                .delete();
+        collectionReference
+                .document("9000000000000")
+                .delete();
+        collectionReference
+                .document("0100000000000")
+                .delete();
+        collectionReference
+                .document("1100000000000")
+                .delete();
+        collectionReference
+                .document("1200000000000")
+                .delete();
+
+        collectionReference = db.collection("users");
+        collectionReference
+                .document("borrower1")
+                .delete();
+        collectionReference
+                .document("borrower2")
+                .delete();
+        collectionReference
+                .document("borrower3")
+                .delete();
+        collectionReference
+                .document("TestOwner1")
+                .delete();
+
     }
 }

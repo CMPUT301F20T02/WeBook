@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +44,7 @@ public class OwnerHomePageTest {
         solo.enterText((EditText) solo.getView(R.id.pwd_input), "111");
         solo.clickOnButton("Log in");
     }
+
 
     @Test
     public void checkOnItemClick(){

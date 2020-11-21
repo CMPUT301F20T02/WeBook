@@ -11,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -23,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class OwnerBookHomeProfileRequestsButtonTest {
     private Solo solo;
+    private DataBaseTestManager dataBaseTestManager;
 
     @Rule
     public ActivityTestRule<MainActivity> rule =
@@ -31,8 +33,14 @@ public class OwnerBookHomeProfileRequestsButtonTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
-        DataBaseTestManager dataBaseTestManager = new DataBaseTestManager();
+        dataBaseTestManager = new DataBaseTestManager();
         dataBaseTestManager.createTestData();
+        solo.sleep(1000);
+    }
+
+    @After
+    public void after(){
+        dataBaseTestManager.deleteTestData();
         solo.sleep(1000);
     }
 

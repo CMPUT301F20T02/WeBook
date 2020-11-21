@@ -58,6 +58,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                 User user = dataList.get(i);
                 intent.putExtra(EXTRA_MESSAGE, user);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
 

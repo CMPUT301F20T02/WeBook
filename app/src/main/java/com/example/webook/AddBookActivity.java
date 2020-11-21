@@ -70,6 +70,7 @@ public class AddBookActivity extends AppCompatActivity {
                         "available", owner.getUsername(), null, description.getText().toString());
                 dataBaseManager.addBook(bitmap,book,owner);
                 finish();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
 
@@ -78,6 +79,7 @@ public class AddBookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AddBookActivity.this, CodeScanner.class);
                 startActivityForResult(intent, SCAN_CODE);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 

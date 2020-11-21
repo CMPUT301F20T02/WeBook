@@ -113,6 +113,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
             @Override
             public void onClick(View v) {
                 finish();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
 
@@ -122,6 +123,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
                 Intent intent = new Intent(OwnerRequestPageActivity.this, OwnerProfileActivity.class);
                 intent.putExtra("user", owner);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
     }

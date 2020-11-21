@@ -70,6 +70,7 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
             public void onClick(View v) {
                 dataBaseManager.updateBook(isbn.getText().toString(),title.getText().toString(),author.getText().toString(),description.getText().toString());
                 finish();
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
 
@@ -78,6 +79,7 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(OwnerBookProfileBookEdit.this, CodeScanner.class);
                 startActivityForResult(intent, SCAN_CODE);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 
@@ -102,11 +104,13 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
                         // permission has been already granted, you can use camera straight away
                     }
                     startActivityForResult(intent, CAMERA);
+                    overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                 } else if ( selection[which].equals("Photo Gallery") ) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(intent, PICK_IMAGE);
+                    overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                 }
             }
         } );

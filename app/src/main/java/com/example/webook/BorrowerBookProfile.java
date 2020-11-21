@@ -79,6 +79,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
             final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
             dataBaseManager.sendBookRequest(newRequest,borrower);
             finish();
+            overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
     }

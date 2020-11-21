@@ -34,6 +34,7 @@ public class BorrowerSearch extends AppCompatActivity {
                 intent.putExtra(EXTRA_MESSAGE, search);
                 intent.putExtra("borrower", borrower);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
 
@@ -46,7 +47,7 @@ public class BorrowerSearch extends AppCompatActivity {
                 String search = newSearch.getText().toString();
                 intent.putExtra(EXTRA_MESSAGE, search);
                 startActivity(intent);
-                //startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
 

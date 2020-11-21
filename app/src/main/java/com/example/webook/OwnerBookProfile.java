@@ -110,6 +110,7 @@ public class OwnerBookProfile extends AppCompatActivity {
                 } else {
                     intent2.putExtra("selectBook", selectBook);
                     startActivity(intent2);
+                    overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                 }
             }
         });
@@ -129,6 +130,7 @@ public class OwnerBookProfile extends AppCompatActivity {
                     intent3.putExtra("selectBook", selectBook);
                     intent3.putExtra("user",owner);
                     startActivity(intent3);
+                    overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                 }
             }
         });
@@ -142,6 +144,7 @@ public class OwnerBookProfile extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dataBaseManager.deleteBook(OwnerBookProfile.this, selectBook.getISBN());
                                 finish();
+                                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
                             }
                         })
                         .setNegativeButton("Cancel", null);

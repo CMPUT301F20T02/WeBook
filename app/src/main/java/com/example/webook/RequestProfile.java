@@ -98,6 +98,7 @@ public class RequestProfile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RequestProfile.this,TimePickerActivity.class);
                 startActivityForResult(intent,3);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
 
@@ -112,6 +113,7 @@ public class RequestProfile extends AppCompatActivity {
                             db.collection("requests").document(isbn_base).update("geoLocation", latlong);
                             db.collection("requests").document(isbn_base).update("date", dateSelected);
                             finish();
+                            overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
                         }
                     }
                 }
@@ -186,6 +188,7 @@ public class RequestProfile extends AppCompatActivity {
 
                 Intent intent = new Intent(RequestProfile.this,CodeScanner.class);
                 startActivityForResult(intent,2);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
     }

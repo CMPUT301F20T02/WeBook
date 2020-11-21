@@ -548,7 +548,6 @@ public class DataBaseManager {
     }
 
     public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
-
         final CollectionReference bookRef = db.collection("books");
         bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -573,6 +572,7 @@ public class DataBaseManager {
     }
 
     private void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
+        Log.d("I'm fine:", bookisbn.toString());
         CollectionReference bookRef = db.collection("books");
         for (int i = 0; i < bookisbn.size(); i++) {
             DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));

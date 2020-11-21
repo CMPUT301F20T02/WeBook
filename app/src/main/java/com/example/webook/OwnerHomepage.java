@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class OwnerHomepage extends AppCompatActivity {
     private String currentListView = "all";
     private DataBaseManager dataBaseManager = new DataBaseManager();
     private Integer before;
+    private Button search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,14 @@ public class OwnerHomepage extends AppCompatActivity {
         TextView me = findViewById(R.id.owner_me_tab);
         TextView books = findViewById(R.id.owner_books_tab);
         TextView request = findViewById(R.id.owner_requests_tab);
+        search = findViewById(R.id.owner_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OwnerHomepage.this,OwnerSearch.class);
+                startActivity(intent);
+            }
+        });
         before = 0;
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");

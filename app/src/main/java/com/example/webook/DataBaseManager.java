@@ -183,6 +183,38 @@ public class DataBaseManager {
                 });
     }
 
+    public void OwnerSearchUser(final String message, final OwnerSearchUserPage ownerSearchUserPage){
+        collectionReference= db.collection("users");
+        collectionReference.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ownerSearchUserPage.dataList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId());
+                                String Username = document.getId();
+                                String email = (String) document.getData().get("email");
+                                String description =  (String) document.getData().get("description");
+                                String pwd =  (String) document.getData().get("pwd");
+                                String phoneNumber =  (String) document.getData().get("phoneNumber");
+                                String userType = (String) document.getData().get("userType");
+                                if(Username.contains(message)){
+                                    if(userType.equals("borrower")) {
+                                        ownerSearchUserPage.dataList.add(new Borrower(Username,email, phoneNumber, pwd, description,null));
+                                    }else{
+                                        ownerSearchUserPage.dataList.add(new Owner(Username,email, phoneNumber, pwd, description,null));
+                                    }
+                                }
+                            }
+                            ownerSearchUserPage.userAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 
     /**
      * This add a book document in database

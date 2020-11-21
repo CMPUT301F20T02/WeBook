@@ -41,8 +41,11 @@
         <activity android:name=".RequestProfile" />
         <activity android:name=".BorrowerRequestDelivery" />
         <activity android:name=".TimePickerActivity" />
+        <activity android:name=".BorrowerReturn" />
+        <activity android:name=".OwnerReturn" />
+        <activity android:name=".OwnerSearchUserPage" />
+        <activity android:name=".OwnerSearch" />
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

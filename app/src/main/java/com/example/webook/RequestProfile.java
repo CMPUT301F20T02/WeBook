@@ -308,9 +308,15 @@ public class RequestProfile extends AppCompatActivity {
                                 if(bookRequest.getStatus() != null){
                                     if(bookRequest.getStatus().equals("accepted")){
                                         //if (isbn_base.equals(bookRequest.getBook().getISBN())){
-                                        db.collection("requests").document(isbn_base).update("status", "waiting");
-                                        scaned = true;
-                                        //}
+                                        if (timeChosen != null) {
+                                            if(!latlong.isEmpty()) {
+                                                if(!dateSelected.isEmpty()) {
+                                                    db.collection("requests").document(isbn_base).update("status", "waiting");
+                                                    scaned = true;
+                                                    finish();
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

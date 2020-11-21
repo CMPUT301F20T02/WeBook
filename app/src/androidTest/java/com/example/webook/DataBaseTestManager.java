@@ -195,8 +195,8 @@ public class DataBaseTestManager {
 
         requester7 = new ArrayList<>();
         requester7.add("Borrower1");
-        requester7.add("Borrower2");
-        requester7.add("Borrower3");
+
+        TestBook7.setBorrower("Borrower1");
 
         Date7 = new ArrayList<>();
         Date7.add(2020);
@@ -231,8 +231,8 @@ public class DataBaseTestManager {
 
         requester8 = new ArrayList<>();
         requester8.add("Borrower1");
-        requester8.add("Borrower2");
-        requester8.add("Borrower3");
+
+        TestBook8.setBorrower("Borrower1");
 
         Date8 = new ArrayList<>();
         Date8.add(2022);
@@ -267,8 +267,8 @@ public class DataBaseTestManager {
 
         requester9 = new ArrayList<>();
         requester9.add("Borrower1");
-        requester9.add("Borrower2");
-        requester9.add("Borrower3");
+
+        TestBook9.setBorrower("Borrower1");
 
         Date9 = new ArrayList<>();
         Date9.add(2020);
@@ -303,8 +303,8 @@ public class DataBaseTestManager {
 
         requester10 = new ArrayList<>();
         requester10.add("Borrower1");
-        requester10.add("Borrower2");
-        requester10.add("Borrower3");
+
+        TestBook10.setBorrower("Borrower1");
 
         Date10 = new ArrayList<>();
         Date10.add(2022);
@@ -339,8 +339,8 @@ public class DataBaseTestManager {
 
         requester11 = new ArrayList<>();
         requester11.add("Borrower1");
-        requester11.add("Borrower2");
-        requester11.add("Borrower3");
+
+        TestBook11.setBorrower("Borrower1");
 
         Date11 = new ArrayList<>();
         Date11.add(2025);
@@ -375,8 +375,8 @@ public class DataBaseTestManager {
 
         requester12 = new ArrayList<>();
         requester12.add("Borrower1");
-        requester12.add("Borrower2");
-        requester12.add("Borrower3");
+
+        TestBook12.setBorrower("Borrower1");
 
         Date12 = new ArrayList<>();
         Date12.add(2020);
@@ -459,15 +459,68 @@ public class DataBaseTestManager {
         requestList.add("1200000000000");
         requestList.add("1200000000000");
 
-        Owner user = new Owner("TestOwner1","ThisIsATestEmail@gmail.com","6476854770","111","Hello, I'm TestOwner1",null);
-        for(int i = 0; i <= requestList.size(); i++){
-            user.addRequest(requestList.get(i));
+        Owner TestOwner1 = new Owner("TestOwner1","ThisIsATestEmail@gmail.com","6476854770","111","Hello, I'm TestOwner1",null);
+        for(int i = 0; i < requestList.size(); i++){
+            TestOwner1.addRequest(requestList.get(i));
         }
-        for(int i = 0; i <= bookList.size(); i++){
-            user.addBook(bookList.get(i));
+        for(int i = 0; i < bookList.size(); i++){
+            TestOwner1.addBook(bookList.get(i));
         }
 
+        collectionReference = db.collection("users");
+        collectionReference
+                .document("TestOwner1")
+                .set(TestOwner1)
+                .addOnSuccessListener(new OnSuccessListener<Void>(){
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Add TestOwner1","Add TestOwner1 successful");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Add TestOwner1", "Add Owner1 failed");
+                    }
+                });
 
+        collectionReference = db.collection("books");
+        collectionReference
+                .document("100000000000")
+                .set(TestBook1);
+        collectionReference
+                .document("200000000000")
+                .set(TestBook2);
+        collectionReference
+                .document("300000000000")
+                .set(TestBook3);
+        collectionReference
+                .document("400000000000")
+                .set(TestBook4);
+        collectionReference
+                .document("500000000000")
+                .set(TestBook5);
+        collectionReference
+                .document("600000000000")
+                .set(TestBook6);
+        collectionReference
+                .document("700000000000")
+                .set(TestBook7);
+        collectionReference
+                .document("800000000000")
+                .set(TestBook8);
+        collectionReference
+                .document("900000000000")
+                .set(TestBook9);
+        collectionReference
+                .document("010000000000")
+                .set(TestBook10);
+        collectionReference
+                .document("110000000000")
+                .set(TestBook11);
+        collectionReference
+                .document("120000000000")
+                .set(TestBook12);
     }
 
     public void deleteTestData(){

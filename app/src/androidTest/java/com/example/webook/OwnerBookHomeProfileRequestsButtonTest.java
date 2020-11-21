@@ -35,13 +35,13 @@ public class OwnerBookHomeProfileRequestsButtonTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
         dataBaseTestManager = new DataBaseTestManager();
         dataBaseTestManager.createTestData();
-        solo.sleep(1000);
+        solo.sleep(5000);
     }
 
     @After
     public void after(){
         dataBaseTestManager.deleteTestData();
-        solo.sleep(1000);
+        solo.sleep(5000);
     }
 
     @Test

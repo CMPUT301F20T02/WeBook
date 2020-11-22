@@ -81,11 +81,6 @@ public class OwnerBookProfileEditTest {
         assertTrue(solo.waitForText("EditedTestBook3", 1, 5000, true, true));
         assertTrue(solo.waitForText("EditedTestBook3 Author", 1, 5000, true, true));
 
-    }
-
-    @Test
-    public void checkOwnerBookProfileEditInvalidEntry(){
-        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         assertTrue(solo.waitForText("TestBook4", 1, 5000, true, true));
         solo.clickOnMenuItem("TestBook4");
         solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
@@ -93,4 +88,5 @@ public class OwnerBookProfileEditTest {
         //solo.sleep(500);
         assertTrue(solo.waitForText("This book currently unavailable to change!", 1, 500, true, true));
     }
+
 }

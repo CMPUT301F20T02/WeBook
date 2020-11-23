@@ -6,6 +6,8 @@ package com.example.webook;
  */
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +34,9 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
         selectBook = (Book) intent.getSerializableExtra("selectBook");
         dataBaseManager = new DataBaseManager();
 //        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
+
         dataBaseManager.getSameBookRequest(selectBook.getISBN(),this);
+        findViewById(R.id.loadingPanelRequest).setVisibility(View.GONE);
 
 
         sameBookRequestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,6 +45,25 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
                 Object selectRequest = sameBookRequestList.getItemAtPosition(position);
                 OwnerAcceptDeclineFragment ownerAcceptDeclineFragment = OwnerAcceptDeclineFragment.newInstance((BookRequest) selectRequest, position);
                 ownerAcceptDeclineFragment.show(getSupportFragmentManager(), "Accept or Decline");
+            }
+        });
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefreshRequest);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sameBookRequestList = findViewById(R.id.same_book_request_list);
+                dataList = new ArrayList<BookRequest>();
+                bookAdapter = new RequestList(SameBookRequestList.this, dataList, null, 0);
+                sameBookRequestList.setAdapter(bookAdapter);
+                final Intent intent = getIntent();
+                selectBook = (Book) intent.getSerializableExtra("selectBook");
+                dataBaseManager = new DataBaseManager();
+//        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
+
+                dataBaseManager.getSameBookRequest(selectBook.getISBN(),SameBookRequestList.this);
+                findViewById(R.id.loadingPanelRequest).setVisibility(View.GONE);
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
     }

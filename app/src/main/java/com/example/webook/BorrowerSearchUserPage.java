@@ -51,6 +51,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         dataBaseManager.BorrowerSearchUser(message,this);
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,7 +82,9 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                 final ArrayList<String> userNameList = new ArrayList<String>();
                 dataBaseManager = new DataBaseManager();
 
+                findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                 dataBaseManager.BorrowerSearchUser(message,BorrowerSearchUserPage.this);
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
 

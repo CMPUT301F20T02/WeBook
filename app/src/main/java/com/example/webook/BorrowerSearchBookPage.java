@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,6 +58,22 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                 intent.putExtra("borrower", borrower);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                dataList = new ArrayList<Book>();
+                bookAdapter = new BookList(BorrowerSearchBookPage.this, dataList);
+                dataBaseManager = new DataBaseManager();
+                Intent intent = getIntent();
+                final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                borrower = (Borrower)intent.getSerializableExtra("borrower");
+                dataBaseManager.BorrowerSearchBook(message,BorrowerSearchBookPage.this);
+                pullToRefresh.setRefreshing(false);
             }
         });
     }

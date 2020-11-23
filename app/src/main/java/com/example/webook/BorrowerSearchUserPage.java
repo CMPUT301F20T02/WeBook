@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -59,6 +60,21 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                 intent.putExtra(EXTRA_MESSAGE, user);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
+
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dataList = new ArrayList<>();
+                userAdapter = new UserList(BorrowerSearchUserPage.this, dataList);
+                userList.setAdapter(userAdapter);
+                final ArrayList<String> userNameList = new ArrayList<String>();
+                dataBaseManager = new DataBaseManager();
+                dataBaseManager.BorrowerSearchUser(message,BorrowerSearchUserPage.this);
+                pullToRefresh.setRefreshing(false);
             }
         });
 

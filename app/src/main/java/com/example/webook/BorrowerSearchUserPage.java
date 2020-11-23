@@ -85,6 +85,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                 findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                 dataBaseManager.BorrowerSearchUser(message,BorrowerSearchUserPage.this);
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                pullToRefresh.setRefreshing(false);
             }
         });
 

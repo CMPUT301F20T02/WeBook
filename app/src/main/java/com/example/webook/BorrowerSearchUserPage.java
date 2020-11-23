@@ -68,13 +68,20 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                final String TAG = "User";
+                // User's key for search
+                Intent intent = getIntent();
+                final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                userList = findViewById(R.id.search_result_list);
+                input = findViewById(R.id.search_book_user_result);
+                input.setHint("Search for users");
                 dataList = new ArrayList<>();
                 userAdapter = new UserList(BorrowerSearchUserPage.this, dataList);
                 userList.setAdapter(userAdapter);
                 final ArrayList<String> userNameList = new ArrayList<String>();
                 dataBaseManager = new DataBaseManager();
+
                 dataBaseManager.BorrowerSearchUser(message,BorrowerSearchUserPage.this);
-                pullToRefresh.setRefreshing(false);
             }
         });
 

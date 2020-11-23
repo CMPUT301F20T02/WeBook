@@ -65,16 +65,17 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                dataList = new ArrayList<Book>();
-                bookAdapter = new BookList(BorrowerSearchBookPage.this, dataList);
-                dataBaseManager = new DataBaseManager();
                 Intent intent = getIntent();
                 final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                bookList = findViewById(R.id.search_result_list);
+                dataList = new ArrayList<Book>();
+                bookAdapter = new BookList(BorrowerSearchBookPage.this, dataList);
+                bookList.setAdapter(bookAdapter);
+                dataBaseManager = new DataBaseManager();
+
                 borrower = (Borrower)intent.getSerializableExtra("borrower");
                 dataBaseManager.BorrowerSearchBook(message,BorrowerSearchBookPage.this);
-                pullToRefresh.setRefreshing(false);
-            }
+        }
         });
     }
 }

@@ -72,6 +72,9 @@ public class DataBaseManager {
                     int duration = Toast.LENGTH_SHORT;
                     if (document.exists() && document.getString("pwd").equals(pwd)) {
                         Intent intent;
+                        String textToShow = "Login success, welcome " + username;
+                        Toast toast = Toast.makeText(mainActivity, textToShow, Toast.LENGTH_LONG);
+                        toast.show();
                         if (document.getString("userType").equals("owner")){
                             intent = new Intent(mainActivity, OwnerHomepage.class);
                             Owner owner = new Owner(username, document.getString("email"),
@@ -89,6 +92,9 @@ public class DataBaseManager {
                             ((Activity)mainActivity).overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                         }
                     } else {
+                        String textToShow = "Wrong username or password, please try again.";
+                        Toast toast = Toast.makeText(mainActivity, textToShow, Toast.LENGTH_LONG);
+                        toast.show();
                     }
                 } else {
                     Log.d(TAG, "Failed with: ", task.getException());

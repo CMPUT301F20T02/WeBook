@@ -8,41 +8,25 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
 public class LoginPageTest {
     private Solo solo;
+    private DataBaseTestManager dataBaseTestManager;
 
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-    }
-
-    @Test
-    public void checkOwnerLogin(){
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        solo.clickOnButton("Log in");
-        solo.assertCurrentActivity("Did not ask for id and pwd", MainActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.username_input), "owner2");
-        solo.enterText((EditText) solo.getView(R.id.pwd_input), "111");
-        solo.clickOnButton("Log in");
-        solo.assertCurrentActivity("Did not login", OwnerHomepage.class);
-    }
-
-    @Test
-    public void checkBorrowerLogin(){
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        solo.clickOnButton("Log in");
-        solo.assertCurrentActivity("Did not ask for id and pwd", MainActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.username_input), "test2");
-        solo.enterText((EditText) solo.getView(R.id.pwd_input), "222");
-        solo.clickOnButton("Log in");
-        solo.assertCurrentActivity("Did not login", BorrowerHomepage.class);
+        dataBaseTestManager = new DataBaseTestManager();
+        dataBaseTestManager.deleteSignedUpUsers();
     }
 
     @Test
@@ -81,6 +65,32 @@ public class LoginPageTest {
 
         solo.clickOnButton("Sign up");
         solo.clickOnButton("Cancel");
+        solo.waitForActivity("MainActivity", 3000);
+
+        solo.sleep(3000);
+
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.clickOnButton("Log in");
+        solo.assertCurrentActivity("Did not ask for id and pwd", MainActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.username_input), "SignUpOwner");
+        solo.enterText((EditText) solo.getView(R.id.pwd_input), "SignUpPWD");
+        solo.clickOnButton("Log in");
+        solo.assertCurrentActivity("Did not login", OwnerHomepage.class);
+
+        solo.sleep(3000);
+        solo.goBack();
+
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.clickOnButton("Log in");
+        solo.assertCurrentActivity("Did not ask for id and pwd", MainActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.username_input), "SignUpBorrower");
+        solo.enterText((EditText) solo.getView(R.id.pwd_input), "SignUpPWD");
+        solo.clickOnButton("Log in");
+        solo.assertCurrentActivity("Did not login", BorrowerHomepage.class);
+
+        solo.sleep(3000);
+        solo.goBack();
+
         solo.waitForActivity("MainActivity", 3000);
     }
 }

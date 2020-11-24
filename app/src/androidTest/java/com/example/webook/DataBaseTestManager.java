@@ -42,9 +42,9 @@ public class DataBaseTestManager {
         Book TestBook12 = new Book("TestBook12", "1200000000000","TestBook12 Author", "accepted","TestOwner1",null,"This is TestBook12");
 
         requester1 = new ArrayList<>();
-        requester1.add("Borrower1");
-        requester1.add("Borrower2");
-        requester1.add("Borrower3");
+        requester1.add("TestBorrower1");
+        requester1.add("TestBorrower2");
+        requester1.add("TestBorrower3");
 
         BookRequest requestTest1 = new BookRequest(TestBook1,"TestOwner1", requester1, null, null);
         collectionReference = db.collection("requests");
@@ -67,9 +67,9 @@ public class DataBaseTestManager {
         ArrayList<String> requester2;
 
         requester2 = new ArrayList<>();
-        requester2.add("Borrower1");
-        requester2.add("Borrower2");
-        requester2.add("Borrower3");
+        requester2.add("TestBorrower1");
+        requester2.add("TestBorrower2");
+        requester2.add("TestBorrower3");
 
         BookRequest requestTest2 = new BookRequest(TestBook2,"TestOwner1",requester2, null, null);
         collectionReference = db.collection("requests");
@@ -92,9 +92,9 @@ public class DataBaseTestManager {
         ArrayList<String> requester3;
 
         requester3 = new ArrayList<>();
-        requester3.add("Borrower1");
-        requester3.add("Borrower2");
-        requester3.add("Borrower3");
+        requester3.add("TestBorrower1");
+        requester3.add("TestBorrower2");
+        requester3.add("TestBorrower3");
 
         BookRequest requestTest3 = new BookRequest(TestBook3,"TestOwner1",requester3, null, null);
         collectionReference = db.collection("requests");
@@ -117,9 +117,9 @@ public class DataBaseTestManager {
         ArrayList<String> requester4;
 
         requester4 = new ArrayList<>();
-        requester4.add("Borrower1");
-        requester4.add("Borrower2");
-        requester4.add("Borrower3");
+        requester4.add("TestBorrower1");
+        requester4.add("TestBorrower2");
+        requester4.add("TestBorrower3");
 
         BookRequest requestTest4 = new BookRequest(TestBook4,"TestOwner1",requester4, null, null);
         collectionReference = db.collection("requests");
@@ -142,9 +142,9 @@ public class DataBaseTestManager {
         ArrayList<String> requester5;
 
         requester5 = new ArrayList<>();
-        requester5.add("Borrower1");
-        requester5.add("Borrower2");
-        requester5.add("Borrower3");
+        requester5.add("TestBorrower1");
+        requester5.add("TestBorrower2");
+        requester5.add("TestBorrower3");
 
         BookRequest requestTest5 = new BookRequest(TestBook5,"TestOwner1",requester5, null, null);
         collectionReference = db.collection("requests");
@@ -167,9 +167,9 @@ public class DataBaseTestManager {
         ArrayList<String> requester6;
 
         requester6 = new ArrayList<>();
-        requester6.add("Borrower1");
-        requester6.add("Borrower2");
-        requester6.add("Borrower3");
+        requester6.add("TestBorrower1");
+        requester6.add("TestBorrower2");
+        requester6.add("TestBorrower3");
 
         BookRequest requestTest6 = new BookRequest(TestBook6,"TestOwner1",requester6, null, null);
         collectionReference = db.collection("requests");
@@ -194,9 +194,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation7;
 
         requester7 = new ArrayList<>();
-        requester7.add("Borrower1");
+        requester7.add("TestBorrower1");
 
-        TestBook7.setBorrower("Borrower1");
+        TestBook7.setBorrower("TestBorrower1");
 
         Date7 = new ArrayList<>();
         Date7.add(2020);
@@ -230,9 +230,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation8;
 
         requester8 = new ArrayList<>();
-        requester8.add("Borrower1");
+        requester8.add("TestBorrower1");
 
-        TestBook8.setBorrower("Borrower1");
+        TestBook8.setBorrower("TestBorrower1");
 
         Date8 = new ArrayList<>();
         Date8.add(2022);
@@ -266,9 +266,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation9;
 
         requester9 = new ArrayList<>();
-        requester9.add("Borrower1");
+        requester9.add("TestBorrower1");
 
-        TestBook9.setBorrower("Borrower1");
+        TestBook9.setBorrower("TestBorrower1");
 
         Date9 = new ArrayList<>();
         Date9.add(2020);
@@ -302,9 +302,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation10;
 
         requester10 = new ArrayList<>();
-        requester10.add("Borrower1");
+        requester10.add("TestBorrower1");
 
-        TestBook10.setBorrower("Borrower1");
+        TestBook10.setBorrower("TestBorrower1");
 
         Date10 = new ArrayList<>();
         Date10.add(2022);
@@ -338,9 +338,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation11;
 
         requester11 = new ArrayList<>();
-        requester11.add("Borrower1");
+        requester11.add("TestBorrower1");
 
-        TestBook11.setBorrower("Borrower1");
+        TestBook11.setBorrower("TestBorrower1");
 
         Date11 = new ArrayList<>();
         Date11.add(2025);
@@ -374,9 +374,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation12;
 
         requester12 = new ArrayList<>();
-        requester12.add("Borrower1");
+        requester12.add("TestBorrower1");
 
-        TestBook12.setBorrower("Borrower1");
+        TestBook12.setBorrower("TestBorrower1");
 
         Date12 = new ArrayList<>();
         Date12.add(2020);
@@ -459,18 +459,18 @@ public class DataBaseTestManager {
         requestList.add("1200000000000");
         requestList.add("1200000000000");
 
-        Owner TestOwner1 = new Owner("TestOwner1","ThisIsATestEmail@gmail.com","6476854770","111","Hello, I'm TestOwner1",null);
+        Owner testOwner1 = new Owner("TestOwner1","ThisIsATestEmail@gmail.com","6476854770","111","Hello, I'm TestOwner1",null);
         for(int i = 0; i < requestList.size(); i++){
-            TestOwner1.addRequest(requestList.get(i));
+            testOwner1.addRequest(requestList.get(i));
         }
         for(int i = 0; i < bookList.size(); i++){
-            TestOwner1.addBook(bookList.get(i));
+            testOwner1.addBook(bookList.get(i));
         }
 
         collectionReference = db.collection("users");
         collectionReference
                 .document("TestOwner1")
-                .set(TestOwner1)
+                .set(testOwner1)
                 .addOnSuccessListener(new OnSuccessListener<Void>(){
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -522,19 +522,23 @@ public class DataBaseTestManager {
                 .document("1200000000000")
                 .set(TestBook12);
 
-        Borrower borrower1 = new Borrower("borrower1","ThisIsATestEmailForBorrower1@gmail.com","6472409903","111","Hello, I'm TestBorrower1",null);
-        Borrower borrower2 = new Borrower("borrower2","ThisIsATestEmailForBorrower2@gmail.com","6465546873","111","Hello, I'm TestBorrower2",null);
-        Borrower borrower3 = new Borrower("borrower3","ThisIsATestEmailForBorrower3@gmail.com","7803664579","111","Hello, I'm TestBorrower3",null);
+        //Borrower testBorrower0 = new Borrower("TestBorrower0","ThisIsATestEmailForBorrower0@gmail.com","6473909903","111","Hello, I'm TestBorrower0",null);
+        Borrower testBorrower1 = new Borrower("TestBorrower1","ThisIsATestEmailForBorrower1@gmail.com","6472409903","111","Hello, I'm TestBorrower1",null);
+        Borrower testBorrower2 = new Borrower("TestBorrower2","ThisIsATestEmailForBorrower2@gmail.com","6465546873","111","Hello, I'm TestBorrower2",null);
+        Borrower testBorrower3 = new Borrower("TestBorrower3","ThisIsATestEmailForBorrower3@gmail.com","7803664579","111","Hello, I'm TestBorrower3",null);
         collectionReference = db.collection("users");
+        /*collectionReference
+                .document("TestBorrower0")
+                .set(testBorrower0);*/
         collectionReference
-                .document("borrower1")
-                .set(borrower1);
+                .document("TestBorrower1")
+                .set(testBorrower1);
         collectionReference
-                .document("borrower2")
-                .set(borrower2);
+                .document("TestBorrower2")
+                .set(testBorrower2);
         collectionReference
-                .document("borrower3")
-                .set(borrower3);
+                .document("TestBorrower3")
+                .set(testBorrower3);
     }
 
     public void deleteTestData(){
@@ -616,21 +620,20 @@ public class DataBaseTestManager {
 
         collectionReference = db.collection("users");
         collectionReference
-                .document("borrower1")
+                .document("TestBorrower2")
                 .delete();
         collectionReference
-                .document("borrower2")
+                .document("TestBorrower3")
                 .delete();
-        collectionReference
-                .document("borrower3")
-                .delete();
-
     }
 
     public void deleteUser() {
         collectionReference = db.collection("users");
         collectionReference
                 .document("TestOwner1")
+                .delete();
+        collectionReference
+                .document("TestBorrower1")
                 .delete();
     }
 

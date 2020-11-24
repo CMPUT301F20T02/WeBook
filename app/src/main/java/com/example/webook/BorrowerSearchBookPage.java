@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  */
 public class BorrowerSearchBookPage extends AppCompatActivity {
     ListView bookList;
+    EditText input;
     ArrayList<Book> dataList;
     ArrayAdapter<Book> bookAdapter;
     public static final String EXTRA_MESSAGE = "selectBook";
@@ -41,6 +43,8 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         Intent intent = getIntent();
         final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
         bookList = findViewById(R.id.search_result_list);
+        input = findViewById(R.id.search_book_user_result);
+        input.setHint("Searching books");
         dataList = new ArrayList<Book>();
         bookAdapter = new BookList(this, dataList);
         bookList.setAdapter(bookAdapter);

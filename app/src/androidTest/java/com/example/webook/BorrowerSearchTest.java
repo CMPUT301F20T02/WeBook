@@ -25,26 +25,29 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class BorrowerSearchTest {
-    private static Solo solo;
+    private Solo solo;
     private static DataBaseTestManager dataBaseTestManager;
+    private static Solo soloCls;
 
     @ClassRule
-    public static ActivityTestRule<MainActivity> rule =
+    public static ActivityTestRule<MainActivity> ruleCls =
             new ActivityTestRule<>(MainActivity.class, true, true);
 
 
     @BeforeClass
     public static void clsSetUp() {
-        solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        soloCls = new Solo(InstrumentationRegistry.getInstrumentation(), ruleCls.getActivity());
         dataBaseTestManager = new DataBaseTestManager();
         dataBaseTestManager.deleteUser();
-        solo.sleep(1000);
+        soloCls.sleep(1000);
         dataBaseTestManager.createTestData();
-        solo.sleep(7000);
-        solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
-        solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");
+        soloCls.sleep(5000);
     }
+
+
+    @Rule
+    public ActivityTestRule<MainActivity> rule =
+            new ActivityTestRule<>(MainActivity.class, true, true);
 
 
     /**
@@ -52,10 +55,10 @@ public class BorrowerSearchTest {
      *
      * @throws Exception
      */
-    /*@Before
+    @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-    }*/
+    }
 
 
     /**
@@ -63,19 +66,19 @@ public class BorrowerSearchTest {
      *
      * @throws Exception
      */
-    /*@Test
+    @Test
     public void start() throws Exception {
         Activity activity = rule.getActivity();
-    }*/
+    }
 
 
     @Test
     public void borrowerSearchBookByTitleAvailable(){
         // login
-        /*solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");*/
+        solo.clickOnButton("Log in");
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.clickOnButton("Search");
@@ -101,10 +104,10 @@ public class BorrowerSearchTest {
     @Test
     public void borrowerSearchBookByAuthorRequested(){
         // login
-        /*solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");*/
+        solo.clickOnButton("Log in");
 
         // login success, switch to borrower homepage
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
@@ -131,10 +134,10 @@ public class BorrowerSearchTest {
     @Test
     public void borrowerSearchBookByISBNAvailable(){
         // login
-        /*solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");*/
+        solo.clickOnButton("Log in");
 
         // login success, switch to borrower homepage
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
@@ -161,10 +164,10 @@ public class BorrowerSearchTest {
     @Test
     public void borrowerSearchBookByDescriptionRequested(){
         // login
-        /*solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");*/
+        solo.clickOnButton("Log in");
 
         // login success, switch to borrower homepage
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
@@ -191,10 +194,10 @@ public class BorrowerSearchTest {
     @Test
     public void BorrowerSearchUserExist(){
         // login
-        /*solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");*/
+        solo.clickOnButton("Log in");
 
         // login success, switch to borrower homepage
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
@@ -222,10 +225,10 @@ public class BorrowerSearchTest {
     @Test
     public void BorrowerSearchUserNotExist(){
         // login
-        /*solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.username_input),"ForBorrower1");
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");*/
+        solo.clickOnButton("Log in");
 
         // login success, switch to borrower homepage
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
@@ -241,14 +244,14 @@ public class BorrowerSearchTest {
 
 
     @After
-    public void goBack() {
-        solo.goBackToActivity("BorrowerHomepage");
+    public void tearDown() {
+        solo.finishOpenedActivities();
     }
 
 
     @AfterClass
     public static void clsTearDown() {
         dataBaseTestManager.deleteTestData();
-        solo.sleep(5000);
+        soloCls.sleep(5000);
     }
 }

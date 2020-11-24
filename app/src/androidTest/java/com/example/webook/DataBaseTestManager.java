@@ -41,83 +41,10 @@ public class DataBaseTestManager {
         Book TestBook11 = new Book("TestBook11", "1100000000000","TestBook11 Author", "accepted","TestOwner1",null,"This is TestBook11");
         Book TestBook12 = new Book("TestBook12", "1200000000000","TestBook12 Author", "accepted","TestOwner1",null,"This is TestBook12");
 
-        requester1 = new ArrayList<>();
-        requester1.add("TestBorrower1");
-        requester1.add("TestBorrower2");
-        requester1.add("TestBorrower3");
-
-        BookRequest requestTest1 = new BookRequest(TestBook1,"TestOwner1", requester1, null, null);
-        collectionReference = db.collection("requests");
-        collectionReference
-                .document("1000000000000")
-                .set(requestTest1)
-                .addOnSuccessListener(new OnSuccessListener<Void>(){
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Add requestTest1","Add requestTest1 successful");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Add requestTest1", "Add requestTest1 failed");
-                    }
-                });
-
-        ArrayList<String> requester2;
-
-        requester2 = new ArrayList<>();
-        requester2.add("TestBorrower1");
-        requester2.add("TestBorrower2");
-        requester2.add("TestBorrower3");
-
-        BookRequest requestTest2 = new BookRequest(TestBook2,"TestOwner1",requester2, null, null);
-        collectionReference = db.collection("requests");
-        collectionReference
-                .document("2000000000000")
-                .set(requestTest2)
-                .addOnSuccessListener(new OnSuccessListener<Void>(){
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Add requestTest2","Add requestTest2 successful");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Add requestTest2", "Add requestTest2 failed");
-                    }
-                });
-
-        ArrayList<String> requester3;
-
-        requester3 = new ArrayList<>();
-        requester3.add("TestBorrower1");
-        requester3.add("TestBorrower2");
-        requester3.add("TestBorrower3");
-
-        BookRequest requestTest3 = new BookRequest(TestBook3,"TestOwner1",requester3, null, null);
-        collectionReference = db.collection("requests");
-        collectionReference
-                .document("3000000000000")
-                .set(requestTest3)
-                .addOnSuccessListener(new OnSuccessListener<Void>(){
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Add requestTest3","Add requestTest3 successful");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Add requestTest3", "Add requestTest3 failed");
-                    }
-                });
 
         ArrayList<String> requester4;
 
         requester4 = new ArrayList<>();
-        requester4.add("TestBorrower1");
         requester4.add("TestBorrower2");
         requester4.add("TestBorrower3");
 
@@ -304,8 +231,6 @@ public class DataBaseTestManager {
         requester10 = new ArrayList<>();
         requester10.add("TestBorrower1");
 
-        TestBook10.setBorrower("TestBorrower1");
-
         Date10 = new ArrayList<>();
         Date10.add(2022);
         Date10.add(03);
@@ -340,8 +265,6 @@ public class DataBaseTestManager {
         requester11 = new ArrayList<>();
         requester11.add("TestBorrower1");
 
-        TestBook11.setBorrower("TestBorrower1");
-
         Date11 = new ArrayList<>();
         Date11.add(2025);
         Date11.add(12);
@@ -375,8 +298,6 @@ public class DataBaseTestManager {
 
         requester12 = new ArrayList<>();
         requester12.add("TestBorrower1");
-
-        TestBook12.setBorrower("TestBorrower1");
 
         Date12 = new ArrayList<>();
         Date12.add(2020);
@@ -422,16 +343,6 @@ public class DataBaseTestManager {
 
         ArrayList<String> requestList;
         requestList = new ArrayList<>();
-        requestList.add("1000000000000");
-        requestList.add("1000000000000");
-        requestList.add("1000000000000");
-        requestList.add("2000000000000");
-        requestList.add("2000000000000");
-        requestList.add("2000000000000");
-        requestList.add("3000000000000");
-        requestList.add("3000000000000");
-        requestList.add("3000000000000");
-        requestList.add("4000000000000");
         requestList.add("4000000000000");
         requestList.add("4000000000000");
         requestList.add("5000000000000");
@@ -617,14 +528,6 @@ public class DataBaseTestManager {
         collectionReference
                 .document("1200000000000")
                 .delete();
-
-        collectionReference = db.collection("users");
-        collectionReference
-                .document("TestBorrower2")
-                .delete();
-        collectionReference
-                .document("TestBorrower3")
-                .delete();
     }
 
     public void deleteUser() {
@@ -634,6 +537,12 @@ public class DataBaseTestManager {
                 .delete();
         collectionReference
                 .document("TestBorrower1")
+                .delete();
+        collectionReference
+                .document("TestBorrower2")
+                .delete();
+        collectionReference
+                .document("TestBorrower3")
                 .delete();
     }
 

@@ -45,7 +45,6 @@ public class OwnerBookProfileDeleteTest {
 
     @Test
     public void checkOwnerBookProfileEditTest() {
-        assertTrue(solo.waitForText("TestBook3", 1, 5000, true, true));
         solo.clickOnMenuItem("TestBook3");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
@@ -53,9 +52,12 @@ public class OwnerBookProfileDeleteTest {
         assertTrue(solo.waitForText("Are you sure you want to delete this book?", 1, 5000, true, true));
         solo.clickOnButton("Yes");
         solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
-        assertFalse(solo.waitForText("TestBook3", 1, 500, true, true));
+        solo.sleep(1000);
+        assertFalse(solo.waitForText("TestBook3", 1, 3000, true, true));
 
-        solo.clickOnMenuItem("TestBook6");
+
+        solo.clickOnText("Requested");
+        solo.clickOnMenuItem("TestBook5");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
         solo.clickOnButton("Delete");
@@ -67,18 +69,10 @@ public class OwnerBookProfileDeleteTest {
         assertTrue(solo.waitForText("Are you sure you want to delete this book?", 1, 5000, true, true));
         solo.clickOnButton("Yes");
         solo.assertCurrentActivity("Wrong activity", OwnerHomepage.class);
-        assertFalse(solo.waitForText("TestBook6", 1, 500, true, true));
-
-
-        solo.clickOnMenuItem("TestBook9");
         solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
-        solo.clickOnButton("Delete");
-        assertTrue(solo.waitForText("Are you sure you want to delete this book?", 1, 5000, true, true));
-        solo.clickOnButton("Yes");
-        solo.assertCurrentActivity("Wrong activity", OwnerHomepage.class);
-        assertFalse(solo.waitForText("TestBook9", 1, 500, true, true));
+        assertFalse(solo.waitForText("TestBook5", 1, 3000, true, true));
 
+        solo.clickOnText("Accepted");
         solo.clickOnMenuItem("TestBook12");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
@@ -86,6 +80,18 @@ public class OwnerBookProfileDeleteTest {
         assertTrue(solo.waitForText("Are you sure you want to delete this book?", 1, 5000, true, true));
         solo.clickOnButton("Yes");
         solo.assertCurrentActivity("Wrong activity", OwnerHomepage.class);
-        assertFalse(solo.waitForText("TestBook12", 1, 500, true, true));
+        solo.sleep(1000);
+        assertFalse(solo.waitForText("TestBook12", 1, 3000, true, true));
+
+        solo.clickOnText("Borrowed");
+        solo.clickOnMenuItem("TestBook9");
+        solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
+        solo.clickOnButton("Delete");
+        assertTrue(solo.waitForText("Are you sure you want to delete this book?", 1, 5000, true, true));
+        solo.clickOnButton("Yes");
+        solo.assertCurrentActivity("Wrong activity", OwnerHomepage.class);
+        solo.sleep(1000);
+        assertFalse(solo.waitForText("TestBook9", 1, 3000, true, true));
     }
 }

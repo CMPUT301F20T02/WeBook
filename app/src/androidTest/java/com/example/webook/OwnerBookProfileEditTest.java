@@ -37,7 +37,6 @@ public class OwnerBookProfileEditTest {
 
     @After
     public void after(){
-        solo.goBackToActivity("MainActivity");
         dataBaseTestManager.deleteTestData();
         solo.sleep(5000);
 

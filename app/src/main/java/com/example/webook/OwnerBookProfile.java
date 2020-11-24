@@ -107,7 +107,7 @@ public class OwnerBookProfile extends AppCompatActivity {
 
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                } if (status.equals("available") ){
+                } else if (status.equals("available") ){
                     Context context = getApplicationContext();
                     CharSequence text = "There is no request for this book";
                     int duration = Toast.LENGTH_SHORT;

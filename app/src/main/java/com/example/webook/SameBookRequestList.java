@@ -10,9 +10,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.github.nuptboyzhb.lib.SuperSwipeRefreshLayout;
+
 import java.util.ArrayList;
 
 public class SameBookRequestList extends AppCompatActivity implements OwnerAcceptDeclineFragment.OnFragmentInteractionListener{
@@ -22,6 +26,7 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
     private static final String TAG = "Sample";
     private Book selectBook;
     private DataBaseManager dataBaseManager;
+    private SuperSwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +40,7 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
         dataBaseManager = new DataBaseManager();
 //        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
 
-        dataBaseManager.getSameBookRequest(selectBook.getISBN(),this);
+        dataBaseManager.getSameBookRequest(selectBook.getISBN(), this);
         findViewById(R.id.loadingPanelRequest).setVisibility(View.GONE);
 
 
@@ -48,25 +53,45 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
             }
         });
 
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefreshRequest);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                sameBookRequestList = findViewById(R.id.same_book_request_list);
-                dataList = new ArrayList<BookRequest>();
-                bookAdapter = new RequestList(SameBookRequestList.this, dataList, null, 0);
-                sameBookRequestList.setAdapter(bookAdapter);
-                final Intent intent = getIntent();
-                selectBook = (Book) intent.getSerializableExtra("selectBook");
-                dataBaseManager = new DataBaseManager();
-//        final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
-                findViewById(R.id.loadingPanelRequest).setVisibility(View.VISIBLE);
-                dataBaseManager.getSameBookRequest(selectBook.getISBN(),SameBookRequestList.this);
-                findViewById(R.id.loadingPanelRequest).setVisibility(View.GONE);
-                pullToRefresh.setRefreshing(false);
-            }
-        });
+        swipeRefreshLayout = (SuperSwipeRefreshLayout) findViewById(R.id.swipe_refresh_request);
+        swipeRefreshLayout
+                .setOnPullRefreshListener(new SuperSwipeRefreshLayout.OnPullRefreshListener() {
+
+                    @Override
+                    public void onRefresh() {
+                        new Handler().postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                sameBookRequestList = findViewById(R.id.same_book_request_list);
+                                dataList = new ArrayList<BookRequest>();
+                                bookAdapter = new RequestList(SameBookRequestList.this, dataList, null, 0);
+                                sameBookRequestList.setAdapter(bookAdapter);
+                                final Intent intent = getIntent();
+                                selectBook = (Book) intent.getSerializableExtra("selectBook");
+                                dataBaseManager = new DataBaseManager();
+                                // final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
+                                findViewById(R.id.loadingPanelRequest).setVisibility(View.VISIBLE);
+                                dataBaseManager.getSameBookRequest(selectBook.getISBN(), SameBookRequestList.this);
+                                findViewById(R.id.loadingPanelRequest).setVisibility(View.GONE);
+
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 2000);
+                    }
+
+                    @Override
+                    public void onPullDistance(int distance) {
+                        System.out.println("debug:distance = " + distance);
+                        // myAdapter.updateHeaderHeight(distance);
+                    }
+
+                    @Override
+                    public void onPullEnable(boolean enable) {
+                    }
+                });
     }
+
 
     public void dataListClear(){
         dataList.clear();

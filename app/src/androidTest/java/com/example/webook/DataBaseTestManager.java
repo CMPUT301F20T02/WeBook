@@ -532,7 +532,8 @@ public class DataBaseTestManager {
                 .document("1200000000000")
                 .delete();
         collectionReference
-                .document("1300000000000");
+                .document("1300000000000")
+                .delete();
     }
 
     public void deleteUser() {

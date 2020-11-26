@@ -150,7 +150,7 @@ public class BorrowerHomepage extends AppCompatActivity {
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BorrowerHomepage.this, OwnerRequestPageActivity.class);
+                Intent intent = new Intent(BorrowerHomepage.this, BorrowerRequestPageActivity.class);
                 intent.putExtra("user", borrower);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);

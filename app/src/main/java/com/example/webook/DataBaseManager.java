@@ -552,6 +552,25 @@ public class DataBaseManager {
                 });
     }
 
+    public void BorrowerRequestPageRequestSnapShotListener(final BorrowerRequestPageActivity borrowerRequestPageActivity, final String username){
+        CollectionReference requestRef = db.collection("requests");
+        requestRef
+                .whereArrayContains("requester", username)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        assert value != null;
+                        List<DocumentSnapshot> documents = value.getDocuments();
+                        ArrayList<BookRequest> bookRequests = new ArrayList<>();
+                        for (int i = 0; i < documents.size(); i++){
+                            BookRequest temp = documents.get(i).toObject(BookRequest.class);
+                            bookRequests.add(temp);
+                        }
+                        borrowerRequestPageActivity.setArrayList(bookRequests);
+                    }
+                });
+    }
+
     public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
         final CollectionReference bookRef = db.collection("books");
         bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {

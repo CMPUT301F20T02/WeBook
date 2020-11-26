@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,15 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BorrowerRequestPageActivity"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw"/>
+            android:value="AIzaSyDvu69tLn3WmOwJD-mfx2OJV_DtYNUBILw" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".OwnerRequestPageActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".OwnerRequestPageActivity" />
         <activity android:name=".CodeScanner" />
         <activity android:name=".ShowUserDetail" />
         <activity android:name=".BorrowerBookProfile" />
@@ -36,7 +39,7 @@
         <activity android:name=".OwnerProfileActivity" />
         <activity android:name=".BorrowerHomepage" />
         <activity android:name=".OwnerHomepage" />
-        <activity android:name=".OwnerBookProfileBookEdit"/>
+        <activity android:name=".OwnerBookProfileBookEdit" />
         <activity android:name=".SimpleMapViewActivity" />
         <activity android:name=".RequestProfile" />
         <activity android:name=".BorrowerRequestDelivery" />

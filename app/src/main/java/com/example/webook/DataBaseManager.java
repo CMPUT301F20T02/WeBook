@@ -897,12 +897,52 @@ public class DataBaseManager {
                                             });
                                     borrowerHomepage.addListenerRegistration(listenerRegistration);
                                     borrowerHomepage.addIsbn(dc.getDocument().getId());
+                                    break;
                                 case MODIFIED:
                                     String isbn = dc.getDocument().getId();
                                     if(borrowerHomepage.getIsbns().contains(isbn)){
                                         int index = borrowerHomepage.getIsbns().indexOf(isbn);
                                         borrowerHomepage.removeListenerRegistration(index);
+                                    }else{
+                                        ListenerRegistration listenerRegistration1 = dc.getDocument().getReference()
+                                                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                        if(value.get("time") != null){
+                                                            if(Objects.equals(value.getString("status"), "accepted")) {
+                                                                BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
+                                                                Book bookHere = requestHere.getBook();
+                                                                String sentence = "Delivery time and location set for \n Book: " + bookHere.getTitle();
+                                                                Toast toast = Toast.makeText(borrowerHomepage,
+                                                                        sentence, Toast.LENGTH_LONG);
+                                                                toast.show();
+                                                            }
+                                                        }
+
+                                                        if(Objects.equals(value.getString("status"), "accepted")){
+                                                            if(value.get("time") == null){
+                                                                BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
+                                                                Book bookHere = requestHere.getBook();
+                                                                String sentence = "Owner have accepted you request on \n" + bookHere.getTitle();
+                                                                Toast toast = Toast.makeText(borrowerHomepage, sentence , Toast.LENGTH_LONG);
+                                                                toast.show();
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                        borrowerHomepage.addListenerRegistration(listenerRegistration1);
+                                        borrowerHomepage.addIsbn(dc.getDocument().getId());
                                     }
+                                    break;
+
+                                case REMOVED:
+                                    String isbn1 = dc.getDocument().getId();
+                                    if(borrowerHomepage.getIsbns().contains(isbn1)) {
+                                        int index = borrowerHomepage.getIsbns().indexOf(isbn1);
+                                        borrowerHomepage.removeListenerRegistration(index);
+                                    }
+                                default:
+                                    break;
 
                             }
                         }

@@ -951,4 +951,35 @@ public class DataBaseManager {
 
     }
 
+    public void getUserBorrowBookProfile(BorrowerBookProfile borrowerBookProfile, String username){
+
+    }
+
+    public void getUserShowBookDetail(ShowBookDetail showBookDetail, String username){
+
+    }
+
+    public void getUserBorrowerRequestDelivery(BorrowerRequestDelivery borrowerRequestDelivery, String username){
+
+    }
+
+    public void getUserOwnerBookProfile(OwnerBookProfile ownerBookProfile, String username){
+
+    }
+
+    public void getUserRequestProfile(RequestProfile requestProfile, String username){
+
+    }
+
+    public void getUserBorrowerReturn(BorrowerReturn borrowerReturn, String username){
+
+    }
+
+    public void getUserOwnerReturn(OwnerReturn ownerReturn, String username){
+
+    }
+
+    public void getUserOwnerAcceptedDecline(OwnerAcceptDeclineFragment ownerAcceptDeclineFragment, String username){
+
+    }
 }

@@ -52,6 +52,8 @@ public class BorrowerHomepage extends AppCompatActivity {
     private TextView borrowed;
     private TextView requested;
     private TextView accepted;
+    private TextView me;
+    private TextView request;
     private String currentView = "all";
 
     @Override
@@ -77,6 +79,8 @@ public class BorrowerHomepage extends AppCompatActivity {
         accepted = findViewById(R.id.borrower_accepted);
         requested = findViewById(R.id.borrower_requested);
         borrowed = findViewById(R.id.borrower_borrowed);
+        me = findViewById(R.id.borrower_me_tab);
+        request = findViewById(R.id.borrower_requests_tab);
 
         listenerRegistrations = new ArrayList<ListenerRegistration>();
         Isbns = new ArrayList<String>();
@@ -130,6 +134,26 @@ public class BorrowerHomepage extends AppCompatActivity {
             public void onClick(View v) {
                 bookListView.setAdapter(borrowedBookList);
                 currentView = "borrowed";
+            }
+        });
+
+        me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BorrowerHomepage.this, BorrowerProfileActivity.class);
+                intent.putExtra("user", borrower);
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
+            }
+        });
+
+        request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BorrowerHomepage.this, OwnerRequestPageActivity.class);
+                intent.putExtra("user", borrower);
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 

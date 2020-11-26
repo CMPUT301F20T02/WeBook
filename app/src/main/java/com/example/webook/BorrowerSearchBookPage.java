@@ -73,9 +73,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 String strEditText = data.getStringExtra("key");
-                System.out.println("fuckhahahahahahah");
                 if (strEditText.equals("request")) {
-                    System.out.println("hahafuck");
                     dataBaseManager.BorrowerSearchBook(message, this);
                 }
             }

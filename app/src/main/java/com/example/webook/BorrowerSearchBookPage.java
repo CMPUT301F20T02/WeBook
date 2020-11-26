@@ -51,8 +51,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         intent = getIntent();
         message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
         bookList = findViewById(R.id.search_result_list);
-        input = findViewById(R.id.search_book_user_result);
-        input.setHint("Searching books");
+//        input = findViewById(R.id.search_book_user_result);
         dataList = new ArrayList<Book>();
         bookAdapter = new BookList(this, dataList);
         bookList.setAdapter(bookAdapter);

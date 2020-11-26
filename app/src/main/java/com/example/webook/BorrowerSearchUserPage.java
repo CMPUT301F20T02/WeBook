@@ -46,8 +46,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         Intent intent = getIntent();
         final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
         userList = findViewById(R.id.search_result_list);
-        input = findViewById(R.id.search_book_user_result);
-        input.setHint("Searching users");
+//        input = findViewById(R.id.search_book_user_result);
         dataList = new ArrayList<>();
         userAdapter = new UserList(this, dataList);
         userList.setAdapter(userAdapter);
@@ -83,8 +82,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                                 Intent intent = getIntent();
                                 final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
                                 userList = findViewById(R.id.search_result_list);
-                                input = findViewById(R.id.search_book_user_result);
-                                input.setHint("Search for users");
+//                                input = findViewById(R.id.search_book_user_result);
                                 dataList = new ArrayList<>();
                                 userAdapter = new UserList(BorrowerSearchUserPage.this, dataList);
                                 userList.setAdapter(userAdapter);

@@ -200,10 +200,8 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {
                                                 if(!dateSelected.isEmpty()) {
-                                                    db.collection("requests").document(isbn_base).update("status", "borrowed");
-                                                    db.collection("requests").document(isbn_base).update("time", null);
-                                                    db.collection("requests").document(isbn_base).update("geoLocation", null);
-                                                    db.collection("requests").document(isbn_base).update("date", null);
+                                                    db.collection("requests").document(isbn_base).update("waiting", false);
+                                                    db.collection("books").document(isbn_base).update("status", "borrowed");
                                                     scaned = true;
                                                     finish();
                                                 }

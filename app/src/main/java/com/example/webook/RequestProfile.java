@@ -303,7 +303,7 @@ public class RequestProfile extends AppCompatActivity {
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {
                                                 if(!dateSelected.isEmpty()) {
-                                                    db.collection("requests").document(isbn_base).update("status", "waiting");
+                                                    db.collection("requests").document(isbn_base).update("waiting", true);
                                                     scaned = true;
                                                     finish();
                                                 }

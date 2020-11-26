@@ -301,7 +301,7 @@ public class BorrowerReturn extends AppCompatActivity {
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {
                                                 if(!dateSelected.isEmpty()) {
-                                                    db.collection("requests").document(isbn_base).update("status", "waiting_for_return");
+                                                    db.collection("requests").document(isbn_base).update("waiting", true);
                                                     scaned = true;
                                                     finish();
                                                 }

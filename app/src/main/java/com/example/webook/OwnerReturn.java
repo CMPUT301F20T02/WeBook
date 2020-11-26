@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -199,11 +200,9 @@ public class OwnerReturn extends AppCompatActivity {
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {
                                                 if(!dateSelected.isEmpty()) {
-                                                    db.collection("requests").document(isbn_base).update("status", "available");
-                                                    db.collection("requests").document(isbn_base).update("time", null);
-                                                    db.collection("requests").document(isbn_base).update("geoLocation", null);
-                                                    db.collection("requests").document(isbn_base).update("date", null);
-                                                    scaned = true;
+                                                    db.collection("requests").document(isbn_base).delete();
+                                                    db.collection("books").document(isbn_base).update("status", "available");
+                                                    db.collection("users").document(owner.getText().toString()).update("requestList", FieldValue.arrayRemove(isbn_base));
                                                     finish();
                                                 }
                                             }

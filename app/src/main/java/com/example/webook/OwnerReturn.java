@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class BorrowerRequestDelivery extends AppCompatActivity {
+public class OwnerReturn extends AppCompatActivity {
     private MapView mapView;
     private GoogleMap mMap;
     private TextView title;
@@ -55,18 +55,16 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
         Intent intent1 = getIntent();
         final BookRequest bookRequest = (BookRequest) intent1.getSerializableExtra("request");
 
-
-
-        setContentView(R.layout.request_profile_borrower_deliver);
-        mapView = findViewById(R.id.deliver_location_map);
+        setContentView(R.layout.request_profile_owner_return);
+        mapView = findViewById(R.id.return_location_map);
         title = findViewById(R.id.request_profile_book_title);
         isbn = findViewById(R.id.request_profile_ISBN);
         owner = findViewById(R.id.request_profile_owner);
         borrower = findViewById(R.id.request_profile_borrower);
         status= findViewById(R.id.request_profile_status);
-        scan = findViewById(R.id.request_profile_deliver_scan);
-        time = findViewById(R.id.deliver_time);
-        date = findViewById(R.id.deliver_date);
+        scan = findViewById(R.id.request_profile_return_scan);
+        time = findViewById(R.id.return_time);
+        date = findViewById(R.id.return_date);
         dateSelected = new ArrayList<Integer>();
         latlong = new ArrayList<Double>();
         scaned = false;
@@ -82,12 +80,12 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
         isbn.setText(book_isbn);
         title.setText(book_title);
         status.setText(book_status);
-        address.setText("This is the deliver location selected by the owner: ");
+        address.setText("This is the return location selected by the borrower: ");
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BorrowerRequestDelivery.this,CodeScanner.class);
+                Intent intent = new Intent(OwnerReturn.this,CodeScanner.class);
                 startActivityForResult(intent,2);
             }
         });
@@ -195,12 +193,12 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
                             if(documentSnapshot.exists()){
                                 BookRequest bookRequest = documentSnapshot.toObject(BookRequest.class);
                                 if(bookRequest.getStatus() != null){
-                                    if(bookRequest.getStatus().equals("waiting")){
+                                    if(bookRequest.getStatus().equals("waiting_for_return")){
                                         //if (isbn_base.equals(bookRequest.getBook().getISBN())){
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {
                                                 if(!dateSelected.isEmpty()) {
-                                                    db.collection("requests").document(isbn_base).update("status", "borrowed");
+                                                    db.collection("requests").document(isbn_base).update("status", "available");
                                                     db.collection("requests").document(isbn_base).update("time", null);
                                                     db.collection("requests").document(isbn_base).update("geoLocation", null);
                                                     db.collection("requests").document(isbn_base).update("date", null);
@@ -219,3 +217,4 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
         }
     }
 }
+

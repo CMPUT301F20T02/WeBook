@@ -1,14 +1,24 @@
 package com.example.webook;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import org.w3c.dom.Text;
 
@@ -31,7 +41,8 @@ public class OwnerHomepage extends AppCompatActivity {
     private ArrayList<Book> borrowedBookArrayList = new ArrayList<>();
     private String currentListView = "all";
     private DataBaseManager dataBaseManager = new DataBaseManager();
-
+    private Integer before;
+    private Button search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +52,15 @@ public class OwnerHomepage extends AppCompatActivity {
         TextView me = findViewById(R.id.owner_me_tab);
         TextView books = findViewById(R.id.owner_books_tab);
         TextView request = findViewById(R.id.owner_requests_tab);
-
+        search = findViewById(R.id.owner_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OwnerHomepage.this,OwnerSearch.class);
+                startActivity(intent);
+            }
+        });
+        before = 0;
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
 
@@ -163,6 +182,31 @@ public class OwnerHomepage extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
 
+        });
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(owner.getUsername()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()){
+                        before = ((ArrayList<String>)documentSnapshot.get("requestList")).size();
+                        db.collection("users").document(owner.getUsername()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                Integer now = ((ArrayList<String>)value.get("requestList")).size();
+                                if(before < now){
+                                    String sentence = "You have received a new request";
+                                    Toast toast = Toast.makeText(OwnerHomepage.this, sentence, Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                                before = now;
+                            }
+                        });
+                    }
+                }
+            }
         });
     }
 
@@ -292,4 +336,6 @@ public class OwnerHomepage extends AppCompatActivity {
         }
         bookListBorrowed.notifyDataSetChanged();
     }
+
+
 }

@@ -192,6 +192,38 @@ public class DataBaseManager {
                 });
     }
 
+    public void OwnerSearchUser(final String message, final OwnerSearchUserPage ownerSearchUserPage){
+        collectionReference= db.collection("users");
+        collectionReference.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ownerSearchUserPage.dataList.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId());
+                                String Username = document.getId();
+                                String email = (String) document.getData().get("email");
+                                String description =  (String) document.getData().get("description");
+                                String pwd =  (String) document.getData().get("pwd");
+                                String phoneNumber =  (String) document.getData().get("phoneNumber");
+                                String userType = (String) document.getData().get("userType");
+                                if(Username.contains(message)){
+                                    if(userType.equals("borrower")) {
+                                        ownerSearchUserPage.dataList.add(new Borrower(Username,email, phoneNumber, pwd, description,null));
+                                    }else{
+                                        ownerSearchUserPage.dataList.add(new Owner(Username,email, phoneNumber, pwd, description,null));
+                                    }
+                                }
+                            }
+                            ownerSearchUserPage.userAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
 
     /**
      * This add a book document in database
@@ -526,8 +558,26 @@ public class DataBaseManager {
                 });
     }
 
-    public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
+    public void BorrowerRequestPageRequestSnapShotListener(final BorrowerRequestPageActivity borrowerRequestPageActivity, final String username){
+        CollectionReference requestRef = db.collection("requests");
+        requestRef
+                .whereArrayContains("requester", username)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        assert value != null;
+                        List<DocumentSnapshot> documents = value.getDocuments();
+                        ArrayList<BookRequest> bookRequests = new ArrayList<>();
+                        for (int i = 0; i < documents.size(); i++){
+                            BookRequest temp = documents.get(i).toObject(BookRequest.class);
+                            bookRequests.add(temp);
+                        }
+                        borrowerRequestPageActivity.setArrayList(bookRequests);
+                    }
+                });
+    }
 
+    public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
         final CollectionReference bookRef = db.collection("books");
         bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -552,6 +602,7 @@ public class DataBaseManager {
     }
 
     private void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
+        Log.d("I'm fine:", bookisbn.toString());
         CollectionReference bookRef = db.collection("books");
         for (int i = 0; i < bookisbn.size(); i++) {
             DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));

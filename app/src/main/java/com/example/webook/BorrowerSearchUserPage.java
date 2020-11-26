@@ -2,6 +2,7 @@ package com.example.webook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,13 +12,16 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.github.nuptboyzhb.lib.SuperSwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.ArrayList;
 /**
@@ -31,6 +35,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
     ArrayList<User> dataList;
     ArrayAdapter<User> userAdapter;
     private DataBaseManager dataBaseManager;
+    private SuperSwipeRefreshLayout swipeRefreshLayout;
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchUserPage.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         dataBaseManager.BorrowerSearchUser(message,this);
+        findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,6 +68,48 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
             }
         });
 
+        swipeRefreshLayout = (SuperSwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout
+                .setOnPullRefreshListener(new SuperSwipeRefreshLayout.OnPullRefreshListener() {
+
+                    @Override
+                    public void onRefresh() {
+                        new Handler().postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                final String TAG = "User";
+                                // User's key for search
+                                Intent intent = getIntent();
+                                final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                                userList = findViewById(R.id.search_result_list);
+                                input = findViewById(R.id.search_book_user_result);
+                                input.setHint("Search for users");
+                                dataList = new ArrayList<>();
+                                userAdapter = new UserList(BorrowerSearchUserPage.this, dataList);
+                                userList.setAdapter(userAdapter);
+                                final ArrayList<String> userNameList = new ArrayList<String>();
+                                dataBaseManager = new DataBaseManager();
+
+                                findViewById(R.id.loadingPanelMid).setVisibility(View.VISIBLE);
+                                dataBaseManager.BorrowerSearchUser(message,BorrowerSearchUserPage.this);
+                                findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
+
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 2000);
+                    }
+
+                    @Override
+                    public void onPullDistance(int distance) {
+                        System.out.println("debug:distance = " + distance);
+                        // myAdapter.updateHeaderHeight(distance);
+                    }
+
+                    @Override
+                    public void onPullEnable(boolean enable) {
+                    }
+                });
 
     }
 }

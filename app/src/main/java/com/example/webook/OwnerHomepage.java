@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -62,7 +63,6 @@ public class OwnerHomepage extends AppCompatActivity {
         before = 0;
         Intent intent = getIntent();
         owner = (Owner) intent.getSerializableExtra("user");
-
 
         bookListView = findViewById(R.id.owner_book_list);
 

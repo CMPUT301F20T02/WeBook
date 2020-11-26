@@ -26,4 +26,5 @@
     <string name="confirm1">CONFIRM</string>
     <string name="author">Author</string>
     <string name="requests_list">REQUESTS LIST</string>
+    <string name="search_books_users">Search Books/Users</string>
 </resources>

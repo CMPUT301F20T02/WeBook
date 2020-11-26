@@ -6,12 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".SameBookRequestList">
 
-    <ListView
-        android:id="@+id/same_book_request_list"
+    <RelativeLayout
+        android:id="@+id/loadingPanelRequest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
+
+    <com.github.nuptboyzhb.lib.SuperSwipeRefreshLayout
+        android:id="@+id/swipe_refresh_request"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+    <ListView
+        android:id="@+id/same_book_request_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+    </com.github.nuptboyzhb.lib.SuperSwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

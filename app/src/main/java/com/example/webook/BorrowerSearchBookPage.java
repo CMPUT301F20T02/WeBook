@@ -2,6 +2,7 @@ package com.example.webook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +12,9 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.github.nuptboyzhb.lib.SuperSwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +39,8 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     private  DataBaseManager dataBaseManager;
     private Intent intent;
     private String message;
+    private SuperSwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
 
         borrower = (Borrower)intent.getSerializableExtra("borrower");
         dataBaseManager.BorrowerSearchBook(message,this);
+        findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -66,6 +72,47 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
+
+
+
+        swipeRefreshLayout = (SuperSwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout
+                .setOnPullRefreshListener(new SuperSwipeRefreshLayout.OnPullRefreshListener() {
+
+                    @Override
+                    public void onRefresh() {
+                        new Handler().postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Intent intent = getIntent();
+                                final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                                bookList = findViewById(R.id.search_result_list);
+                                dataList = new ArrayList<Book>();
+                                bookAdapter = new BookList(BorrowerSearchBookPage.this, dataList);
+                                bookList.setAdapter(bookAdapter);
+                                dataBaseManager = new DataBaseManager();
+
+                                borrower = (Borrower)intent.getSerializableExtra("borrower");
+                                findViewById(R.id.loadingPanelMid).setVisibility(View.VISIBLE);
+                                dataBaseManager.BorrowerSearchBook(message,BorrowerSearchBookPage.this);
+                                findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
+
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 2000);
+                    }
+
+                    @Override
+                    public void onPullDistance(int distance) {
+                        System.out.println("debug:distance = " + distance);
+                        // myAdapter.updateHeaderHeight(distance);
+                    }
+
+                    @Override
+                    public void onPullEnable(boolean enable) {
+                    }
+                });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

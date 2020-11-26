@@ -134,7 +134,7 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
     public void getPending(){
         this.pendingRequests.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
-            if (requestArrayList.get(i).getStatus().equals("pending")){
+            if (requestArrayList.get(i).getBook().getStatus().equals("requested")){
                 pendingRequests.add(requestArrayList.get(i));
             }
         }
@@ -146,7 +146,7 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
         this.acceptedRequests.clear();
         this.acceptedList.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
-            if (requestArrayList.get(i).getStatus().equals("accepted") | requestArrayList.get(i).getStatus().equals("waiting")){
+            if (requestArrayList.get(i).getBook().getStatus().equals("accepted") | requestArrayList.get(i).getStatus().equals("waiting")){
                 acceptedRequests.add(requestArrayList.get(i));
                 acceptedList.add(requestArrayList.get(i).getRequester().get(0));
             }
@@ -159,7 +159,7 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
         this.borrowedRequests.clear();
         this.borrowedList.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
-            if (requestArrayList.get(i).getStatus().equals("borrowed")){
+            if (requestArrayList.get(i).getBook().getStatus().equals("borrowed")){
                 borrowedRequests.add(requestArrayList.get(i));
                 borrowedList.add(requestArrayList.get(i).getRequester().get(0));
             }

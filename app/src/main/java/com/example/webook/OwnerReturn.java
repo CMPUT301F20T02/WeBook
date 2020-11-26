@@ -65,6 +65,7 @@ public class OwnerReturn extends AppCompatActivity {
         scan = findViewById(R.id.request_profile_return_scan);
         time = findViewById(R.id.return_time);
         date = findViewById(R.id.return_date);
+        address = findViewById(R.id.location_instruction);
         dateSelected = new ArrayList<Integer>();
         latlong = new ArrayList<Double>();
         scaned = false;

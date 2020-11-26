@@ -79,6 +79,9 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
 
                 }else if(currentView.equals("borrowed")){
                     selectRequest = borrowedRequests.get(position);
+                    Intent intent = new Intent(OwnerRequestPageActivity.this, OwnerReturn.class);
+                    intent.putExtra("request", selectRequest);
+                    startActivity(intent);
                 }
 
             }

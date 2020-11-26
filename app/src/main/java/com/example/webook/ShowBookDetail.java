@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 /**
  * This is activity shows a book's profile
@@ -15,7 +17,7 @@ public class ShowBookDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_book_profile);
         Intent intent = getIntent();
-        final Book book = (Book)intent.getSerializableExtra(BorrowerSearchBookPage.EXTRA_MESSAGE);
+        final Book book = (Book)intent.getSerializableExtra("book");
         final TextView  tile = findViewById(R.id.book_profile_title);
         final TextView  author = findViewById(R.id.book_profile_author);
         final TextView  isbn = findViewById(R.id.book_profile_ISBN);
@@ -23,6 +25,8 @@ public class ShowBookDetail extends AppCompatActivity {
         final TextView  status = findViewById(R.id.book_profile_status_text);
         final TextView  description = findViewById(R.id.book_profile_description);
         final TextView  owner = findViewById(R.id.book_profile_owner_text);
+        Button show = findViewById(R.id.borrower_book_request_button);
+        show.setVisibility(View.INVISIBLE);
         tile.setText(book.getTitle());
         author.setText(book.getAuthor());
         isbn.setText(book.getISBN());

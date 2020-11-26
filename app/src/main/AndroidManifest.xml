@@ -24,6 +24,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".SignUpActivity" />
+        <activity android:name="ShowBookDetail"/>
         <activity android:name=".OwnerRequestPageActivity" />
         <activity android:name=".CodeScanner" />
         <activity android:name=".ShowUserDetail" />

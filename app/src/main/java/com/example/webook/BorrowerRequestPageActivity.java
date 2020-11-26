@@ -68,6 +68,9 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
 
                 }else if(currentView.equals("borrowed")){
                     selectRequest = borrowedRequests.get(position);
+                    Intent intent = new Intent(BorrowerRequestPageActivity.this, BorrowerReturn.class);
+                    intent.putExtra("request", selectRequest);
+                    startActivity(intent);
                 }
 
             }

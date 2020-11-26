@@ -56,13 +56,14 @@ public class BorrowerHomepage extends AppCompatActivity {
     private TextView me;
     private TextView request;
     private String currentView = "all";
+    private DataBaseManager dataBaseManager;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_homepage);
         bookListView = findViewById(R.id.borrower_book_list);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         borrower = (Borrower) intent.getSerializableExtra("user");
         final Button searchButton = findViewById(R.id.borrower_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +82,7 @@ public class BorrowerHomepage extends AppCompatActivity {
         borrowed = findViewById(R.id.borrower_borrowed);
         me = findViewById(R.id.borrower_me_tab);
         request = findViewById(R.id.borrower_requests_tab);
+        dataBaseManager = new DataBaseManager();
 
         listenerRegistrations = new ArrayList<ListenerRegistration>();
         Isbns = new ArrayList<String>();
@@ -95,16 +97,19 @@ public class BorrowerHomepage extends AppCompatActivity {
         requestedBookList = new BookList(this, requestedBooks);
 
         bookListView.setAdapter(allBookList);
-        db = new DataBaseManager();
-        db.BorrowerHomepageBookAddSnapShotListener(this, borrower.getUsername());
-
         bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                System.out.println("borrower homepage");
+                Book book = (Book) bookListView.getItemAtPosition(position);
+                Intent intent1 = new Intent(BorrowerHomepage.this, ShowBookDetail.class);
+                intent1.putExtra("book", book);
+                startActivity(intent1);
             }
         });
 
+        db = new DataBaseManager();
+        db.BorrowerHomepageBookAddSnapShotListener(this, borrower.getUsername());
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +205,10 @@ public class BorrowerHomepage extends AppCompatActivity {
                 }
             }
         });*/
+
+        dataBaseManager.BorrowerHomepageRequestListener(this, borrower.getUsername());
+
+
         db.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
@@ -224,7 +233,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                                     String sentence = "Owner have already set the deliver data \n Book: " + bookHere.getTitle();
                                                     Toast toast = Toast.makeText(BorrowerHomepage.this,
                                                             sentence, Toast.LENGTH_LONG);
-                                                    toast.show();
+                                                    //toast.show();
                                                 }
                                             }
                                         }
@@ -235,7 +244,7 @@ public class BorrowerHomepage extends AppCompatActivity {
                                                     Book bookHere = requestHere.getBook();
                                                     String sentence = "Owner have accepted you request \n Book: " + bookHere.getTitle();
                                                     Toast toast = Toast.makeText(BorrowerHomepage.this,sentence , Toast.LENGTH_LONG);
-                                                    toast.show();
+                                                    //toast.show();
                                                 }
                                             }
                                         }
@@ -243,7 +252,6 @@ public class BorrowerHomepage extends AppCompatActivity {
                                 });
                                 listenerRegistrations.add(listenerRegistration);
                                 Isbns.add(isbnHere);
-                                System.out.println("ncie");
                             }
                             break;
                         case MODIFIED:
@@ -330,5 +338,23 @@ public class BorrowerHomepage extends AppCompatActivity {
         allBookList.notifyDataSetChanged();
     }
 
+    public void addListenerRegistration(ListenerRegistration listenerRegistration){
+        this.listenerRegistrations.add(listenerRegistration);
+    }
+
+    public void removeListenerRegistration(int index){
+        ListenerRegistration listenerRegistration = this.listenerRegistrations.get(index);
+        listenerRegistration.remove();
+        this.listenerRegistrations.remove(index);
+        this.Isbns.remove(index);
+    }
+
+    public void addIsbn(String isbn){
+        this.Isbns.add(isbn);
+    }
+
+    public ArrayList<String> getIsbns(){
+        return this.Isbns;
+    }
 
 }

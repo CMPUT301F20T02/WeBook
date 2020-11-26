@@ -8,7 +8,7 @@ import java.util.Date;
  * This is a class for BookRequest object which is a sub class of Request
  */
 public class BookRequest extends Request {
-    private String status = "pending";
+    private boolean waiting = false;
 
     /**
      * constructor of the BookRequest with no parameter.
@@ -30,18 +30,18 @@ public class BookRequest extends Request {
     }
 
     /**
-     * getter of the status of the request (pending, accepted or declined).
-     * @return status of the request
+     * getter of the waiting of the request (pending, accepted or declined).
+     * @return waiting of the request
      */
-    public String getStatus() {
-        return status;
+    public boolean getwaiting() {
+        return waiting;
     }
 
     /**
-     * setter of the status of the request (pending, accepted or declined).
-     * @param status
+     * setter of the waiting of the request (pending, accepted or declined).
+     * @param waiting
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public void setwaiting(boolean waiting) {
+        this.waiting = waiting;
     }
 }

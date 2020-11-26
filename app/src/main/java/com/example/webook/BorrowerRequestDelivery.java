@@ -76,7 +76,7 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
         isbn_base = bookRequest.getBook().getISBN();
         final String book_isbn = "ISBN: " + isbn_base;
         String book_title = "Title: " + bookRequest.getBook().getTitle();
-        String book_status = "Status: " + bookRequest.getStatus();
+        String book_status = "Status: " + bookRequest.getBook().getStatus();
         owner.setText(owner_name);
         borrower.setText(borrower_name);
         isbn.setText(book_isbn);
@@ -194,8 +194,8 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             if(documentSnapshot.exists()){
                                 BookRequest bookRequest = documentSnapshot.toObject(BookRequest.class);
-                                if(bookRequest.getStatus() != null){
-                                    if(bookRequest.getStatus().equals("waiting")){
+                                if(bookRequest.getBook().getStatus().equals("accepted")){
+                                    if(bookRequest.getwaiting()){
                                         //if (isbn_base.equals(bookRequest.getBook().getISBN())){
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {

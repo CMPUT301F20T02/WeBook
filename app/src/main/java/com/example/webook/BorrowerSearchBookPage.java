@@ -34,14 +34,17 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "selectBook";
     private Borrower borrower;
     private  DataBaseManager dataBaseManager;
+    private Intent intent;
+    private String message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
         final String TAG = "Book";
         // User's key for search
-        Intent intent = getIntent();
-        final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+        intent = getIntent();
+        message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
         bookList = findViewById(R.id.search_result_list);
         input = findViewById(R.id.search_book_user_result);
         input.setHint("Searching books");
@@ -59,9 +62,23 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                 Book book = dataList.get(i);
                 intent.putExtra(EXTRA_MESSAGE, book);
                 intent.putExtra("borrower", borrower);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                String strEditText = data.getStringExtra("key");
+                System.out.println("fuckhahahahahahah");
+                if (strEditText.equals("request")) {
+                    System.out.println("hahafuck");
+                    dataBaseManager.BorrowerSearchBook(message, this);
+                }
+            }
+        }
     }
 }

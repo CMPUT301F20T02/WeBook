@@ -78,6 +78,9 @@ public class BorrowerBookProfile extends AppCompatActivity {
             public void onClick(View v) {
             final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), requesterList, null, null);
             dataBaseManager.sendBookRequest(newRequest,borrower);
+            Intent intent = new Intent();
+            intent.putExtra("key", "request");
+            setResult(RESULT_OK, intent);
             finish();
             overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }

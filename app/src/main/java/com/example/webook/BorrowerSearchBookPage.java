@@ -58,8 +58,10 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         borrower = (Borrower)intent.getSerializableExtra("borrower");
+        
         dataBaseManager.BorrowerSearchBook(message,this);
         findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
+        
         bookList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,13 +95,11 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
                                 dataBaseManager = new DataBaseManager();
 
                                 borrower = (Borrower)intent.getSerializableExtra("borrower");
-                                findViewById(R.id.loadingPanelMid).setVisibility(View.VISIBLE);
                                 dataBaseManager.BorrowerSearchBook(message,BorrowerSearchBookPage.this);
-                                findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
 
                                 swipeRefreshLayout.setRefreshing(false);
                             }
-                        }, 2000);
+                        }, 1000);
                     }
 
                     @Override

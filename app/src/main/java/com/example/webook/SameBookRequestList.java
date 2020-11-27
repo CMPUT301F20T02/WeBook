@@ -71,13 +71,11 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
                                 selectBook = (Book) intent.getSerializableExtra("selectBook");
                                 dataBaseManager = new DataBaseManager();
                                 // final BookRequest newRequest = new BookRequest(selectBook, selectBook.getOwner(), "requester1", null, null);
-                                findViewById(R.id.loadingPanelRequest).setVisibility(View.VISIBLE);
                                 dataBaseManager.getSameBookRequest(selectBook.getISBN(), SameBookRequestList.this);
-                                findViewById(R.id.loadingPanelRequest).setVisibility(View.GONE);
 
                                 swipeRefreshLayout.setRefreshing(false);
                             }
-                        }, 2000);
+                        }, 1000);
                     }
 
                     @Override

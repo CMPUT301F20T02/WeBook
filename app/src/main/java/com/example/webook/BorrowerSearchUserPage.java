@@ -88,14 +88,12 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
                                 userList.setAdapter(userAdapter);
                                 final ArrayList<String> userNameList = new ArrayList<String>();
                                 dataBaseManager = new DataBaseManager();
-
-                                findViewById(R.id.loadingPanelMid).setVisibility(View.VISIBLE);
+                                
                                 dataBaseManager.BorrowerSearchUser(message,BorrowerSearchUserPage.this);
-                                findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
 
                                 swipeRefreshLayout.setRefreshing(false);
                             }
-                        }, 2000);
+                        }, 1000);
                     }
 
                     @Override

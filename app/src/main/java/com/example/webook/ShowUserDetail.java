@@ -18,7 +18,7 @@ public class ShowUserDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         Intent intent = getIntent();
-        final User user = (User)intent.getSerializableExtra(BorrowerSearchUserPage.EXTRA_MESSAGE);
+        final User user = (User)intent.getSerializableExtra("user");
         final TextView username = findViewById(R.id.user_username);
         final TextView userType = findViewById(R.id.user_userType);
         final TextView  phone = findViewById(R.id.user_phone);

@@ -19,6 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import org.w3c.dom.Text;
 
@@ -43,6 +44,8 @@ public class OwnerHomepage extends AppCompatActivity {
     private DataBaseManager dataBaseManager = new DataBaseManager();
     private Integer before;
     private Button search;
+    private ListenerRegistration listenerRegistration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,7 +195,7 @@ public class OwnerHomepage extends AppCompatActivity {
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot.exists()){
                         before = ((ArrayList<String>)documentSnapshot.get("requestList")).size();
-                        db.collection("users").document(owner.getUsername()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        listenerRegistration = db.collection("users").document(owner.getUsername()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                             @Override
                             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                                 Integer now = ((ArrayList<String>)value.get("requestList")).size();
@@ -210,6 +213,13 @@ public class OwnerHomepage extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        listenerRegistration.remove();
+        finish();
+    }
 
     /**
      * This sets the resets the bookList, This step is required for the "all" listView to behave correctly

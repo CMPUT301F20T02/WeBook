@@ -56,7 +56,7 @@ public class OwnerSearchUserPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(OwnerSearchUserPage.this,ShowUserDetail.class);
                 User user = dataList.get(i);
-                intent.putExtra(EXTRA_MESSAGE, user);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });

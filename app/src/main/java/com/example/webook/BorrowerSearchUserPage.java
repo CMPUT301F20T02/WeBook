@@ -61,7 +61,7 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(BorrowerSearchUserPage.this,ShowUserDetail.class);
                 User user = dataList.get(i);
-                intent.putExtra(EXTRA_MESSAGE, user);
+                intent.putExtra("user", user);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }

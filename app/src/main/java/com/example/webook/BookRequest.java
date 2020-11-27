@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class BookRequest extends Request {
     private boolean waiting = false;
-    private boolean notify = false;
+    private int notify = 0;
 
     /**
      * constructor of the BookRequest with no parameter.
@@ -46,11 +46,11 @@ public class BookRequest extends Request {
         this.waiting = waiting;
     }
 
-    public boolean getNotify() {
+    public int getNotify() {
         return notify;
     }
 
-    public void setNotify(boolean notify) {
+    public void setNotify(int notify) {
         this.notify = notify;
     }
 }

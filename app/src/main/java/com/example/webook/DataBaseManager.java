@@ -756,25 +756,7 @@ public class DataBaseManager {
     }
 
     public void BorrowerHomepageBookAddSnapShotListener(final BorrowerHomepage borrowerHomepage, final String username){
-        /*
-        db.collection("books")
-                .whereEqualTo("borrower", username)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        List<DocumentSnapshot> documents = value.getDocuments();
-                        ArrayList<Book> books = new ArrayList<>();
-                        for (int i = 0; i < documents.size(); i++){
-                            Book temp = documents.get(i).toObject(Book.class);
-                            books.add(temp);
-                        }
-                        borrowerHomepage.setBorrowedBooks(books);
-                        borrowerHomepage.updateAllBooks();
 
-                    }
-                });
-
-         */
 
         db.collection("requests")
                 .whereArrayContains("requester", username)
@@ -809,34 +791,9 @@ public class DataBaseManager {
 
                     }
                 });
-        /*
-        db.collection("requests").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    QuerySnapshot snapshot = task.getResult();
-                    List<DocumentSnapshot> documents = snapshot.getDocuments();
-                    ArrayList<Book> requestedBooks = new ArrayList<>();
-                    ArrayList<Book> acceptedBooks = new ArrayList<>();
-                    for (int i = 0; i < documents.size(); i++){
-                        BookRequest request = documents.get(i).toObject(BookRequest.class);
-                        ArrayList<String> requester = request.getRequester();
-                        if (request.getStatus().equals("pending") && requester.contains(username)){
-                            requestedBooks.add(request.getBook());
-                            System.out.println("pending "+request.getBook().getTitle() );
-                        }else if (request.getStatus().equals("accepted") && requester.contains(username)){
-                            acceptedBooks.add(request.getBook());
-                            System.out.println("accepted "+ request.getBook().getTitle());
-                        }
-                    }
-                    borrowerHomepage.setRequestedBooks(requestedBooks);
-                    borrowerHomepage.setAcceptedBooks(acceptedBooks);
-                    borrowerHomepage.updateAllBooks();
-                }
-            }
-        });
 
-                 */
+
+
 
     }
 
@@ -860,6 +817,7 @@ public class DataBaseManager {
     }
 
     public void BorrowerHomepageRequestListener(final BorrowerHomepage borrowerHomepage, final String username){
+
         db.collection("requests")
                 .whereArrayContains("requester", username)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -869,7 +827,7 @@ public class DataBaseManager {
                         for (final DocumentChange dc : value.getDocumentChanges()) {
                             switch (dc.getType()){
                                 case ADDED:
-                                    System.out.println(dc.getDocument().get("notify"));
+
                                     ListenerRegistration listenerRegistration = dc.getDocument().getReference()
                                             .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                                 @Override
@@ -877,8 +835,9 @@ public class DataBaseManager {
                                                     if(value.get("time") != null){
                                                         BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
                                                         System.out.println("1");
-                                                        if(requestHere.getBook().getStatus().equals("accepted") && !requestHere.getNotify()) {
-                                                            dc.getDocument().getReference().update("notify", true);
+                                                        if(requestHere.getBook().getStatus().equals("accepted") && requestHere.getNotify() == 1) {
+                                                            System.out.println("added" + dc.getDocument().get("book.title"));
+                                                            dc.getDocument().getReference().update("notify", 2);
                                                             Book bookHere = requestHere.getBook();
                                                             String sentence = "Delivery time and location set for \n Book: " + bookHere.getTitle();
                                                             Toast toast = Toast.makeText(borrowerHomepage,
@@ -888,10 +847,10 @@ public class DataBaseManager {
                                                     }
 
                                                     BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
-                                                    if(requestHere.getBook().getStatus().equals("accepted") && !requestHere.getNotify()){
+                                                    if(requestHere.getBook().getStatus().equals("accepted") && requestHere.getNotify() == 0){
                                                         System.out.println("2");
                                                         if(value.get("time") == null){
-                                                            dc.getDocument().getReference().update("notify", true);
+                                                            dc.getDocument().getReference().update("notify", 1);
                                                             Book bookHere = requestHere.getBook();
                                                             String sentence = "Owner have accepted you request on \n" + bookHere.getTitle();
                                                             Toast toast = Toast.makeText(borrowerHomepage, sentence , Toast.LENGTH_LONG);
@@ -904,7 +863,7 @@ public class DataBaseManager {
                                     borrowerHomepage.addIsbn(dc.getDocument().getId());
                                     break;
                                 case MODIFIED:
-                                    System.out.println("modified");
+
                                     String isbn = dc.getDocument().getId();
                                     if(borrowerHomepage.getIsbns().contains(isbn)){
                                         int index = borrowerHomepage.getIsbns().indexOf(isbn);
@@ -917,7 +876,8 @@ public class DataBaseManager {
                                                         if(value.get("time") != null){
                                                             BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
                                                             System.out.println("3");
-                                                            if(requestHere.getBook().getStatus().equals("accepted")) {
+                                                            if(requestHere.getBook().getStatus().equals("accepted") && requestHere.getNotify() == 1) {
+                                                                dc.getDocument().getReference().update("notify", 2);
                                                                 Book bookHere = requestHere.getBook();
                                                                 String sentence = "Delivery time and location set for \n Book: " + bookHere.getTitle();
                                                                 Toast toast = Toast.makeText(borrowerHomepage,
@@ -927,9 +887,11 @@ public class DataBaseManager {
                                                         }
 
                                                         BookRequest requestHere = dc.getDocument().toObject(BookRequest.class);
-                                                        if(requestHere.getBook().getStatus().equals("accepted")){
+                                                        if(requestHere.getBook().getStatus().equals("accepted") && requestHere.getNotify() == 0){
                                                             System.out.println("4");
                                                             if(value.get("time") == null){
+                                                                dc.getDocument().getReference().update("notify", 1);
+                                                                System.out.println("modified" + dc.getDocument().get("book.title"));
                                                                 Book bookHere = requestHere.getBook();
                                                                 String sentence = "Owner have accepted you request on \n" + bookHere.getTitle();
                                                                 Toast toast = Toast.makeText(borrowerHomepage, sentence , Toast.LENGTH_LONG);
@@ -956,6 +918,7 @@ public class DataBaseManager {
                         }
                     }
                 });
+
 
     }
 

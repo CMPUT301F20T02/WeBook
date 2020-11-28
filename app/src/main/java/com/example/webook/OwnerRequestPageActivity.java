@@ -9,9 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.internal.$Gson$Preconditions;
-
-import java.lang.ref.PhantomReference;
 import java.util.ArrayList;
 
 public class OwnerRequestPageActivity extends AppCompatActivity implements OwnerAcceptDeclineFragment.OnFragmentInteractionListener {
@@ -49,7 +46,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         final ListView requestListView = findViewById(R.id.owner_request_list);
         TextView me = findViewById(R.id.owner_me_tab);
         TextView books = findViewById(R.id.owner_books_tab);
-        TextView pending = findViewById(R.id.owner_request_pending);
+        TextView pending = findViewById(R.id.owner_request_requested);
         TextView accepted = findViewById(R.id.owner_request_accepted);
         TextView borrowed = findViewById(R.id.owner_request_borrowed);
         borrowedList = new ArrayList<>();

@@ -1,9 +1,7 @@
 package com.example.webook;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.NoCopySpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -20,9 +18,9 @@ public class TimePickerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tem2);
-        timePicker = (TimePicker)findViewById(R.id.timePicker1);
-        setTime = findViewById(R.id.SetTime);
+        setContentView(R.layout.request_set_time);
+        timePicker = (TimePicker)findViewById(R.id.timePicker);
+        setTime = findViewById(R.id.request_setTime_button);
         calendar = Calendar.getInstance();
 
         setTime.setOnClickListener(new View.OnClickListener() {

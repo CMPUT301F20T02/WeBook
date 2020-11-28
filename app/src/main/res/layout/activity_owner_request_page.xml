@@ -8,12 +8,12 @@
     tools:context=".OwnerHomepage" >
 
     <TextView
-        android:id="@+id/owner_request_pending"
+        android:id="@+id/owner_request_requested"
         android:layout_width="67dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Pending"
+        android:text="Requested"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_marginTop="24dp"
         android:text="Accepted"
         app:layout_constraintEnd_toStartOf="@+id/owner_request_borrowed"
-        app:layout_constraintStart_toEndOf="@+id/owner_request_pending"
+        app:layout_constraintStart_toEndOf="@+id/owner_request_requested"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

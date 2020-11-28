@@ -50,7 +50,7 @@ public class SimpleMapViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tem);
+        setContentView(R.layout.request_set_location);
         mapView = findViewById(R.id.mapView);
         confirm = findViewById(R.id.map_confirm_button);
         cancel = findViewById(R.id.map_cancel_button);

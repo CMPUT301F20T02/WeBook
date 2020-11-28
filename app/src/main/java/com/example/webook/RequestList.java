@@ -55,7 +55,7 @@ public class RequestList extends ArrayAdapter<BookRequest> {
         }else if (mode == 2){
             temp = "";
         }else{
-            temp = "Owned by " + BookRequest.getRequestee();
+            temp = "Book owner is " + BookRequest.getRequestee();
         }
         borrow_text.setText(temp);
 

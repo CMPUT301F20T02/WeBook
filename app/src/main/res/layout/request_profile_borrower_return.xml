@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Deliver Date"
+        android:text="Set Return Date"
         app:layout_constraintBottom_toTopOf="@+id/request_profile_return_scan"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="32dp"
-        android:text="Deliver Time"
+        android:text="Set Return Time"
         app:layout_constraintBottom_toTopOf="@+id/request_profile_return_scan"
         app:layout_constraintStart_toEndOf="@+id/return_date" />
 

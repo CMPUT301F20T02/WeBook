@@ -44,7 +44,7 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
         final ListView requestListView = findViewById(R.id.borrower_request_list);
         TextView me = findViewById(R.id.borrower_me_tab);
         TextView books = findViewById(R.id.borrower_books_tab);
-        TextView pending = findViewById(R.id.borrower_request_pending);
+        TextView pending = findViewById(R.id.borrower_request_requested);
         TextView accepted = findViewById(R.id.borrower_request_accepted);
         TextView borrowed = findViewById(R.id.borrower_request_borrowed);
         borrowedList = new ArrayList<>();

@@ -191,6 +191,15 @@ public class RequestProfile extends AppCompatActivity {
                 dataBaseManager.getUserRequestProfile(RequestProfile.this, bookRequest.getBook().getOwner());
             }
         });
+
+        if (bookRequest.getRequester() != null) {
+            borrower.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserRequestProfile(RequestProfile.this, bookRequest.getRequester().get(0));
+                }
+            });
+        }
     }
 
 

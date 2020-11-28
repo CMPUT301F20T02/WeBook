@@ -188,6 +188,15 @@ public class BorrowerReturn extends AppCompatActivity {
                 dataBaseManager.getUserBorrowerReturn(BorrowerReturn.this, bookRequest.getBook().getOwner());
             }
         });
+
+        if (bookRequest.getBook().getBorrower() != null) {
+            borrower.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserBorrowerReturn(BorrowerReturn.this, bookRequest.getBook().getBorrower());
+                }
+            });
+        }
     }
 
 

@@ -102,6 +102,14 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
             }
         });
 
+        if (selectRequest.getRequester().get(position) != null) {
+            BookRequestRequesteeText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserOwnerAcceptedDecline(OwnerAcceptDeclineFragment.this, selectRequest.getRequester().get(position));
+                }
+            });
+        }
 
         return builder
                 .setView(view)

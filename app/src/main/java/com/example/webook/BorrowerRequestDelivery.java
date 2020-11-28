@@ -149,6 +149,15 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
                 dataBaseManager.getUserBorrowerRequestDelivery(BorrowerRequestDelivery.this, bookRequest.getBook().getOwner());
             }
         });
+
+        if (bookRequest.getRequester() != null) {
+            borrower.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserBorrowerRequestDelivery(BorrowerRequestDelivery.this, bookRequest.getRequester().get(0));
+                }
+            });
+        }
     }
     @Override
     public void onResume() {

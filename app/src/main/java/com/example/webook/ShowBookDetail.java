@@ -46,5 +46,14 @@ public class ShowBookDetail extends AppCompatActivity {
                 dataBaseManager.getUserShowBookDetail(ShowBookDetail.this, book.getOwner());
             }
         });
+
+        if (book.getBorrower() != null) {
+            borrower.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserShowBookDetail(ShowBookDetail.this, book.getBorrower());
+                }
+            });
+        }
     }
 }

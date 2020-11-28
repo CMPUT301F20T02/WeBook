@@ -146,6 +146,15 @@ public class OwnerReturn extends AppCompatActivity {
                 dataBaseManager.getUserOwnerReturn(OwnerReturn.this, bookRequest.getBook().getOwner());
             }
         });
+
+        if (bookRequest.getBook().getBorrower() != null) {
+            borrower.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserOwnerReturn(OwnerReturn.this, bookRequest.getBook().getBorrower());
+                }
+            });
+        }
     }
     @Override
     public void onResume() {

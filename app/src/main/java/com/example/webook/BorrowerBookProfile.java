@@ -92,5 +92,14 @@ public class BorrowerBookProfile extends AppCompatActivity {
                 dataBaseManager.getUserBorrowBookProfile(BorrowerBookProfile.this, selectBook.getOwner());
             }
         });
+
+        if (selectBook.getBorrower() != null) {
+            borrowed_by.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dataBaseManager.getUserBorrowBookProfile(BorrowerBookProfile.this, selectBook.getBorrower());
+                }
+            });
+        }
     }
 }

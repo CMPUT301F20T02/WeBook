@@ -490,6 +490,9 @@ public class DataBaseTestManager {
         collectionReference
                 .document("1200000000000")
                 .delete();
+        collectionReference
+                .document("1300000000000")
+                .delete();
 
         collectionReference = db.collection("books");
         collectionReference
@@ -527,6 +530,9 @@ public class DataBaseTestManager {
                 .delete();
         collectionReference
                 .document("1200000000000")
+                .delete();
+        collectionReference
+                .document("1300000000000")
                 .delete();
     }
 

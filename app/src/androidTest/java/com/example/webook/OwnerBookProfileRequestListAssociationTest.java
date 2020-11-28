@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class OwnerBookProfileRequestListaAssociationTest {
+public class OwnerBookProfileRequestListAssociationTest {
     private Solo solo;
     private DataBaseTestManager dataBaseTestManager;
 
@@ -51,8 +51,7 @@ public class OwnerBookProfileRequestListaAssociationTest {
         solo.assertCurrentActivity("Wrong Activity", OwnerBookProfile.class);
         solo.sleep(1000);
         solo.clickOnButton("REQUESTS LIST");
-        solo.sleep(1000);
-        assertTrue(solo.waitForText("This book's request is already accepted/borrowed, no waiting requests", 1, 1000, true, true));
+        assertTrue(solo.waitForText("This book's request is already accepted/borrowed, no waiting requests", 1, 2000, true, true));
         solo.goBack();
 
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
@@ -62,8 +61,7 @@ public class OwnerBookProfileRequestListaAssociationTest {
         solo.clickOnMenuItem("TestBook8");
         solo.assertCurrentActivity("Wrong Activity", OwnerBookProfile.class);
         solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);
-        solo.sleep(1000);
+        solo.clickOnButton("REQUESTS LIST");
         assertTrue(solo.waitForText("This book's request is already accepted/borrowed, no waiting requests", 1, 1000, true, true));
         solo.goBack();
 
@@ -73,7 +71,9 @@ public class OwnerBookProfileRequestListaAssociationTest {
         solo.clickOnText("Available");
         solo.sleep(1000);
         solo.clickOnMenuItem("TestBook3");
-        solo.clickOnButton("REQUEST LIST");
+        solo.assertCurrentActivity("Wrong Activity", OwnerBookProfile.class);
+        solo.sleep(1000);
+        solo.clickOnButton("REQUESTS LIST");
         assertTrue(solo.waitForText("There is no request for this book", 1, 1000, true, true));
         solo.sleep(1000);
     }

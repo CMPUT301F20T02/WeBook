@@ -160,6 +160,15 @@ public class OwnerBookProfile extends AppCompatActivity {
             }
         });
         dataBaseManager.BookProfileAddUserSnapShotListener(OwnerBookProfile.this, isbn_text.getText().toString());
+
+
+        dataBaseManager = new DataBaseManager();
+        owned_by.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserOwnerBookProfile(OwnerBookProfile.this, selectBook.getOwner());
+            }
+        });
     }
 
 

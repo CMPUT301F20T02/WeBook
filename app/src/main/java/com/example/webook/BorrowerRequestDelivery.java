@@ -7,6 +7,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
 
 public class BorrowerRequestDelivery extends AppCompatActivity {
@@ -48,6 +50,8 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
     private ArrayList<Integer> dateSelected;
     private Boolean scaned;
     private String timeChosen;
+    private DataBaseManager dataBaseManager;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,7 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
         scan = findViewById(R.id.request_profile_deliver_scan);
         time = findViewById(R.id.deliver_time);
         date = findViewById(R.id.deliver_date);
+        address = findViewById(R.id.location_instruction);
         dateSelected = new ArrayList<Integer>();
         latlong = new ArrayList<Double>();
         scaned = false;
@@ -133,6 +138,15 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
                             .title("Marker in Xiamen"));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(xiamen,15));
                 }
+            }
+        });
+
+
+        dataBaseManager = new DataBaseManager();
+        owner.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserBorrowerRequestDelivery(BorrowerRequestDelivery.this, bookRequest.getBook().getOwner());
             }
         });
     }

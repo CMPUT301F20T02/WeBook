@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +13,9 @@ import android.widget.TextView;
  * @pram EXTRA_MESSAGE Books item to show in profile, clicked by user in formal actvity
  */
 public class ShowBookDetail extends AppCompatActivity {
+
+    private  DataBaseManager dataBaseManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,5 +38,13 @@ public class ShowBookDetail extends AppCompatActivity {
         status.setText(book.getStatus());
         description.setText(book.getDescription());
         owner.setText(book.getOwner());
+
+        dataBaseManager = new DataBaseManager();
+        owner.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserShowBookDetail(ShowBookDetail.this, book.getOwner());
+            }
+        });
     }
 }

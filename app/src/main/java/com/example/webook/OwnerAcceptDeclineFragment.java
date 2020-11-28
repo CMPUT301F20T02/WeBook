@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
     private TextView BookRequestRequesteeText;
     private OnFragmentInteractionListener listener;
     private static final String TAG = "Sample";
+    private DataBaseManager dataBaseManager;
 
     public interface OnFragmentInteractionListener {
         void onAcceptPressed();
@@ -90,6 +92,17 @@ public class OwnerAcceptDeclineFragment extends DialogFragment {
         BookRequestOwnerText.setText("Owner: " + selectRequest.getRequestee());
         BookRequestRequesteeText.setText("Borrower: " + selectRequest.getRequester().get(position));
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+
+        dataBaseManager = new DataBaseManager();
+        BookRequestOwnerText.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserOwnerAcceptedDecline(OwnerAcceptDeclineFragment.this, selectRequest.getBook().getOwner());
+            }
+        });
+
+
         return builder
                 .setView(view)
                 .setNeutralButton("Cancel", null)

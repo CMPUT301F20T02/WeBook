@@ -53,6 +53,8 @@ public class RequestProfile extends AppCompatActivity {
     private  LatLng locationSelected;
     private Boolean scaned;
     private Calendar myCalendar; //initialize a calender object
+    private DataBaseManager dataBaseManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +180,15 @@ public class RequestProfile extends AppCompatActivity {
                 Intent intent = new Intent(RequestProfile.this,CodeScanner.class);
                 startActivityForResult(intent,2);
                 overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
+            }
+        });
+
+
+        dataBaseManager = new DataBaseManager();
+        owner.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserRequestProfile(RequestProfile.this, bookRequest.getBook().getOwner());
             }
         });
     }

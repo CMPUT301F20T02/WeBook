@@ -53,6 +53,8 @@ public class BorrowerReturn extends AppCompatActivity {
     private  LatLng locationSelected;
     private Boolean scaned;
     private Calendar myCalendar; //initialize a calender object
+    private DataBaseManager dataBaseManager;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +178,14 @@ public class BorrowerReturn extends AppCompatActivity {
 
                 Intent intent = new Intent(BorrowerReturn.this,CodeScanner.class);
                 startActivityForResult(intent,2);
+            }
+        });
+
+        dataBaseManager = new DataBaseManager();
+        owner.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserBorrowerReturn(BorrowerReturn.this, bookRequest.getBook().getOwner());
             }
         });
     }

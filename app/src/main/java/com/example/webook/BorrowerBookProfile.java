@@ -85,5 +85,12 @@ public class BorrowerBookProfile extends AppCompatActivity {
             overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
         });
+
+        owned_by.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserBorrowBookProfile(BorrowerBookProfile.this, selectBook.getOwner());
+            }
+        });
     }
 }

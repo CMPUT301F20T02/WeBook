@@ -62,7 +62,7 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
                 BookRequest selectRequest = null;
                 if (currentView.equals("accepted")){
                     selectRequest = acceptedRequests.get(position);
-                    Intent intent = new Intent(BorrowerRequestPageActivity.this, RequestProfile.class);
+                    Intent intent = new Intent(BorrowerRequestPageActivity.this, BorrowerRequestDelivery.class);
                     intent.putExtra("request", selectRequest);
                     startActivity(intent);
 

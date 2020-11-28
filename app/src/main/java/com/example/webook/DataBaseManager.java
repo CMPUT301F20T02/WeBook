@@ -922,35 +922,115 @@ public class DataBaseManager {
 
     }
 
-    public void getUserBorrowBookProfile(BorrowerBookProfile borrowerBookProfile, String username){
-
+    public void getUserBorrowBookProfile(final BorrowerBookProfile borrowerBookProfile, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(borrowerBookProfile, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                borrowerBookProfile.startActivity(intent);
+                borrowerBookProfile.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserShowBookDetail(ShowBookDetail showBookDetail, String username){
-
+    public void getUserShowBookDetail(final ShowBookDetail showBookDetail, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(showBookDetail, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                showBookDetail.startActivity(intent);
+                showBookDetail.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserBorrowerRequestDelivery(BorrowerRequestDelivery borrowerRequestDelivery, String username){
-
+    public void getUserBorrowerRequestDelivery(final BorrowerRequestDelivery borrowerRequestDelivery, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(borrowerRequestDelivery, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                borrowerRequestDelivery.startActivity(intent);
+                borrowerRequestDelivery.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserOwnerBookProfile(OwnerBookProfile ownerBookProfile, String username){
-
+    public void getUserOwnerBookProfile(final OwnerBookProfile ownerBookProfile, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(ownerBookProfile, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                ownerBookProfile.startActivity(intent);
+                ownerBookProfile.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserRequestProfile(RequestProfile requestProfile, String username){
-
+    public void getUserRequestProfile(final RequestProfile requestProfile, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(requestProfile, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                requestProfile.startActivity(intent);
+                requestProfile.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserBorrowerReturn(BorrowerReturn borrowerReturn, String username){
-
+    public void getUserBorrowerReturn(final BorrowerReturn borrowerReturn, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(borrowerReturn, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                borrowerReturn.startActivity(intent);
+                borrowerReturn.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserOwnerReturn(OwnerReturn ownerReturn, String username){
-
+    public void getUserOwnerReturn(final OwnerReturn ownerReturn, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(ownerReturn, ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                ownerReturn.startActivity(intent);
+                ownerReturn.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 
-    public void getUserOwnerAcceptedDecline(OwnerAcceptDeclineFragment ownerAcceptDeclineFragment, String username){
-
+    public void getUserOwnerAcceptedDecline(final OwnerAcceptDeclineFragment ownerAcceptDeclineFragment, String username){
+        DocumentReference docRef = db.collection("users").document(username);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Owner owner = documentSnapshot.toObject(Owner.class);
+                Intent intent = new Intent(ownerAcceptDeclineFragment.getActivity(), ShowUserDetail.class);
+                intent.putExtra("user", owner);
+                ownerAcceptDeclineFragment.startActivity(intent);
+                ownerAcceptDeclineFragment.getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
     }
 }

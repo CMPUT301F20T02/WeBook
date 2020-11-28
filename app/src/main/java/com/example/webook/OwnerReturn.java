@@ -49,6 +49,8 @@ public class OwnerReturn extends AppCompatActivity {
     private ArrayList<Integer> dateSelected;
     private Boolean scaned;
     private String timeChosen;
+    private DataBaseManager dataBaseManager;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,15 @@ public class OwnerReturn extends AppCompatActivity {
                             .title("Marker in Xiamen"));
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(xiamen,15));
                 }
+            }
+        });
+
+
+        dataBaseManager = new DataBaseManager();
+        owner.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                dataBaseManager.getUserOwnerReturn(OwnerReturn.this, bookRequest.getBook().getOwner());
             }
         });
     }

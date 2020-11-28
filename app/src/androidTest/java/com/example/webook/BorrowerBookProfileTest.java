@@ -139,6 +139,7 @@ public class BorrowerBookProfileTest {
     public void BorrowerBookProfileBorrowedBookCheck() {
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
+        solo.sleep(5000);
         solo.clickOnButton("Search");
         solo.enterText((EditText) solo.getView(R.id.search_input), "TestBook9");
         solo.clickOnButton("Books");
@@ -146,8 +147,8 @@ public class BorrowerBookProfileTest {
         // borrower search books, show result list, click on item to show profile
         solo.assertCurrentActivity("Wrong Activity", BorrowerSearchBookPage.class);
 
-        assertFalse(solo.waitForText("TestBook9", 1, 5000, true, true));
-        assertFalse(solo.waitForText("borrowed", 1, 5000, true, true));
+        assertFalse(solo.searchText("TestBook9 Author"));
+        //assertFalse(solo.waitForText("borrowed", 1, 5000, true, true));
     }
 
     //When the book status is "accept", test whether the request button works, since our borrower search
@@ -156,15 +157,16 @@ public class BorrowerBookProfileTest {
     public void BorrowerBookProfileAcceptedBookCheck() {
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
+        solo.sleep(5000);
         solo.clickOnButton("Search");
-        solo.enterText((EditText) solo.getView(R.id.search_input), "TestBook12");
+        solo.enterText((EditText) solo.getView(R.id.search_input), "TestBook10");
         solo.clickOnButton("Books");
 
         // borrower search books, show result list, click on item to show profile
         solo.assertCurrentActivity("Wrong Activity", BorrowerSearchBookPage.class);
 
-        assertFalse(solo.waitForText("TestBook12", 1, 5000, true, true));
-        assertFalse(solo.waitForText("accepted", 1, 5000, true, true));
+        //assertFalse(solo.searchText("TestBook10 Author"));
+        assertFalse(solo.waitForText("accepted", 1, 5000));
     }
 
     //When the book status is "requested", test whether the request button works, this function

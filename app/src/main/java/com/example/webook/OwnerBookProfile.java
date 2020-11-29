@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -36,10 +38,12 @@ public class OwnerBookProfile extends AppCompatActivity {
     private TextView owned_by;
     private TextView borrowed_by;
     private TextView book_status_text;
+    private ImageView book_pic;
     private String status;
     private Owner owner;
     private DataBaseManager dataBaseManager;
     private static final String TAG = "Sample";
+    private Book selectBook;
 
 
     @Override
@@ -55,13 +59,13 @@ public class OwnerBookProfile extends AppCompatActivity {
         title_text = findViewById(R.id.book_profile_title);
         author_text = findViewById(R.id.book_profile_author);
         isbn_text = findViewById(R.id.book_profile_ISBN);
-
+        book_pic = findViewById(R.id.book_profile_icon);
         owned_by = findViewById(R.id.book_profile_owner_text);
         borrowed_by = findViewById(R.id.book_profile_borrower_text);
         book_status_text = findViewById(R.id.book_profile_status_text);
         description_text = findViewById(R.id.book_profile_description);
         final Intent intent = getIntent();
-        final Book selectBook = (Book) intent.getSerializableExtra("selectBook");
+        selectBook = (Book) intent.getSerializableExtra("selectBook");
         owned_by.setText("Owned by " + selectBook.getOwner());
         if (selectBook.getBorrower() != null) {
             borrowed_by.setText("Borrowed by " + selectBook.getBorrower());
@@ -69,6 +73,15 @@ public class OwnerBookProfile extends AppCompatActivity {
             borrowed_by.setText("Borrowed by ");
         }
         book_status_text.setText("Book Status: " + selectBook.getStatus());
+
+        if (selectBook.getImage() == null){
+            book_pic.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this)
+                    .load(selectBook.getImage())
+                    .into(book_pic);
+        }
+
         owner = (Owner) intent.getSerializableExtra("user");
 
         title_text.setText(selectBook.getTitle());
@@ -198,6 +211,19 @@ public class OwnerBookProfile extends AppCompatActivity {
         this.description_text.setText(description_text);
     }
 
+    public void setImage(String image){
+        if (image == null){
+            book_pic.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(OwnerBookProfile.this)
+                    .load(image)
+                    .into(book_pic);
+        }
+    }
+
+    public void setSelectBook(Book book){
+        this.selectBook = book;
+    }
 
 
 }

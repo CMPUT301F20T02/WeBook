@@ -2,16 +2,19 @@ package com.example.webook;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.nuptboyzhb.lib.SuperSwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -32,6 +35,8 @@ public class OwnerSearchUserPage extends AppCompatActivity {
     ArrayAdapter<User> userAdapter;
     private DataBaseManager dataBaseManager;
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchUserPage.MESSAGE";
+    private SuperSwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,9 @@ public class OwnerSearchUserPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         dataBaseManager.OwnerSearchUser(message,this);
+        ProgressBar loading = findViewById(R.id.loadingPanelMid);
+        loading.clearAnimation();
+        loading.setVisibility(View.GONE);
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,6 +69,44 @@ public class OwnerSearchUserPage extends AppCompatActivity {
             }
         });
 
+        swipeRefreshLayout = (SuperSwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout
+                .setOnPullRefreshListener(new SuperSwipeRefreshLayout.OnPullRefreshListener() {
 
+                    @Override
+                    public void onRefresh() {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                final String TAG = "User";
+                                // User's key for search
+                                Intent intent = getIntent();
+                                final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                                userList = findViewById(R.id.search_result_list);
+//                              input = findViewById(R.id.search_book_user_result);
+//                              input.setHint("Searching users");
+                                dataList = new ArrayList<>();
+                                userAdapter = new UserList(OwnerSearchUserPage.this, dataList);
+                                userList.setAdapter(userAdapter);
+                                final ArrayList<String> userNameList = new ArrayList<String>();
+                                dataBaseManager = new DataBaseManager();
+                                dataBaseManager.OwnerSearchUser(message,OwnerSearchUserPage.this);
+
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onPullDistance(int distance) {
+                        System.out.println("debug:distance = " + distance);
+                        // myAdapter.updateHeaderHeight(distance);
+                    }
+
+                    @Override
+                    public void onPullEnable(boolean enable) {
+                    }
+                });
+        
     }
 }

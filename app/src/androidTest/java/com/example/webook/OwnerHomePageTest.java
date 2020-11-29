@@ -139,6 +139,81 @@ public class OwnerHomePageTest {
         solo.waitForText("This description has changed", 1, 5000);
     }
 
+    @Test
+    public void checkAvailableButton(){
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.clickOnText("Available");
+        assertTrue(solo.waitForText("TestBook1", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook2", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook3", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook1 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook2 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook3 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("available", 3, 1000, true, true));
+    }
+
+    @Test
+    public void checkRequestedButton(){
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.clickOnText("Requested");
+        assertTrue(solo.waitForText("TestBook4", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook5", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook6", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook4 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook5 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook6 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("requested", 3, 1000, true, true));
+    }
+
+    @Test
+    public void checkAcceptedButton(){
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.clickOnText("Accepted");
+        assertTrue(solo.waitForText("TestBook10", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook11", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook12", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook10 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook11 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook12 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("accepted", 3, 1000, true, true));
+    }
+
+    @Test
+    public void checkBorrowedButton(){
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.clickOnText("Borrowed");
+        assertTrue(solo.waitForText("TestBook7", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook8", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook9", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook7 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook8 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("TestBook9 Author", 1, 1000, true, true));
+        assertTrue(solo.waitForText("borrowed", 3, 1000, true, true));
+    }
+
+    @Test
+    public void CheckAllButton(){
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        assertTrue(solo.waitForText("TestBook3", 1, 5000, true, true));
+        assertTrue(solo.waitForText("TestBook3 Author", 1, 5000, true, true));
+        assertTrue(solo.waitForText("available", 1, 5000, true, true));
+        solo.clickOnText("ALL");
+        assertTrue(solo.waitForText("TestBook4", 1, 5000, true, true));
+        assertTrue(solo.waitForText("TestBook4 Author", 1, 5000, true, true));
+        assertTrue(solo.waitForText("requested", 1, 5000, true, true));
+        solo.clickOnText("ALL");
+        assertTrue(solo.waitForText("TestBook7", 1, 5000, true, true));
+        assertTrue(solo.waitForText("TestBook7 Author", 1, 5000, true, true));
+        assertTrue(solo.waitForText("accepted", 1, 5000, true, true));
+        solo.clickOnText("ALL");
+        assertTrue(solo.waitForText("TestBook12", 1, 5000, true, true));
+        assertTrue(solo.waitForText("TestBook12 Author", 1, 5000, true, true));
+        assertTrue(solo.waitForText("borrowed", 1, 5000, true, true));
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+    }
+
+
+
     @After
     public void tearDown() {
         solo.finishOpenedActivities();

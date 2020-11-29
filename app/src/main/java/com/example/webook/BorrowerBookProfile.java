@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +38,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
     private TextView owned_by;
     private TextView borrowed_by;
     private TextView description;
+    private ImageView book_pic;
     private Button requestButton;
     private ArrayList<String> requesterList;
     private static final String TAG = "Sample";
@@ -46,6 +49,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_book_profile);
 
+        book_pic = findViewById(R.id.book_profile_icon);
         title = findViewById(R.id.book_profile_title);
         author = findViewById(R.id.book_profile_author);
         isbn = findViewById(R.id.book_profile_ISBN);
@@ -100,6 +104,14 @@ public class BorrowerBookProfile extends AppCompatActivity {
                     dataBaseManager.getUserBorrowBookProfile(BorrowerBookProfile.this, selectBook.getBorrower());
                 }
             });
+        }
+
+        if (selectBook.getImage() == null){
+            book_pic.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this)
+                    .load(selectBook.getImage())
+                    .into(book_pic);
         }
     }
 }

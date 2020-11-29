@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 /**
  * This is a class that keeps track of a list of BookRequests objects
@@ -39,23 +41,27 @@ public class RequestList extends ArrayAdapter<BookRequest> {
             view = LayoutInflater.from(context).inflate(R.layout.request_list_content, parent, false);
         }
 
-        BookRequest BookRequest = BookRequests.get(position);
+        BookRequest bookRequest = BookRequests.get(position);
 
         ImageView img= (ImageView) view.findViewById(R.id.request_book_icon);
-        img.setImageResource(R.drawable.book_icon);
+        if (bookRequest.getBook().getImage() == null){
+            img.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this.context)
+                    .load(bookRequest.getBook().getImage())
+                    .into(img);
+        }
 
         TextView title_text = view.findViewById(R.id.request_book_title);
-        title_text.setText(BookRequest.getBook().getTitle());
+        title_text.setText(bookRequest.getBook().getTitle());
         TextView borrow_text = view.findViewById(R.id.request_requesterORrequestee);
         String temp;
         if (mode == 0) {
-            temp = "Requested by " + BookRequest.getRequester().get(position);
+            temp = "Requested by " + bookRequest.getRequester().get(position);
         }else if (mode == 1) {
             temp = "Requested by " + borrower.get(position);
-        }else if (mode == 2){
-            temp = "";
         }else{
-            temp = "Book owner is " + BookRequest.getRequestee();
+            temp = "Owner: " + bookRequest.getRequestee();
         }
         borrow_text.setText(temp);
 

@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,7 +61,7 @@ public class BorrowerSearchBookPage extends AppCompatActivity {
         borrower = (Borrower)intent.getSerializableExtra("borrower");
         
         dataBaseManager.BorrowerSearchBook(message,this);
-        RelativeLayout loading = findViewById(R.id.loadingPanelMid);
+        ProgressBar loading = findViewById(R.id.loadingPanelMid);
         loading.clearAnimation();
         loading.setVisibility(View.GONE);
         

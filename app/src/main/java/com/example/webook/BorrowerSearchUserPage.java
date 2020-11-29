@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +55,9 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         dataBaseManager.BorrowerSearchUser(message,this);
-        findViewById(R.id.loadingPanelMid).setVisibility(View.GONE);
+        ProgressBar loading = findViewById(R.id.loadingPanelMid);
+        loading.clearAnimation();
+        loading.setVisibility(View.GONE);
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

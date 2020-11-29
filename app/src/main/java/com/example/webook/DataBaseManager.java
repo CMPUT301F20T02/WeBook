@@ -440,12 +440,14 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                BookRequest request = documentSnapshot.toObject(BookRequest.class);
-                sameBookRequest.dataListClear();
-                for(int i = 0; i < request.getRequester().size(); i++){
-                    sameBookRequest.dataListAdd(request);
+                if(documentSnapshot.exists()) {
+                    BookRequest request = documentSnapshot.toObject(BookRequest.class);
+                    sameBookRequest.dataListClear();
+                    for (int i = 0; i < request.getRequester().size(); i++) {
+                        sameBookRequest.dataListAdd(request);
+                    }
+                    sameBookRequest.bookAdapterChanged();
                 }
-                sameBookRequest.bookAdapterChanged();
             }
         });
     }

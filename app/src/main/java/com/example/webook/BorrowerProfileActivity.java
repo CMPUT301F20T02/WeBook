@@ -83,11 +83,11 @@ public class BorrowerProfileActivity extends AppCompatActivity {
      */
     private void updateUserInfo(DocumentSnapshot document) {
         borrower = document.toObject(Borrower.class);
-        username.setText(borrower.getUsername());
-        userType.setText(borrower.getUserType());
-        phone.setText(borrower.getPhoneNumber());
-        email.setText(borrower.getEmail());
-        description.setText(borrower.getDescription());
+        username.setText("Username: " + borrower.getUsername());
+        userType.setText("User Type: " + borrower.getUserType());
+        phone.setText("Phone: " + borrower.getPhoneNumber());
+        email.setText("Email: " + borrower.getEmail());
+        description.setText("Description: " + borrower.getDescription());
     }
 
 

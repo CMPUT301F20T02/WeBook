@@ -318,7 +318,7 @@ public class RequestProfile extends AppCompatActivity {
                             if(documentSnapshot.exists()){
                                 BookRequest bookRequest = documentSnapshot.toObject(BookRequest.class);
                                 if(bookRequest.getBook().getStatus().equals("accepted")){
-                                    if(bookRequest.getwaiting()) {
+                                    if(!bookRequest.getwaiting()) {
                                         //if (isbn_base.equals(bookRequest.getBook().getISBN())){
                                         if (timeChosen != null) {
                                             if(!latlong.isEmpty()) {

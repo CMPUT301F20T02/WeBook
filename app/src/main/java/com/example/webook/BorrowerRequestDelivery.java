@@ -225,6 +225,7 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
                                                 if(!dateSelected.isEmpty()) {
                                                     db.collection("requests").document(isbn_base).update("waiting", false);
                                                     db.collection("books").document(isbn_base).update("status", "borrowed");
+                                                    db.collection("requests").document(isbn_base).update("book.status", "borrowed");
                                                     scaned = true;
                                                     finish();
                                                 }

@@ -126,23 +126,23 @@ public class DataBaseManager {
                                 Log.d(TAG, document.getId());
                                 String status = (String) document.getData().get("status");
                                 if(!status.equals("borrowed") && !status.equals("accepted")){
-                                    String title = (String) document.getData().get("title");
-                                    String author = (String) document.getData().get("author");
-                                    String isbn = (String) document.getData().get("isbn");
-                                    String description = (String) document.getData().get("description");
-                                    String owner = (String) document.getData().get("owner");
+                                    Book book = document.toObject(Book.class);
+                                    String title = book.getTitle();
+                                    String author = book.getAuthor();
+                                    String isbn = book.getISBN();
+                                    String description = book.getDescription();
 
                                     if(title.contains(message)) {
-                                        borrowerSearchBookPage.dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        borrowerSearchBookPage.dataList.add(book);
                                     }
                                     else if (author.contains(message)) {
-                                        borrowerSearchBookPage.dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        borrowerSearchBookPage.dataList.add(book);
                                     }
                                     else if(isbn.contains(message)) {
-                                        borrowerSearchBookPage.dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                        borrowerSearchBookPage.dataList.add(book);
                                     }else if(description!= null){
                                         if(description.contains(message)) {
-                                            borrowerSearchBookPage.dataList.add(new Book(title, isbn, author, status, owner, null, description));
+                                            borrowerSearchBookPage.dataList.add(book);
                                         }
                                     }
                                 }
@@ -703,8 +703,8 @@ public class DataBaseManager {
                     }
                 });
     }
-
-    public void updateBook(final OwnerBookProfile ownerBookProfile, String isbn){
+/*
+    public void updateBook1(final OwnerBookProfile ownerBookProfile, String isbn){
         DocumentReference docRef = db.collection("books").document(isbn);
         System.out.println(isbn);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -728,6 +728,8 @@ public class DataBaseManager {
         });
     }
 
+ */
+
     public void BookProfileAddUserSnapShotListener(final OwnerBookProfile ownerBookProfile, final String isbn){
         DocumentReference bookRef = db.collection("books").document(isbn);
         bookRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -746,13 +748,44 @@ public class DataBaseManager {
         ownerBookProfile.setIsbn_text(book.getISBN());
         ownerBookProfile.setDescription_text(book.getDescription());
         ownerBookProfile.setAuthor_text(book.getAuthor());
+        System.out.println("image is: "+ book.getImage());
+        ownerBookProfile.setImage(book.getImage());
+        ownerBookProfile.setSelectBook(book);
     }
 
-    public void updateBook (String isbn, String title, String author, String des) {
+    public void updateBook (final String isbn, String title, String author, String des, Bitmap bitmap, int imageChanged) {
         DocumentReference bookRef = db.collection("books").document(isbn);
         bookRef.update("description",des);
         bookRef.update("title",title);
         bookRef.update("author", author);
+        if (imageChanged == 2) {
+            final StorageReference imageReference = storageReference.child( "images/" + System.currentTimeMillis());
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            imageReference.putBytes(byteArray)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = uri.toString();
+                                    db.collection("books").document(isbn).update("image", url);
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("Upload image", "Error uploading.", e);
+                        }
+                    });
+        }else if (imageChanged == 1){
+            db.collection("books").document(isbn).update("image", null);
+        }
     }
 
     public void BorrowerHomepageBookAddSnapShotListener(final BorrowerHomepage borrowerHomepage, final String username){
@@ -1033,4 +1066,9 @@ public class DataBaseManager {
             }
         });
     }
+
+    public void deleteImage(String isbn){
+        db.collection("books").document(isbn).update("image", null);
+    }
+
 }

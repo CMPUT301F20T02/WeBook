@@ -65,7 +65,7 @@ public class AddBookActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bitmap = ( (BitmapDrawable) book_icon.getDrawable() ).getBitmap();
+                Bitmap bitmap = ((BitmapDrawable) book_icon.getDrawable() ).getBitmap();
                 Book book = new Book(title.getText().toString(), isbn.getText().toString(), author.getText().toString(),
                         "available", owner.getUsername(), null, description.getText().toString());
                 dataBaseManager.addBook(bitmap,book,owner);

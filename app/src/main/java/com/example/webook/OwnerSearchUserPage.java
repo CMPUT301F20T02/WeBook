@@ -32,6 +32,8 @@ public class OwnerSearchUserPage extends AppCompatActivity {
     ArrayAdapter<User> userAdapter;
     private DataBaseManager dataBaseManager;
     public static final String EXTRA_MESSAGE = "com.example.BorrowerSearchUserPage.MESSAGE";
+    private SuperSwipeRefreshLayout swipeRefreshLayout;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,9 @@ public class OwnerSearchUserPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         dataBaseManager.OwnerSearchUser(message,this);
+        ProgressBar loading = findViewById(R.id.loadingPanelMid);
+        loading.clearAnimation();
+        loading.setVisibility(View.GONE);
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,6 +65,45 @@ public class OwnerSearchUserPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        
+        swipeRefreshLayout = (SuperSwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout
+            .setOnPullRefreshListener(new SuperSwipeRefreshLayout.OnPullRefreshListener() {
+
+                @Override
+                public void onRefresh() {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                                final String TAG = "User";
+                                // User's key for search
+                                Intent intent = getIntent();
+                                final String message = intent.getStringExtra(BorrowerSearch.EXTRA_MESSAGE);
+                                userList = findViewById(R.id.search_result_list);
+//                              input = findViewById(R.id.search_book_user_result);
+//                              input.setHint("Searching users");
+                                dataList = new ArrayList<>();
+                                userAdapter = new UserList(this, dataList);
+                                userList.setAdapter(userAdapter);
+                                final ArrayList<String> userNameList = new ArrayList<String>();
+                                dataBaseManager = new DataBaseManager();
+                                dataBaseManager.OwnerSearchUser(message,this);
+
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onPullDistance(int distance) {
+                        System.out.println("debug:distance = " + distance);
+                        // myAdapter.updateHeaderHeight(distance);
+                    }
+
+                    @Override
+                    public void onPullEnable(boolean enable) {
+                    }
+                });
 
 
     }

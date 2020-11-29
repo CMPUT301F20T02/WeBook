@@ -125,7 +125,7 @@ public class RequestProfile extends AppCompatActivity {
         isbn.setText(book_isbn);
         title.setText(book_title);
         status.setText(book_status);
-        address.setText("Please click the map to select the deliver location.");
+        address.setText("Please click the map to select the deliver location (Long-press to pin)");
 
         if(bookRequest.getTime() != null){
             time.setText(bookRequest.getTime());

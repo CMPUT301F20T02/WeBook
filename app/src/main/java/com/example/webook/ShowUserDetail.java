@@ -26,10 +26,10 @@ public class ShowUserDetail extends AppCompatActivity {
         final TextView description = findViewById(R.id.user_description);
         final ImageView image = findViewById(R.id.user_icon);
         image.setImageDrawable(getResources().getDrawable(R.drawable.empty_user_icon));
-        username.setText(user.getUsername());
-        userType.setText(user.getUserType());
-        phone.setText(user.getPhoneNumber());
-        email.setText(user.getEmail());
-        description.setText(user.getDescription());
+        username.setText("Username: " + user.getUsername());
+        userType.setText("User Type: " + user.getUserType());
+        phone.setText("Phone: " + user.getPhoneNumber());
+        email.setText("Email: " + user.getEmail());
+        description.setText("Description: " + user.getDescription());
     }
 }

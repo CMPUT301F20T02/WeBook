@@ -55,9 +55,14 @@ public class BorrowerSearchUserPage extends AppCompatActivity {
         dataBaseManager = new DataBaseManager();
 
         dataBaseManager.BorrowerSearchUser(message,this);
-        ProgressBar loading = findViewById(R.id.loadingPanelMid);
+        final ProgressBar loading = findViewById(R.id.loadingPanelMid);
         loading.clearAnimation();
-        loading.setVisibility(View.GONE);
+        runOnUiThread(new Runnable() {
+        @Override
+            public void run() {
+                loading.setVisibility(View.GONE);
+            }
+        });
 
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

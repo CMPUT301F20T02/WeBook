@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 /**
  * This is activity shows a book's profile
  * @pram EXTRA_MESSAGE Books item to show in profile, clicked by user in formal actvity
@@ -29,6 +33,7 @@ public class ShowBookDetail extends AppCompatActivity {
         final TextView  status = findViewById(R.id.book_profile_status_text);
         final TextView  description = findViewById(R.id.book_profile_description);
         final TextView  owner = findViewById(R.id.book_profile_owner_text);
+        ImageView book_pic = findViewById(R.id.book_profile_icon);
         Button show = findViewById(R.id.borrower_book_request_button);
         show.setVisibility(View.INVISIBLE);
         tile.setText(book.getTitle());
@@ -54,6 +59,13 @@ public class ShowBookDetail extends AppCompatActivity {
                     dataBaseManager.getUserShowBookDetail(ShowBookDetail.this, book.getBorrower());
                 }
             });
+        }
+        if (book.getImage() == null){
+            book_pic.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this)
+                    .load(book.getImage())
+                    .into(book_pic);
         }
     }
 }

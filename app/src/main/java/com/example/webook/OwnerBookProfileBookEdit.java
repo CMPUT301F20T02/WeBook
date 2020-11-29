@@ -20,6 +20,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 public class OwnerBookProfileBookEdit extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     private static final int CAMERA = 2;
@@ -35,6 +37,7 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     private Button scanButton;
     private DataBaseManager dataBaseManager;
+    private int imageChanged = 0;  // 0 no change, 1 deleted, 2 updated.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,20 +58,25 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
         isbn.setText(oldbook.getISBN());
         description.setText(oldbook.getDescription());
 
-        book_icon = findViewById(R.id.book_icon_add_edit);
         dataBaseManager = new DataBaseManager();
+        if (oldbook.getImage() == null){
+            book_icon.setImageResource(R.drawable.book_icon);
+        }else{
+            Glide.with(this)
+                    .load(oldbook.getImage())
+                    .into(book_icon);
+        }
         book_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagePiker();
-
+                imagePiker(oldbook.getImage());
             }
         });
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataBaseManager.updateBook(isbn.getText().toString(),title.getText().toString(),author.getText().toString(),description.getText().toString());
+                dataBaseManager.updateBook(isbn.getText().toString(),title.getText().toString(),author.getText().toString(),description.getText().toString(), ((BitmapDrawable) book_icon.getDrawable() ).getBitmap(), imageChanged);
                 finish();
                 overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
             }
@@ -87,10 +95,12 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void imagePiker() {
-        AlertDialog.Builder camOrGal = new AlertDialog.Builder(OwnerBookProfileBookEdit.this);
-        camOrGal.setTitle("Choose your source");
-        final CharSequence[] selection = {"Camera", "Photo Gallery"};
+    private void imagePiker(final String oldImage) {
+        final AlertDialog.Builder camOrGal = new AlertDialog.Builder(OwnerBookProfileBookEdit.this);
+        camOrGal.setTitle("Edit book image");
+        final CharSequence[] selection = new CharSequence[]{"Camera", "Photo Gallery", "Delete"};
+
+
         camOrGal.setItems( selection, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -106,11 +116,16 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
                     startActivityForResult(intent, CAMERA);
                     overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                 } else if ( selection[which].equals("Photo Gallery") ) {
+                    System.out.println("the old image"+oldImage);
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(intent, PICK_IMAGE);
                     overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
+                }else if(selection[which].equals("Delete")){
+                    imageChanged = 1;
+                    book_icon.setImageDrawable(getResources().getDrawable(R.drawable.book_icon));
+                    dataBaseManager.deleteImage(isbn.getText().toString());
                 }
             }
         } );
@@ -124,12 +139,14 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             book_icon.setImageURI(imageUri);
+            imageChanged = 2;
         }
 
         else if (requestCode == CAMERA && resultCode == RESULT_OK && data != null && data.getExtras() != null) {
             Bundle bundle = data.getExtras();
             Bitmap imageBitmap = (Bitmap) bundle.get("data");
             book_icon.setImageBitmap(imageBitmap);
+            imageChanged = 2;
         }else if (requestCode == SCAN_CODE && resultCode == RESULT_OK && data != null && data.getExtras() != null){
             String isbnString = data.getStringExtra("code");
             isbn.setText(isbnString);

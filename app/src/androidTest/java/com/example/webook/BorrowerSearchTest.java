@@ -89,7 +89,7 @@ public class BorrowerSearchTest {
         solo.assertCurrentActivity("Wrong Activity", BorrowerSearchBookPage.class);
         assertTrue(solo.waitForText("TestBook1",1,5000,true,true));
         assertTrue(solo.waitForText("available",1,5000,true,true));
-        solo.clickOnMenuItem("TestBook1");
+        solo.clickInList(0);
 
         // check for profile consistency
         assertTrue(solo.waitForText("TestBook1",1,5000,true,true));
@@ -192,7 +192,7 @@ public class BorrowerSearchTest {
 
 
     @Test
-    public void BorrowerSearchUserExist(){
+    public void borrowerSearchUserExist(){
         // login
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
@@ -223,7 +223,7 @@ public class BorrowerSearchTest {
 
 
     @Test
-    public void BorrowerSearchUserNotExist(){
+    public void borrowerSearchUserNotExist(){
         // login
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");

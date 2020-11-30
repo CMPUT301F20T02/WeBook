@@ -55,14 +55,14 @@ public class OwnerBookProfileRequestListFunctionalTest {
     }
 
     @Test
-    public void OwnerBookProfileRequestListFunctionalTest() {
+    public void OwnerRequestListFunctionalTest() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestOwner1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
         solo.clickOnButton("Log in");
-        solo.sleep(1000);
+        solo.sleep(3000);
         solo.clickOnText("Requested");
-        solo.sleep(1000);
+        solo.sleep(2000);
         solo.clickOnMenuItem("TestBook5");
         solo.sleep(1000);
         solo.clickOnButton("REQUESTS LIST");

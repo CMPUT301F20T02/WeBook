@@ -68,56 +68,48 @@ public class BorrowerRequestButtonTest {
     @Test
     public void topButtonsCheck(){
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
+        solo.sleep(1000);
         solo.clickOnText("REQUESTS");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Activity", BorrowerRequestPageActivity.class);
         assertTrue(solo.waitForText("TestBook5", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook6", 1, 5000, true, true));
         solo.clickOnText("Accepted");
-        assertTrue(solo.waitForText("TestBook10", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook11", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook12", 1, 5000, true, true));
-        assertTrue(solo.waitForText("Owner: TestOwner1", 3, 5000, true, true));
+        assertTrue(solo.waitForText("Owner: TestOwner1", 2, 5000, true, true));
         solo.clickOnText("Borrowed");
         assertTrue(solo.waitForText("TestBook7", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook8", 1, 5000, true, true));
-        assertTrue(solo.waitForText("TestBook9", 1, 5000, true, true));
-        assertTrue(solo.waitForText("Owner: TestOwner1", 3, 5000, true, true));
+        assertTrue(solo.waitForText("Owner: TestOwner1", 2, 5000, true, true));
     }
-/*
+
+
     @Test
-    public void BorrowerRequestDeliveryCheck() {
+    public void BorrowerAcceptedDeliveryCheck() {
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
+        solo.sleep(1000);
         solo.clickOnText("REQUESTS");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Activity", BorrowerRequestPageActivity.class);
         solo.clickOnText("Accepted");
-        solo.sleep(2000);
-        solo.goBack();
-        solo.goBack();
-        solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
-        solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
-        solo.clickOnButton("Log in");
-        solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
-        solo.clickOnText("REQUESTS");
+        solo.sleep(4000);
+        solo.clickInList(0);
         solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong Activity", BorrowerRequestPageActivity.class);
-        solo.clickOnText("Accepted");
-        solo.sleep(1000);
-        solo.clickOnText("TestBook10");
         solo.assertCurrentActivity("Wrong Activity", BorrowerRequestDelivery.class);
-        assertTrue(solo.waitForText("Title: TestBook10", 1, 5000, true, true));
-        assertTrue(solo.waitForText("ISBN: 0100000000000", 1, 5000, true, true));
+        assertTrue(solo.waitForText("Title: TestBook11", 1, 5000, true, true));
+        assertTrue(solo.waitForText("ISBN: 1100000000000", 1, 5000, true, true));
         assertTrue(solo.waitForText("Owner: TestOwner1", 1, 5000, true, true));
         assertTrue(solo.waitForText("Status: accepted", 1, 5000, true, true));
         assertTrue(solo.waitForText("2025-12-5", 1, 5000, true, true));
-        solo.clickOnText("DELIVER SCAN");
+        solo.clickOnText("Deliver Scan");
+        solo.sleep(4000);
         solo.assertCurrentActivity("Wrong Activity", CodeScanner.class);
     }
 
- */
+
     @Test
-    public void BorrowerBorrowedDeliveryCheck(){
+    public void BorrowerBorrowedReturnCheck(){
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.clickOnText("REQUESTS");
         solo.sleep(1000);
@@ -132,7 +124,8 @@ public class BorrowerRequestButtonTest {
         assertTrue(solo.waitForText("Owner: TestOwner1", 1, 5000, true, true));
         assertTrue(solo.waitForText("Status: borrowed", 1, 5000, true, true));
         assertTrue(solo.waitForText("2020-9-22", 1, 5000, true, true));
-        solo.clickOnText("Deliver Scan");
+        solo.clickOnText("Return Scan");
+        solo.sleep(4000);
         solo.assertCurrentActivity("Wrong Activity", CodeScanner.class);
     }
 

@@ -12,25 +12,43 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
 public class LoginPageTest {
     private Solo solo;
-    private DataBaseTestManager dataBaseTestManager;
+    private static DataBaseTestManager dataBaseTestManager;
+    private static Solo soloCls;
+
+    @ClassRule
+    public static ActivityTestRule<MainActivity> ruleCls =
+            new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
+
+
+    @BeforeClass
+    public static void clsSetUp() {
+        soloCls = new Solo(InstrumentationRegistry.getInstrumentation(), ruleCls.getActivity());
+        dataBaseTestManager = new DataBaseTestManager();
+        dataBaseTestManager.deleteSignedUpUsers();
+        soloCls.sleep(1000);
+        dataBaseTestManager.createTestData();
+        soloCls.sleep(5000);
+    }
+
 
     @Rule
-    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<MainActivity>(MainActivity.class, true, true);
+    public ActivityTestRule<MainActivity> rule =
+            new ActivityTestRule<>(MainActivity.class, true, true);
+
 
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        dataBaseTestManager = new DataBaseTestManager();
-        dataBaseTestManager.deleteSignedUpUsers();
     }
 
     @Test
-    public void checkSignUp() {
+    public void checkSignUpOwner() {
         solo.clickOnButton("Sign up");
         solo.waitForActivity("SignUpActivity", 3000);
         solo.enterText((EditText) solo.getView(R.id.username_signup), "SignUpOwner");
@@ -44,9 +62,11 @@ public class LoginPageTest {
         solo.enterText((EditText) solo.getView(R.id.pwd_input), "SignUpPWD");
         solo.clickOnButton("Log in");
         solo.waitForActivity("OwnerHomepage", 3000);
-        solo.goBack();
-        solo.waitForActivity("MainActivity", 3000);
+    }
 
+
+    @Test
+    public void checkSignUpBorrower() {
         solo.clickOnButton("Sign up");
         solo.waitForActivity("SignUpActivity", 3000);
         solo.enterText((EditText) solo.getView(R.id.username_signup), "SignUpBorrower");
@@ -60,37 +80,51 @@ public class LoginPageTest {
         solo.enterText((EditText) solo.getView(R.id.pwd_input), "SignUpPWD");
         solo.clickOnButton("Log in");
         solo.waitForActivity("BorrowerHomepage", 3000);
-        solo.goBack();
-        solo.waitForActivity("MainActivity", 3000);
+    }
 
+
+    @Test
+    public void checkCancelSignUp() {
         solo.clickOnButton("Sign up");
+        solo.waitForActivity("SignUpActivity", 3000);
         solo.clickOnButton("Cancel");
         solo.waitForActivity("MainActivity", 3000);
+    }
 
-        solo.sleep(3000);
 
+    @Test
+    public void checkLoginOwner() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Did not ask for id and pwd", MainActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.username_input), "SignUpOwner");
-        solo.enterText((EditText) solo.getView(R.id.pwd_input), "SignUpPWD");
+        solo.enterText((EditText) solo.getView(R.id.username_input), "TestOwner1");
+        solo.enterText((EditText) solo.getView(R.id.pwd_input), "111");
         solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Did not login", OwnerHomepage.class);
+    }
 
-        solo.sleep(3000);
-        solo.goBack();
 
+    @Test
+    public void checkLoginBorrower() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Did not ask for id and pwd", MainActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.username_input), "SignUpBorrower");
-        solo.enterText((EditText) solo.getView(R.id.pwd_input), "SignUpPWD");
+        solo.enterText((EditText) solo.getView(R.id.username_input), "TestBorrower1");
+        solo.enterText((EditText) solo.getView(R.id.pwd_input), "111");
         solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Did not login", BorrowerHomepage.class);
+    }
 
-        solo.sleep(3000);
-        solo.goBack();
 
-        solo.waitForActivity("MainActivity", 3000);
+    @After
+    public void tearDown() {
+        solo.finishOpenedActivities();
+    }
+
+
+    @AfterClass
+    public static void clsTearDown() {
+        dataBaseTestManager.deleteTestData();
+        soloCls.sleep(5000);
     }
 }

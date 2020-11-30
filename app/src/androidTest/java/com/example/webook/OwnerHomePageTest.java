@@ -89,7 +89,7 @@ public class OwnerHomePageTest {
 
 
     @Test
-    public void checkAvailableButton(){
+    public void checkAvailableFilter(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.sleep(5000);
         solo.clickOnText("Available");
@@ -105,7 +105,7 @@ public class OwnerHomePageTest {
 
 
     @Test
-    public void checkRequestedButton(){
+    public void checkRequestedFilter(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.sleep(5000);
         solo.clickOnText("Requested");
@@ -121,7 +121,7 @@ public class OwnerHomePageTest {
 
 
     @Test
-    public void checkAcceptedButton(){
+    public void checkAcceptedFilter(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.sleep(5000);
         solo.clickOnText("Accepted");
@@ -137,7 +137,7 @@ public class OwnerHomePageTest {
 
 
     @Test
-    public void checkBorrowedButton(){
+    public void checkBorrowedFilter(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.sleep(5000);
         solo.clickOnText("Borrowed");
@@ -153,7 +153,7 @@ public class OwnerHomePageTest {
 
 
     @Test
-    public void CheckAllButton(){
+    public void CheckAllFilter(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         assertTrue(solo.waitForText("TestBook3", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook3 Author", 1, 5000, true, true));
@@ -163,12 +163,12 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("TestBook4 Author", 1, 5000, true, true));
         assertTrue(solo.waitForText("requested", 1, 5000, true, true));
         solo.clickOnText("ALL");
-        assertTrue(solo.waitForText("TestBook7", 1, 5000, true, true));
-        assertTrue(solo.waitForText("TestBook7 Author", 1, 5000, true, true));
-        assertTrue(solo.waitForText("accepted", 1, 5000, true, true));
-        solo.clickOnText("ALL");
         assertTrue(solo.waitForText("TestBook12", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook12 Author", 1, 5000, true, true));
+        assertTrue(solo.waitForText("accepted", 1, 5000, true, true));
+        solo.clickOnText("ALL");
+        assertTrue(solo.waitForText("TestBook7", 1, 5000, true, true));
+        assertTrue(solo.waitForText("TestBook7 Author", 1, 5000, true, true));
         assertTrue(solo.waitForText("borrowed", 1, 5000, true, true));
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
     }

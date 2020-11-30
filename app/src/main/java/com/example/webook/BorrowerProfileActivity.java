@@ -62,7 +62,7 @@ public class BorrowerProfileActivity extends AppCompatActivity {
      * this os the username to be set
      */
     public void setUsername(String usernameText){
-        this.username.setText(usernameText);
+        this.username.setText("User name: " + usernameText);
     }
 
 
@@ -72,7 +72,7 @@ public class BorrowerProfileActivity extends AppCompatActivity {
      * this is the user type to be set
      */
     public void setUserType(String userTypeText) {
-        this.userType.setText(userTypeText);
+        this.userType.setText("User type: " + userTypeText);
     }
 
 
@@ -97,7 +97,7 @@ public class BorrowerProfileActivity extends AppCompatActivity {
      * this is the phone to be set
      */
     public void setPhone(String phoneText){
-        this.phone.setText(phoneText);
+        this.phone.setText("Phone: " + phoneText);
     }
 
 
@@ -107,7 +107,7 @@ public class BorrowerProfileActivity extends AppCompatActivity {
      * this is the email to be set
      */
     public void setEmail(String emailText){
-        this.email.setText(emailText);
+        this.email.setText("Email: " + emailText);
     }
 
 
@@ -117,6 +117,6 @@ public class BorrowerProfileActivity extends AppCompatActivity {
      * this is the description to be set
      */
     public void setDescription(String descriptionText){
-        this.description.setText(descriptionText);
+        this.description.setText("Description: " + descriptionText);
     }
 }

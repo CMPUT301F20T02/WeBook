@@ -75,7 +75,7 @@ public class OwnerProfileActivity extends AppCompatActivity {
      * this os the username to be set
      */
     public void setUsername(String usernameText){
-        this.username.setText("Username: " + usernameText);
+        this.username.setText("User name: " + usernameText);
     }
 
 

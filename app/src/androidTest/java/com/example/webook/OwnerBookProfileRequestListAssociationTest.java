@@ -47,7 +47,7 @@ public class OwnerBookProfileRequestListAssociationTest {
         solo.sleep(1000);
         solo.clickOnText("Accepted");
         solo.sleep(1000);
-        solo.clickOnMenuItem("TestBook12");
+        solo.clickOnMenuItem("TestBook12 Author");
         solo.assertCurrentActivity("Wrong Activity", OwnerBookProfile.class);
         solo.sleep(1000);
         solo.clickOnButton("REQUESTS LIST");

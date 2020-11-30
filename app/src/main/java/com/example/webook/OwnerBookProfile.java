@@ -215,7 +215,7 @@ public class OwnerBookProfile extends AppCompatActivity {
         if (image == null){
             book_pic.setImageResource(R.drawable.book_icon);
         }else{
-            Glide.with(OwnerBookProfile.this)
+            Glide.with(getApplicationContext())
                     .load(image)
                     .into(book_pic);
         }

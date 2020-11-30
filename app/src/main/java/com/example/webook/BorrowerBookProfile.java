@@ -109,7 +109,7 @@ public class BorrowerBookProfile extends AppCompatActivity {
         if (selectBook.getImage() == null){
             book_pic.setImageResource(R.drawable.book_icon);
         }else{
-            Glide.with(this)
+            Glide.with(getApplicationContext())
                     .load(selectBook.getImage())
                     .into(book_pic);
         }

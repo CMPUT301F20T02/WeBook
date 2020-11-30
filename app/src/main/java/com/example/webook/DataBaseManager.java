@@ -619,12 +619,13 @@ public class DataBaseManager {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                         if(task.isSuccessful()){
-                            ownerHomepage.setBookArrayList(new ArrayList<Book>());
-                            ownerHomepage.ownerSetBookList(new ArrayList<String>());
                             DocumentSnapshot document = task.getResult();
-                            final ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
-                            downloadBooks(ownerHomepage, bookisbn);
-
+                            if(document.exists()) {
+                                ownerHomepage.setBookArrayList(new ArrayList<Book>());
+                                ownerHomepage.ownerSetBookList(new ArrayList<String>());
+                                final ArrayList<String> bookisbn = (ArrayList<String>) document.get("bookList");
+                                downloadBooks(ownerHomepage, bookisbn);
+                            }
                         }
 
                     }
@@ -640,7 +641,7 @@ public class DataBaseManager {
      * These are related activity and an array list of ISBN
      */
     private void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
-        Log.d("I'm fine:", bookisbn.toString());
+
         CollectionReference bookRef = db.collection("books");
         for (int i = 0; i < bookisbn.size(); i++) {
             DocumentReference bookRef1 = bookRef.document(bookisbn.get(i));
@@ -681,10 +682,12 @@ public class DataBaseManager {
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                ownerHomepage.setBookArrayList(new ArrayList<Book>());
-                ownerHomepage.ownerSetBookList(new ArrayList<String>());
-                ArrayList<String> bookisbn = (ArrayList<String>) value.get("bookList");
-                downloadBooks(ownerHomepage, bookisbn);
+                if(value.exists()) {
+                    ownerHomepage.setBookArrayList(new ArrayList<Book>());
+                    ownerHomepage.ownerSetBookList(new ArrayList<String>());
+                    ArrayList<String> bookisbn = (ArrayList<String>) value.get("bookList");
+                    downloadBooks(ownerHomepage, bookisbn);
+                }
             }
         });
     }
@@ -701,6 +704,7 @@ public class DataBaseManager {
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                Log.d("I'm fine", value.toString());
                 updateBorrowerInfo(value, borrowerProfileActivity);
             }
         });
@@ -716,11 +720,14 @@ public class DataBaseManager {
      */
     private void updateBorrowerInfo(DocumentSnapshot document, final BorrowerProfileActivity borrowerProfileActivity) {
         Borrower borrower = document.toObject(Borrower.class);
-        borrowerProfileActivity.setUsername(borrower.getUsername());
-        borrowerProfileActivity.setUserType(borrower.getUserType());
-        borrowerProfileActivity.setPhone(borrower.getPhoneNumber());
-        borrowerProfileActivity.setEmail(borrower.getEmail());
-        borrowerProfileActivity.setDescription(borrower.getDescription());
+        if(document.exists()) {
+            Log.d("I'm fine2", "I'm fine3");
+            borrowerProfileActivity.setUsername(borrower.getUsername());
+            borrowerProfileActivity.setUserType(borrower.getUserType());
+            borrowerProfileActivity.setPhone(borrower.getPhoneNumber());
+            borrowerProfileActivity.setEmail(borrower.getEmail());
+            borrowerProfileActivity.setDescription(borrower.getDescription());
+        }
     }
 
     /**

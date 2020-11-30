@@ -1,5 +1,6 @@
 package com.example.webook;
 
+import android.util.Log;
 import android.widget.EditText;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -74,7 +75,7 @@ public class BorrowerProfileEditTest {
     }
 
     @Test
-    public void checkEdit(){
+    public void checkEdit() throws Exception{
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.clickOnText("ME");
         solo.assertCurrentActivity("Wrong Activity",BorrowerProfileActivity.class);
@@ -84,30 +85,42 @@ public class BorrowerProfileEditTest {
         solo.clickOnButton("Cancel");
         solo.sleep(1000);
         solo.clickOnText("EDIT PROFILE");
+        solo.sleep(2000);
         solo.clearEditText((EditText) solo.getView(R.id.editUserPhone));
         solo.clearEditText((EditText) solo.getView(R.id.editUserEmail));
         solo.clearEditText((EditText) solo.getView(R.id.editUserDescription));
         solo.enterText((EditText) solo.getView(R.id.editUserPhone),"6466606670");
+        solo.sleep(1000);
         solo.enterText((EditText) solo.getView(R.id.editUserEmail),"NewTestBorrower1@gmail.com");
+        solo.sleep(1000);
         solo.enterText((EditText) solo.getView(R.id.editUserDescription),"This is new TestBorrower1");
+        solo.sleep(1000);
         solo.clickOnButton("Confirm");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Activity",BorrowerProfileActivity.class);
         assertTrue(solo.waitForText("6466606670", 1, 5000, true, true));
         assertTrue(solo.waitForText("NewTestBorrower1@gmail.com", 1, 5000, true, true));
         assertTrue(solo.waitForText("This is new TestBorrower1", 1, 5000, true, true));
+        solo.sleep(1000);
+        solo.goBack();
     }
 
 
     @After
     public void tearDown() {
+        Log.d("Arrived1"," I arrived here");
+        solo.sleep(2000);
         solo.finishOpenedActivities();
+        Log.d("Arrived2"," I arrived here");
     }
 
 
     @AfterClass
     public static void clsTearDown() {
+        Log.d("Arrived3"," I arrived here");
+        soloCls.sleep(2000);
         dataBaseTestManager.deleteTestData();
         soloCls.sleep(5000);
+        Log.d("Arrived4"," I arrived here");
     }
 }

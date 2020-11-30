@@ -86,6 +86,10 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This function picks the book image from camera or gallery
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void imagePiker() {
         AlertDialog.Builder camOrGal = new AlertDialog.Builder(AddBookActivity.this);

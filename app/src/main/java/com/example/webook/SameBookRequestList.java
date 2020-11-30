@@ -90,13 +90,24 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
                 });
     }
 
-
+    /**
+     * Reset dataList
+     */
     public void dataListClear(){
         dataList.clear();
     }
+
+    /**
+     * add requests to dataList
+     * @param request
+     */
     public void dataListAdd(BookRequest request){
         dataList.add(request);
     }
+
+    /**
+     * Update listView
+     */
     public void bookAdapterChanged(){
         bookAdapter.notifyDataSetChanged();
     }
@@ -106,7 +117,9 @@ public class SameBookRequestList extends AppCompatActivity implements OwnerAccep
         finish();
     }
 
-
+    /**
+     * decline a request
+     */
     @Override
     public void onDeclinePressed(){
         dataBaseManager.declinePressed(selectBook.getISBN(),this);

@@ -93,6 +93,10 @@ public abstract class Request implements Serializable{
         this.date = date;
     }
 
+    /**
+     * get the time for pick up
+     * @return time
+     */
     public String getTime(){
         return this.time;
     }

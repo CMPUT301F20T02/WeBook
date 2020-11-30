@@ -190,12 +190,14 @@ public class SimpleMapViewActivity extends AppCompatActivity {
         }
         updateLocationUI();
     }
+
+    /**
+     * Request location permission, so that we can get the location of the
+     * device. The result of the permission request is handled by a callback,
+     * onRequestPermissionsResult.
+     */
     private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
+
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -206,6 +208,7 @@ public class SimpleMapViewActivity extends AppCompatActivity {
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
+
     private void updateLocationUI() {
         if (mMap == null) {
             return;

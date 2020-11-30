@@ -94,6 +94,11 @@ public class OwnerBookProfileBookEdit extends AppCompatActivity {
 
     }
 
+    /**
+     * pick an new image or delete the old image
+     * @param oldImage the old image or null if it does not exist
+     */
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void imagePiker(final String oldImage) {
         final AlertDialog.Builder camOrGal = new AlertDialog.Builder(OwnerBookProfileBookEdit.this);

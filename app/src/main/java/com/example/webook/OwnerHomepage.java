@@ -186,31 +186,7 @@ public class OwnerHomepage extends AppCompatActivity {
             }
 
         });
-
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(owner.getUsername()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if(documentSnapshot.exists()){
-                        before = ((ArrayList<String>)documentSnapshot.get("requestList")).size();
-                        listenerRegistration = db.collection("users").document(owner.getUsername()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                Integer now = ((ArrayList<String>)value.get("requestList")).size();
-                                if(before < now){
-                                    String sentence = "You have received a new request";
-                                    Toast toast = Toast.makeText(OwnerHomepage.this, sentence, Toast.LENGTH_LONG);
-                                    toast.show();
-                                }
-                                before = now;
-                            }
-                        });
-                    }
-                }
-            }
-        });
+        dataBaseManager.OwnerHomePageNotify(this, owner.getUsername());
     }
 
 
@@ -347,5 +323,15 @@ public class OwnerHomepage extends AppCompatActivity {
         bookListBorrowed.notifyDataSetChanged();
     }
 
+    public Integer getBefore() {
+        return before;
+    }
 
+    public void setBefore(int before){
+        this.before = before;
+    }
+
+    public void setListenerRegistration(ListenerRegistration l){
+        this.listenerRegistration = l;
+    }
 }

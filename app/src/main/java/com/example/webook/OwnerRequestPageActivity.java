@@ -128,24 +128,21 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
         });
     }
 
+    /**
+     * Update all requests based on their status
+     * @param bookRequests the list of all requests
+     */
+
     public void setArrayList(ArrayList<BookRequest> bookRequests){
         this.requestArrayList = bookRequests;
-        System.out.println("whole size" + requestArrayList.size());
         getPending();
         getBorrowed();
         getAccepted();
     }
 
-    public ArrayList<String> getOwnerRequestList(){
-        return owner.getRequestList();
-    }
-
-    public void ownerAddRequest(String isbn){
-        owner.addRequest(isbn);
-    }
-
-
-
+    /**
+     * get all pending requests
+     */
     public void getPending(){
         this.pendingRequests.clear();
         for (int i = 0; i < this.requestArrayList.size(); i++){
@@ -154,9 +151,11 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
             }
         }
         requestListPending.notifyDataSetChanged();
-
     }
 
+    /**
+     * get all accepted requests
+     */
     public void getAccepted(){
         this.acceptedRequests.clear();
         this.acceptedList.clear();
@@ -167,9 +166,11 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
             }
         }
         requestListAccepted.notifyDataSetChanged();
-
     }
 
+    /**
+     * get all borrowed requests
+     */
     public void getBorrowed(){
         this.borrowedRequests.clear();
         this.borrowedList.clear();
@@ -180,14 +181,8 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
             }
         }
         requestListBorrowed.notifyDataSetChanged();
-
     }
 
-
-    public void clearList(){
-        this.requestArrayList = new ArrayList<BookRequest>();
-        this.owner.setBookList(new ArrayList<String>());
-    }
 
     @Override
     public void onAcceptPressed() {

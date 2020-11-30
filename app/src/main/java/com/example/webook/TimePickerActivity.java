@@ -37,6 +37,13 @@ public class TimePickerActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Pick a time
+     * @param hour
+     * @param min
+     * @return string rep of the time picked
+     */
     public String showTime(int hour, int min) {
         if (hour == 0) {
             hour += 12;

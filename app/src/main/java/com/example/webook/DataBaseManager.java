@@ -195,6 +195,12 @@ public class DataBaseManager {
                 });
     }
 
+    /**
+     * Search for users in the database
+     * @param message the keyword
+     * @param ownerSearchUserPage the activity reference
+     */
+
     public void OwnerSearchUser(final String message, final OwnerSearchUserPage ownerSearchUserPage){
         collectionReference= db.collection("users");
         collectionReference.get()
@@ -230,9 +236,9 @@ public class DataBaseManager {
 
     /**
      * This add a book document in database
-     * @param bitmap
-     * @param book
-     * @param owner
+     * @param bitmap the book image
+     * @param book the book
+     * @param owner the owner of the book
      * These are the picture, book item and owner information that you want to add into the document
      */
     public void addBook(Bitmap bitmap, final Book book, final Owner owner){
@@ -268,8 +274,8 @@ public class DataBaseManager {
 
     /**
      * This change a book document in database
-     * @param book
-     * @param owner
+     * @param book the book to be changed
+     * @param owner the owner of the book
      * These are book and its owner that the document you want to change have
      */
     private void uploadBook(final Book book, final Owner owner){
@@ -772,32 +778,6 @@ public class DataBaseManager {
                     }
                 });
     }
-/*
-    public void updateBook1(final OwnerBookProfile ownerBookProfile, String isbn){
-        DocumentReference docRef = db.collection("books").document(isbn);
-        System.out.println(isbn);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    System.out.println("I'm successful!");
-                    Book selectBook = document.toObject(Book.class);
-                    System.out.println("I'm successful too" + selectBook.getDescription());
-                    if (document.exists()) {
-                        System.out.println("I'm successful too!");
-                        //Book selectBook = document.toObject(Book.class);
-                        ownerBookProfile.setTitle_text(selectBook.getTitle());
-                        ownerBookProfile.setAuthor_text(selectBook.getAuthor());
-                        ownerBookProfile.setDescription_text(selectBook.getDescription());
-                        ownerBookProfile.setIsbn_text(selectBook.getISBN());
-                    }
-                }
-            }
-        });
-    }
-
- */
 
     /**
      * This method sets a SnapshotListener, when user update the info of
@@ -922,10 +902,6 @@ public class DataBaseManager {
 
                     }
                 });
-
-
-
-
     }
 
     /**
@@ -1244,6 +1220,33 @@ public class DataBaseManager {
      */
     public void deleteImage(String isbn){
         db.collection("books").document(isbn).update("image", null);
+    }
+
+    public void OwnerHomePageNotify(final OwnerHomepage ownerHomepage, final String username){
+        db.collection("users").document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()){
+                        ownerHomepage.setBefore(((ArrayList<String>)documentSnapshot.get("requestList")).size());
+                        ListenerRegistration l = db.collection("users").document(username).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                Integer now = ((ArrayList<String>)value.get("requestList")).size();
+                                if(ownerHomepage.getBefore() < now){
+                                    String sentence = "You have received a new request";
+                                    Toast toast = Toast.makeText(ownerHomepage, sentence, Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                                ownerHomepage.setBefore(now);
+                            }
+                        });
+                        ownerHomepage.setListenerRegistration(l);
+                    }
+                }
+            }
+        });
     }
 
 }

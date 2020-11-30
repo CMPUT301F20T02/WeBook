@@ -21,7 +21,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * This is an activity that let user to scan a book code to get isbn
- * @param x isbn code results from scanning
  */
 
 public class CodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler{
@@ -34,6 +33,10 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
         super.onCreate(savedInstanceState);
         scan();
     }
+
+    /**
+     * Scan the bar code and return its value
+     */
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void scan(){
         if (checkSelfPermission(Manifest.permission.CAMERA)
@@ -59,6 +62,10 @@ public class CodeScanner extends AppCompatActivity implements ZXingScannerView.R
         zXingScannerView.stopCamera();
     }
 
+    /**
+     * Set the result of the scan
+     * @param result the result of scan activity
+     */
     @Override
     public void handleResult(Result result) {
         Toast.makeText(getApplicationContext(),result.getText(),Toast.LENGTH_SHORT).show();

@@ -166,7 +166,10 @@ public class BorrowerHomepage extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Updates the borrowed books in the borrowedBook list
+     * @param borrowedBooks
+     */
 
     public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
         this.borrowedBooks.clear();
@@ -174,17 +177,31 @@ public class BorrowerHomepage extends AppCompatActivity {
         this.borrowedBookList.notifyDataSetChanged();
     }
 
+    /**
+     * Updates the requetsed books in the requestedBook list
+     * @param requestedBooks
+     */
+
     public void setRequestedBooks(ArrayList<Book> requestedBooks) {
         this.requestedBooks.clear();
         this.requestedBooks.addAll(requestedBooks);
         this.requestedBookList.notifyDataSetChanged();
     }
 
+    /**
+     * Updates the accepted books in the acceptedBooks
+     * @param acceptedBooks
+     */
+
     public void setAcceptedBooks(ArrayList<Book> acceptedBooks) {
         this.acceptedBooks.clear();
         this.acceptedBooks.addAll(acceptedBooks);
         this.acceptedBookList.notifyDataSetChanged();
     }
+
+    /**
+     * Updates allBooks list based on the other three lists
+     */
 
     public void updateAllBooks(){
         this.allBooks.clear();
@@ -194,9 +211,19 @@ public class BorrowerHomepage extends AppCompatActivity {
         allBookList.notifyDataSetChanged();
     }
 
+    /**
+     * Keep a reference of the snap shot listener registered
+     * @param listenerRegistration the registration to be recorded
+     */
+
     public void addListenerRegistration(ListenerRegistration listenerRegistration){
         this.listenerRegistrations.add(listenerRegistration);
     }
+
+    /**
+     * Detach a listener when no longer needed from the list of listener registrations
+     * @param index the index of the registration object
+     */
 
     public void removeListenerRegistration(int index){
         ListenerRegistration listenerRegistration = this.listenerRegistrations.get(index);
@@ -204,6 +231,11 @@ public class BorrowerHomepage extends AppCompatActivity {
         this.listenerRegistrations.remove(index);
         this.Isbns.remove(index);
     }
+
+    /**
+     * Used to keep track of document names that are being listened. Adds the document name to a list.
+     * @param isbn the document name
+     */
 
     public void addIsbn(String isbn){
         this.Isbns.add(isbn);

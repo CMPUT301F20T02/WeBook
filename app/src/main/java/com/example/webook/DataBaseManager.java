@@ -466,16 +466,18 @@ public class DataBaseManager {
      * These are the isbn code the requested book had and the page you want to show the list
      */
     public  void declinePressed(String isbn, final SameBookRequestList sameBookRequest){
-        DocumentReference docRef = db.collection("requests").document(isbn);
+        final DocumentReference docRef = db.collection("requests").document(isbn);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                BookRequest request = documentSnapshot.toObject(BookRequest.class);
-                sameBookRequest.dataListClear();
-                for(int i = 0; i < request.getRequester().size(); i++){
-                    sameBookRequest.dataListAdd(request);
+                if(documentSnapshot.exists()) {
+                    BookRequest request = documentSnapshot.toObject(BookRequest.class);
+                    sameBookRequest.dataListClear();
+                    for (int i = 0; i < request.getRequester().size(); i++) {
+                        sameBookRequest.dataListAdd(request);
+                    }
+                    sameBookRequest.bookAdapterChanged();
                 }
-                sameBookRequest.bookAdapterChanged();
             }
         });
     }
@@ -704,8 +706,9 @@ public class DataBaseManager {
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                Log.d("I'm fine", value.toString());
-                updateBorrowerInfo(value, borrowerProfileActivity);
+                if(value.exists()) {
+                    updateBorrowerInfo(value, borrowerProfileActivity);
+                }
             }
         });
 
@@ -721,7 +724,6 @@ public class DataBaseManager {
     private void updateBorrowerInfo(DocumentSnapshot document, final BorrowerProfileActivity borrowerProfileActivity) {
         Borrower borrower = document.toObject(Borrower.class);
         if(document.exists()) {
-            Log.d("I'm fine2", "I'm fine3");
             borrowerProfileActivity.setUsername(borrower.getUsername());
             borrowerProfileActivity.setUserType(borrower.getUserType());
             borrowerProfileActivity.setPhone(borrower.getPhoneNumber());
@@ -742,7 +744,9 @@ public class DataBaseManager {
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                updateOwnerInfo(value, ownerProfileActivity);
+                if(value.exists()) {
+                    updateOwnerInfo(value, ownerProfileActivity);
+                }
             }
         });
 
@@ -881,32 +885,32 @@ public class DataBaseManager {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        assert value != null;
-                        List<DocumentSnapshot> documents = value.getDocuments();
-                        ArrayList<Book> pending = new ArrayList<>();
-                        ArrayList<Book> accepted = new ArrayList<>();
-                        ArrayList<Book> borrowed = new ArrayList<>();
-                        for (int i = 0; i < documents.size(); i++){
-                            BookRequest temp = documents.get(i).toObject(BookRequest.class);
-                            assert temp != null;
-                            Book book = temp.getBook();
-                            switch (book.getStatus()) {
-                                case "requested":
-                                    pending.add((book));
-                                    break;
-                                case "accepted":
-                                    accepted.add(book);
-                                    break;
-                                case "borrowed":
-                                    borrowed.add(book);
-                                    break;
+                        if( value != null) {
+                            List<DocumentSnapshot> documents = value.getDocuments();
+                            ArrayList<Book> pending = new ArrayList<>();
+                            ArrayList<Book> accepted = new ArrayList<>();
+                            ArrayList<Book> borrowed = new ArrayList<>();
+                            for (int i = 0; i < documents.size(); i++) {
+                                BookRequest temp = documents.get(i).toObject(BookRequest.class);
+                                assert temp != null;
+                                Book book = temp.getBook();
+                                switch (book.getStatus()) {
+                                    case "requested":
+                                        pending.add((book));
+                                        break;
+                                    case "accepted":
+                                        accepted.add(book);
+                                        break;
+                                    case "borrowed":
+                                        borrowed.add(book);
+                                        break;
+                                }
                             }
+                            borrowerHomepage.setBorrowedBooks(borrowed);
+                            borrowerHomepage.setRequestedBooks(pending);
+                            borrowerHomepage.setAcceptedBooks(accepted);
+                            borrowerHomepage.updateAllBooks();
                         }
-                        borrowerHomepage.setBorrowedBooks(borrowed);
-                        borrowerHomepage.setRequestedBooks(pending);
-                        borrowerHomepage.setAcceptedBooks(accepted);
-                        borrowerHomepage.updateAllBooks();
-
                     }
                 });
     }
@@ -1064,11 +1068,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(borrowerBookProfile, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                borrowerBookProfile.startActivity(intent);
-                borrowerBookProfile.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(borrowerBookProfile, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    borrowerBookProfile.startActivity(intent);
+                    borrowerBookProfile.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1085,11 +1091,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(showBookDetail, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                showBookDetail.startActivity(intent);
-                showBookDetail.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(showBookDetail, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    showBookDetail.startActivity(intent);
+                    showBookDetail.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1106,11 +1114,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(borrowerRequestDelivery, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                borrowerRequestDelivery.startActivity(intent);
-                borrowerRequestDelivery.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(borrowerRequestDelivery, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    borrowerRequestDelivery.startActivity(intent);
+                    borrowerRequestDelivery.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1127,11 +1137,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(ownerBookProfile, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                ownerBookProfile.startActivity(intent);
-                ownerBookProfile.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if (documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(ownerBookProfile, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    ownerBookProfile.startActivity(intent);
+                    ownerBookProfile.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1148,11 +1160,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(requestProfile, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                requestProfile.startActivity(intent);
-                requestProfile.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(requestProfile, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    requestProfile.startActivity(intent);
+                    requestProfile.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1169,11 +1183,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(borrowerReturn, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                borrowerReturn.startActivity(intent);
-                borrowerReturn.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(borrowerReturn, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    borrowerReturn.startActivity(intent);
+                    borrowerReturn.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1190,11 +1206,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(ownerReturn, ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                ownerReturn.startActivity(intent);
-                ownerReturn.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(ownerReturn, ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    ownerReturn.startActivity(intent);
+                    ownerReturn.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1211,11 +1229,13 @@ public class DataBaseManager {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Owner owner = documentSnapshot.toObject(Owner.class);
-                Intent intent = new Intent(ownerAcceptDeclineFragment.getActivity(), ShowUserDetail.class);
-                intent.putExtra("user", owner);
-                ownerAcceptDeclineFragment.startActivity(intent);
-                ownerAcceptDeclineFragment.getActivity().overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                if(documentSnapshot.exists()) {
+                    Owner owner = documentSnapshot.toObject(Owner.class);
+                    Intent intent = new Intent(ownerAcceptDeclineFragment.getActivity(), ShowUserDetail.class);
+                    intent.putExtra("user", owner);
+                    ownerAcceptDeclineFragment.startActivity(intent);
+                    ownerAcceptDeclineFragment.getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }
             }
         });
     }
@@ -1240,13 +1260,15 @@ public class DataBaseManager {
                         ListenerRegistration l = db.collection("users").document(username).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                             @Override
                             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                Integer now = ((ArrayList<String>)value.get("requestList")).size();
-                                if(ownerHomepage.getBefore() < now){
-                                    String sentence = "You have received a new request";
-                                    Toast toast = Toast.makeText(ownerHomepage, sentence, Toast.LENGTH_LONG);
-                                    toast.show();
+                                if(value.exists()) {
+                                    Integer now = ((ArrayList<String>) value.get("requestList")).size();
+                                    if (ownerHomepage.getBefore() < now) {
+                                        String sentence = "You have received a new request";
+                                        Toast toast = Toast.makeText(ownerHomepage, sentence, Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
+                                    ownerHomepage.setBefore(now);
                                 }
-                                ownerHomepage.setBefore(now);
                             }
                         });
                         ownerHomepage.setListenerRegistration(l);

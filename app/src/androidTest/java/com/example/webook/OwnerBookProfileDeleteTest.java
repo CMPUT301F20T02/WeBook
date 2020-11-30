@@ -45,6 +45,7 @@ public class OwnerBookProfileDeleteTest {
 
     @Test
     public void checkOwnerBookProfileEditTest() {
+        solo.waitForText("TestBook3");
         solo.clickOnMenuItem("TestBook3");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong activity", OwnerBookProfile.class);

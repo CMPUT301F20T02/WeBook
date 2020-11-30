@@ -28,7 +28,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class OwnerBookHomeProfileRequestsTest {
+public class OwnerRequestProfileTest {
     private Solo solo;
     private static DataBaseTestManager dataBaseTestManager;
     private static Solo soloCls;
@@ -69,16 +69,17 @@ public class OwnerBookHomeProfileRequestsTest {
     }
 
     @Test
-    public void CheckRequestButton(){
+    public void checkRequestButton(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.clickOnText("REQUESTS");
         solo.assertCurrentActivity("Wrong Activity", OwnerRequestPageActivity.class);
     }
 
     @Test
-    public void CheckPendingList(){
+    public void checkRequestedList() {
         solo.sleep(2000);
         solo.clickOnText("REQUESTS");
+        solo.sleep(2000);
         solo.clickOnText("Requested");
         solo.sleep(1000);
         solo.waitForText("TestBook4", 1, 5000);
@@ -115,9 +116,10 @@ public class OwnerBookHomeProfileRequestsTest {
     }
 
     @Test
-    public void CheckAcceptedList() {
+    public void checkAcceptedList() {
         solo.sleep(2000);
         solo.clickOnText("REQUESTS");
+        solo.sleep(2000);
         solo.clickOnText("Accepted");
         solo.sleep(1000);
         solo.waitForText("TestBook10", 1, 5000);
@@ -129,7 +131,7 @@ public class OwnerBookHomeProfileRequestsTest {
         solo.waitForText("Title: TestBook10", 1, 5000);
         solo.waitForText("ISBN: 0100000000000", 1, 5000);
         solo.waitForText("Owner: TestOwner1", 1, 5000);
-        solo.waitForText("Borrower: TestBorrower1", 1, 5000);
+        solo.waitForText("Requester: TestBorrower2", 1, 5000);
         solo.waitForText("Status: accepted", 1, 5000);
         solo.clickOnText("Deliver Scan");
         solo.assertCurrentActivity("Wrong Activity", CodeScanner.class);
@@ -159,14 +161,15 @@ public class OwnerBookHomeProfileRequestsTest {
     }
 
     @Test
-    public void CheckBorrowedTest(){
+    public void checkBorrowedList() {
         solo.sleep(2000);
         solo.clickOnText("REQUESTS");
+        solo.sleep(2000);
         solo.clickOnText("Borrowed");
         solo.sleep(1000);
         solo.waitForText("TestBook7", 1, 5000);
         solo.waitForText("TestBook8", 1, 5000);
-        solo.waitForText("TestBook8", 1, 5000);
+        solo.waitForText("TestBook9", 1, 5000);
         solo.clickOnMenuItem("TestBook8");
         solo.sleep(1000);
         solo.assertCurrentActivity("Wrong Activity", OwnerReturn.class);
@@ -176,6 +179,7 @@ public class OwnerBookHomeProfileRequestsTest {
         solo.waitForText("Borrower: TestBorrower1", 1, 5000);
         solo.waitForText("Status: borrowed", 1, 5000);
         solo.clickOnText("Return Scan");
+        solo.sleep(4000);
         solo.assertCurrentActivity("Wrong Activity", CodeScanner.class);
     }
 

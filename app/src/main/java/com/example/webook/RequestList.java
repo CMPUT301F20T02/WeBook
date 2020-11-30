@@ -58,9 +58,11 @@ public class RequestList extends ArrayAdapter<BookRequest> {
         String temp;
         if (mode == 0) {
             temp = "Requested by " + bookRequest.getRequester().get(position);
-        }else if (mode == 1) {
+        } else if (mode == 1) {
             temp = "Requested by " + borrower.get(position);
-        }else{
+        } else if (mode == 3) {
+            temp = "Borrowed by " + borrower.get(position);
+        } else{
             temp = "Owner: " + bookRequest.getRequestee();
         }
         borrow_text.setText(temp);

@@ -54,7 +54,7 @@ public class OwnerRequestPageActivity extends AppCompatActivity implements Owner
 
         requestListPending = new RequestList(this, pendingRequests, null, 2);
         requestListAccepted = new RequestList(this, acceptedRequests, acceptedList, 1);
-        requestListBorrowed = new RequestList(this, borrowedRequests, borrowedList, 1);
+        requestListBorrowed = new RequestList(this, borrowedRequests, borrowedList, 3);
         dataBaseManager.OwnerRequestPageRequestSnapShotListener(this, owner.getUsername());
 
         requestListView.setAdapter(requestListPending);

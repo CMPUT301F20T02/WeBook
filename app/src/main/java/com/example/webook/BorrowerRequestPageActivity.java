@@ -51,8 +51,8 @@ public class BorrowerRequestPageActivity extends AppCompatActivity {
         acceptedList = new ArrayList<>();
 
         requestListPending = new RequestList(this, pendingRequests, null, 2);
-        requestListAccepted = new RequestList(this, acceptedRequests, acceptedList, 3);
-        requestListBorrowed = new RequestList(this, borrowedRequests, borrowedList, 3);
+        requestListAccepted = new RequestList(this, acceptedRequests, acceptedList, 2);
+        requestListBorrowed = new RequestList(this, borrowedRequests, borrowedList, 2);
         dataBaseManager.BorrowerRequestPageRequestSnapShotListener(this, borrower.getUsername());
 
         requestListView.setAdapter(requestListPending);

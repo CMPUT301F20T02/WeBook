@@ -153,7 +153,7 @@ public class OwnerHomePageTest {
 
 
     @Test
-    public void CheckAllFilter(){
+    public void checkAllFilter(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         assertTrue(solo.waitForText("TestBook3", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook3 Author", 1, 5000, true, true));

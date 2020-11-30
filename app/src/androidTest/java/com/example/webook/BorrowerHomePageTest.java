@@ -127,7 +127,7 @@ public class BorrowerHomePageTest {
 
 
     @Test
-    public void CheckAllFilter(){
+    public void checkAllFilter(){
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         assertTrue(solo.waitForText("TestBook5", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook5 Author", 1, 5000, true, true));

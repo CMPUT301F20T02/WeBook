@@ -75,7 +75,7 @@ public class BorrowerBookProfileTest {
     }
 
     @Test
-    public void BorrowerBookProfileTest(){
+    public void borrowerBookProfileTest(){
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.clickOnButton("Search");
         solo.enterText((EditText) solo.getView(R.id.search_input),"TestBook3");
@@ -99,7 +99,7 @@ public class BorrowerBookProfileTest {
 
     //test the request button on borrower book profile page. When the status is available.
     @Test
-    public void BorrowerBookProfileAvailableBookCheck(){
+    public void borrowerBookProfileAvailableBookCheck(){
         // login
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
@@ -138,7 +138,7 @@ public class BorrowerBookProfileTest {
     // When the book status is "Borrowed", since our borrower search
     // only find available and requested books, the search page show nothing.
     @Test
-    public void BorrowerBookProfileBorrowedBookCheck() {
+    public void borrowerBookProfileBorrowedBookCheck() {
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.sleep(5000);
@@ -155,7 +155,7 @@ public class BorrowerBookProfileTest {
     // When the book status is "accepted", since our borrower search
     // only find available and requested books, the search page show nothing.
     @Test
-    public void BorrowerBookProfileAcceptedBookCheck() {
+    public void borrowerBookProfileAcceptedBookCheck() {
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.sleep(5000);
@@ -173,7 +173,7 @@ public class BorrowerBookProfileTest {
     // is not fully complete since our borrower page is not complete.
     // will be completed in next part.
     @Test
-    public void BorrowerBookProfileRequestedBookTest(){
+    public void borrowerBookProfileRequestedBookTest(){
 
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.clickOnButton("Search");

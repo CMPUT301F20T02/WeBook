@@ -55,7 +55,7 @@ public class OwnerBookProfileRequestListFunctionalTest {
     }
 
     @Test
-    public void OwnerRequestListFunctionalTest() {
+    public void ownerRequestListFunctionalTest() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.enterText((EditText) solo.getView(R.id.username_input),"TestOwner1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");

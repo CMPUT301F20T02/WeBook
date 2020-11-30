@@ -86,7 +86,7 @@ public class BorrowerRequestButtonTest {
 
 
     @Test
-    public void BorrowerAcceptedDeliveryCheck() {
+    public void borrowerAcceptedDeliveryCheck() {
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.sleep(1000);
         solo.clickOnText("REQUESTS");
@@ -109,7 +109,7 @@ public class BorrowerRequestButtonTest {
 
 
     @Test
-    public void BorrowerBorrowedReturnCheck(){
+    public void borrowerBorrowedReturnCheck(){
         solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
         solo.clickOnText("REQUESTS");
         solo.sleep(1000);

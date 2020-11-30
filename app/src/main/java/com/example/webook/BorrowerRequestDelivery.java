@@ -77,7 +77,7 @@ public class BorrowerRequestDelivery extends AppCompatActivity {
         scaned = false;
 
         String owner_name = "Owner: " + bookRequest.getRequestee();
-        String borrower_name = "Borrower: " + bookRequest.getRequester().get(0);
+        String borrower_name = "Requester: " + bookRequest.getRequester().get(0);
         isbn_base = bookRequest.getBook().getISBN();
         final String book_isbn = "ISBN: " + isbn_base;
         String book_title = "Title: " + bookRequest.getBook().getTitle();

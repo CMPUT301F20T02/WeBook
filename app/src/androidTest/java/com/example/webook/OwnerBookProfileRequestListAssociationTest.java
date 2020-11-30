@@ -42,7 +42,7 @@ public class OwnerBookProfileRequestListAssociationTest {
     }
 
     @Test
-    public void OwnerRequestListFunctionalTest2() {
+    public void ownerRequestListFunctionalTest2() {
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.sleep(1000);
         solo.clickOnText("Accepted");

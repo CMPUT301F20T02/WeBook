@@ -1,7 +1,9 @@
 package com.example.webook;
 
+import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
@@ -14,10 +16,10 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertTrue;
-
-public class BorrowerProfileEdit {
+@RunWith(AndroidJUnit4.class)
+public class OwnerProfileEditTest {
     private Solo solo;
     private static DataBaseTestManager dataBaseTestManager;
     private static Solo soloCls;
@@ -51,46 +53,46 @@ public class BorrowerProfileEdit {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        solo.enterText((EditText) solo.getView(R.id.username_input),"TestBorrower1");
+        solo.enterText((EditText) solo.getView(R.id.username_input),"TestOwner1");
         solo.enterText((EditText) solo.getView(R.id.pwd_input),"111");
         solo.clickOnButton("Log in");
         solo.sleep(1000);
     }
-    @Test
-    public void checkProfile(){
-        solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
-        solo.clickOnText("ME");
-        solo.assertCurrentActivity("Wrong Activity",BorrowerProfileActivity.class);
-        assertTrue(solo.waitForText("TestBorrower1", 1, 5000, true, true));
-        assertTrue(solo.waitForText("borrower", 1, 5000, true, true));
-        assertTrue(solo.waitForText("6472409903", 1, 5000, true, true));
-        assertTrue(solo.waitForText("ThisIsATestEmailForBorrower1@gmail.com", 1, 5000, true, true));
-        assertTrue(solo.waitForText("Hello, I'm TestBorrower1", 1, 5000, true, true));
-    }
+
 
     @Test
-    public void checkEdit(){
-        solo.assertCurrentActivity("Wrong Activity", BorrowerHomepage.class);
+    public void checkEditOwnerProfile(){
+        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
         solo.clickOnText("ME");
-        solo.assertCurrentActivity("Wrong Activity",BorrowerProfileActivity.class);
-        solo.clickOnText("EDIT PROFILE");
-        solo.assertCurrentActivity("Wrong Activity",EditUserProfileActivity.class);
         solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
+        solo.clickOnButton("EDIT PROFILE");
+        solo.sleep(1000);
+        solo.assertCurrentActivity("Wrong Activity", EditUserProfileActivity.class);
         solo.clickOnButton("Cancel");
         solo.sleep(1000);
-        solo.clickOnText("EDIT PROFILE");
-        solo.clearEditText((EditText) solo.getView(R.id.editUserPhone));
-        solo.clearEditText((EditText) solo.getView(R.id.editUserEmail));
-        solo.clearEditText((EditText) solo.getView(R.id.editUserDescription));
-        solo.enterText((EditText) solo.getView(R.id.editUserPhone),"6466606670");
-        solo.enterText((EditText) solo.getView(R.id.editUserEmail),"NewTestBorrower1@gmail.com");
-        solo.enterText((EditText) solo.getView(R.id.editUserDescription),"This is new TestBorrower1");
-        solo.clickOnButton("Confirm");
+        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
+
+
+        solo.clickOnButton("EDIT PROFILE");
         solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong Activity",BorrowerProfileActivity.class);
-        assertTrue(solo.waitForText("6466606670", 1, 5000, true, true));
-        assertTrue(solo.waitForText("NewTestBorrower1@gmail.com", 1, 5000, true, true));
-        assertTrue(solo.waitForText("This is new TestBorrower1", 1, 5000, true, true));
+        solo.assertCurrentActivity("Wrong Activity", EditUserProfileActivity.class);
+
+        solo.clearEditText((EditText) solo.getView(R.id.editUserEmail));
+        solo.clearEditText((EditText) solo.getView(R.id.editUserPhone));
+        solo.clearEditText((EditText) solo.getView(R.id.editUserDescription));
+        EditText email = (EditText) solo.getView(R.id.editUserEmail);
+        EditText phone =  (EditText) solo.getView(R.id.editUserPhone);
+        EditText description =  (EditText) solo.getView(R.id.editUserDescription);
+        solo.enterText(email, "TestOwner1EditedEmail@gmail.com");
+        solo.enterText(phone, "6476855590");
+        solo.enterText(description, "This description has changed");
+        solo.clickOnView((Button) solo.getView(R.id.editUserConfirm));
+        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
+        solo.waitForActivity("OwnerProfileActivity",5000);
+        solo.waitForText("TestOwner1EditedEmail@gmail.com", 1, 5000);
+        solo.waitForText("6476855590", 1, 5000);
+        solo.waitForText("This description has changed", 1, 5000);
     }
 
 

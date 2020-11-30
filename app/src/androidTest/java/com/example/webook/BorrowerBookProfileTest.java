@@ -96,6 +96,7 @@ public class BorrowerBookProfileTest {
         assertTrue(solo.waitForText("This is TestBook3",1,3000,true,true));
     }
 
+
     //test the request button on borrower book profile page. When the status is available.
     @Test
     public void BorrowerBookProfileAvailableBookCheck(){
@@ -133,7 +134,8 @@ public class BorrowerBookProfileTest {
 
     }
 
-    //When the book status is "accept", test whether the request button works, since our borrower search
+
+    // When the book status is "Borrowed", since our borrower search
     // only find available and requested books, the search page show nothing.
     @Test
     public void BorrowerBookProfileBorrowedBookCheck() {
@@ -144,14 +146,13 @@ public class BorrowerBookProfileTest {
         solo.enterText((EditText) solo.getView(R.id.search_input), "TestBook9");
         solo.clickOnButton("Books");
 
-        // borrower search books, show result list, click on item to show profile
+        // borrower search books, show result list containing nothing
         solo.assertCurrentActivity("Wrong Activity", BorrowerSearchBookPage.class);
-
         assertFalse(solo.searchText("TestBook9 Author"));
-        //assertFalse(solo.waitForText("borrowed", 1, 5000, true, true));
     }
 
-    //When the book status is "accept", test whether the request button works, since our borrower search
+
+    // When the book status is "accepted", since our borrower search
     // only find available and requested books, the search page show nothing.
     @Test
     public void BorrowerBookProfileAcceptedBookCheck() {
@@ -162,16 +163,15 @@ public class BorrowerBookProfileTest {
         solo.enterText((EditText) solo.getView(R.id.search_input), "TestBook10");
         solo.clickOnButton("Books");
 
-        // borrower search books, show result list, click on item to show profile
+        // borrower search books, show result list containing nothing
         solo.assertCurrentActivity("Wrong Activity", BorrowerSearchBookPage.class);
-
-        //assertFalse(solo.searchText("TestBook10 Author"));
-        assertFalse(solo.waitForText("accepted", 1, 5000));
+        assertFalse(solo.waitForText("TestBook10 Author", 1, 5000));
     }
 
-    //When the book status is "requested", test whether the request button works, this function
-    //is not fully complete since our borrower page is not complete.
-    //will be completed in next part.
+
+    // When the book status is "requested", test whether the request button works, this function
+    // is not fully complete since our borrower page is not complete.
+    // will be completed in next part.
     @Test
     public void BorrowerBookProfileRequestedBookTest(){
 
@@ -194,6 +194,7 @@ public class BorrowerBookProfileTest {
         solo.assertCurrentActivity("Wrong Activity", BorrowerSearchBookPage.class);
 
     }
+
 
     @After
     public void tearDown() {

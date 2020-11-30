@@ -193,9 +193,9 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation9;
 
         requester9 = new ArrayList<>();
-        requester9.add("TestBorrower1");
+        requester9.add("TestBorrower3");
 
-        TestBook9.setBorrower("TestBorrower1");
+        TestBook9.setBorrower("TestBorrower3");
 
         Date9 = new ArrayList<>();
         Date9.add(2020);
@@ -206,7 +206,7 @@ public class DataBaseTestManager {
         geoLocation9.add(52.59963812631389);
         geoLocation9.add(98.08721370995045);
 
-        BookRequest requestTest9 = new BookRequest(TestBook9,"TestOwner1",requester9, Date9, geoLocation9);
+        BookRequest requestTest9 = new BookRequest(TestBook9,"TestOwner1", requester9, Date9, geoLocation9);
         collectionReference = db.collection("requests");
         collectionReference
                 .document("9000000000000")
@@ -229,7 +229,7 @@ public class DataBaseTestManager {
         ArrayList<Double> geoLocation10;
 
         requester10 = new ArrayList<>();
-        requester10.add("TestBorrower1");
+        requester10.add("TestBorrower2");
 
         Date10 = new ArrayList<>();
         Date10.add(2022);
@@ -240,7 +240,7 @@ public class DataBaseTestManager {
         geoLocation10.add(47.59963812631389);
         geoLocation10.add(133.08721370995045);
 
-        BookRequest requestTest10 = new BookRequest(TestBook10,"TestOwner1",requester10, Date10, geoLocation10);
+        BookRequest requestTest10 = new BookRequest(TestBook10,"TestOwner1", requester10, Date10, geoLocation10);
         collectionReference = db.collection("requests");
         collectionReference
                 .document("0100000000000")
@@ -352,22 +352,10 @@ public class DataBaseTestManager {
         requestList.add("6000000000000");
         requestList.add("6000000000000");
         requestList.add("7000000000000");
-        requestList.add("7000000000000");
-        requestList.add("7000000000000");
-        requestList.add("8000000000000");
-        requestList.add("8000000000000");
         requestList.add("8000000000000");
         requestList.add("9000000000000");
-        requestList.add("9000000000000");
-        requestList.add("9000000000000");
-        requestList.add("0100000000000");
-        requestList.add("0100000000000");
         requestList.add("0100000000000");
         requestList.add("1100000000000");
-        requestList.add("1100000000000");
-        requestList.add("1100000000000");
-        requestList.add("1200000000000");
-        requestList.add("1200000000000");
         requestList.add("1200000000000");
 
         Owner testOwner1 = new Owner("TestOwner1","ThisIsATestEmail@gmail.com","6476854770","111","Hello, I'm TestOwner1",null);

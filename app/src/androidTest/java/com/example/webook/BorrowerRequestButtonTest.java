@@ -77,12 +77,12 @@ public class BorrowerRequestButtonTest {
         assertTrue(solo.waitForText("TestBook10", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook11", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook12", 1, 5000, true, true));
-        assertTrue(solo.waitForText("Book owner is TestOwner1", 3, 5000, true, true));
+        assertTrue(solo.waitForText("Owner: TestOwner1", 3, 5000, true, true));
         solo.clickOnText("Borrowed");
         assertTrue(solo.waitForText("TestBook7", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook8", 1, 5000, true, true));
         assertTrue(solo.waitForText("TestBook9", 1, 5000, true, true));
-        assertTrue(solo.waitForText("Book owner is TestOwner1", 3, 5000, true, true));
+        assertTrue(solo.waitForText("Owner: TestOwner1", 3, 5000, true, true));
     }
 /*
     @Test

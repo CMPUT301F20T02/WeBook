@@ -66,6 +66,7 @@ public class OwnerHomePageTest {
         solo.sleep(1000);
     }
 
+
     @Test
     public void checkOnItemClick(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
@@ -77,6 +78,7 @@ public class OwnerHomePageTest {
         assertTrue(solo.searchText("TestBook3"));
     }
 
+
     @Test
     public void checkRequestsButton(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
@@ -85,64 +87,13 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("TestBook4", 1, 5000, true, true));
     }
 
-    @Test
-    public void checkAddBook(){
-        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
-        solo.clickOnText("ME");
-        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
-        solo.clickOnButton("ADD BOOK");
-        solo.assertCurrentActivity("Wrong Activity", AddBookActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.editTextBookTitle), "testing book");
-        solo.enterText((EditText) solo.getView(R.id.editTextBookAuthor), "testing author");
-        solo.enterText((EditText) solo.getView(R.id.editTextISBN), "1300000000000");
-        solo.enterText((EditText) solo.getView(R.id.editTextDescription), "testing description");
-        solo.clickOnButton("CONFIRM");
-        solo.waitForActivity("OwnerProfileActivity",5000);
-        solo.goBack();
-        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
-        solo.waitForText("testing book", 1, 5000);
-        solo.waitForText("testing author", 1, 5000);
-    }
-
-    @Test
-    public void checkEditOwnerProfile(){
-        solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
-        solo.clickOnText("ME");
-        solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
-        solo.clickOnButton("EDIT PROFILE");
-        solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong Activity", EditUserProfileActivity.class);
-        solo.clickOnButton("Cancel");
-        solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
-
-
-        solo.clickOnButton("EDIT PROFILE");
-        solo.sleep(1000);
-        solo.assertCurrentActivity("Wrong Activity", EditUserProfileActivity.class);
-
-        solo.clearEditText((EditText) solo.getView(R.id.editUserEmail));
-        solo.clearEditText((EditText) solo.getView(R.id.editUserPhone));
-        solo.clearEditText((EditText) solo.getView(R.id.editUserDescription));
-        EditText email = (EditText) solo.getView(R.id.editUserEmail);
-        EditText phone =  (EditText) solo.getView(R.id.editUserPhone);
-        EditText description =  (EditText) solo.getView(R.id.editUserDescription);
-        solo.enterText(email, "TestOwner1EditedEmail@gmail.com");
-        solo.enterText(phone, "6476855590");
-        solo.enterText(description, "This description has changed");
-        solo.clickOnView((Button) solo.getView(R.id.editUserConfirm));
-        solo.assertCurrentActivity("Wrong Activity", OwnerProfileActivity.class);
-        solo.waitForActivity("OwnerProfileActivity",5000);
-        solo.waitForText("TestOwner1EditedEmail@gmail.com", 1, 5000);
-        solo.waitForText("6476855590", 1, 5000);
-        solo.waitForText("This description has changed", 1, 5000);
-    }
 
     @Test
     public void checkAvailableButton(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.sleep(5000);
         solo.clickOnText("Available");
+        solo.sleep(2000);
         assertTrue(solo.waitForText("TestBook1", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook2", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook3", 1, 1000, true, true));
@@ -152,10 +103,13 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("available", 3, 1000, true, true));
     }
 
+
     @Test
     public void checkRequestedButton(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.sleep(5000);
         solo.clickOnText("Requested");
+        solo.sleep(2000);
         assertTrue(solo.waitForText("TestBook4", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook5", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook6", 1, 1000, true, true));
@@ -165,10 +119,13 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("requested", 3, 1000, true, true));
     }
 
+
     @Test
     public void checkAcceptedButton(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.sleep(5000);
         solo.clickOnText("Accepted");
+        solo.sleep(2000);
         assertTrue(solo.waitForText("TestBook10", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook11", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook12", 1, 1000, true, true));
@@ -178,10 +135,13 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("accepted", 3, 1000, true, true));
     }
 
+
     @Test
     public void checkBorrowedButton(){
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
+        solo.sleep(5000);
         solo.clickOnText("Borrowed");
+        solo.sleep(2000);
         assertTrue(solo.waitForText("TestBook7", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook8", 1, 1000, true, true));
         assertTrue(solo.waitForText("TestBook9", 1, 1000, true, true));
@@ -190,6 +150,7 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("TestBook9 Author", 1, 1000, true, true));
         assertTrue(solo.waitForText("borrowed", 3, 1000, true, true));
     }
+
 
     @Test
     public void CheckAllButton(){
@@ -211,7 +172,6 @@ public class OwnerHomePageTest {
         assertTrue(solo.waitForText("borrowed", 1, 5000, true, true));
         solo.assertCurrentActivity("Wrong Activity", OwnerHomepage.class);
     }
-
 
 
     @After

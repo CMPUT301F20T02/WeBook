@@ -544,6 +544,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method set a SnapShotListener on, if there is any change
+     * of the owner's requests in the database, the array list will refresh
+     * @param ownerRequestPageActivity
+     * @param username
+     * These are related activity and username
+     */
     public void OwnerRequestPageRequestSnapShotListener(final OwnerRequestPageActivity ownerRequestPageActivity, final String username){
         CollectionReference requestRef = db.collection("requests");
         requestRef
@@ -563,6 +570,13 @@ public class DataBaseManager {
                 });
     }
 
+    /**
+     *This method set a SnapShotListener, if there is any change
+     * of the borrower's requests in the database, the array list will refresh
+     * @param borrowerRequestPageActivity
+     * @param username
+     * These are related activity and username
+     */
     public void BorrowerRequestPageRequestSnapShotListener(final BorrowerRequestPageActivity borrowerRequestPageActivity, final String username){
         CollectionReference requestRef = db.collection("requests");
         requestRef
@@ -582,6 +596,13 @@ public class DataBaseManager {
                 });
     }
 
+    /**
+     * This method set a SnapShotListener, when owner add new books, the
+     * book list of owner homepage will refresh
+     * @param ownerHomepage
+     * @param username
+     * These are related activity and username
+     */
     public void OwnerHomePageAddBookSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
         final CollectionReference bookRef = db.collection("books");
         bookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -606,6 +627,12 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method is used to download books from database
+     * @param ownerHomepage
+     * @param bookisbn
+     * These are related activity and an array list of ISBN
+     */
     private void downloadBooks(final OwnerHomepage ownerHomepage , final ArrayList<String> bookisbn) {
         Log.d("I'm fine:", bookisbn.toString());
         CollectionReference bookRef = db.collection("books");
@@ -636,6 +663,13 @@ public class DataBaseManager {
         }
     }
 
+    /**
+     * This method set a SnapShotListener on an owner, if there is any change,
+     * the owner home page will refresh
+     * @param ownerHomepage
+     * @param username
+     * These are related activity and username
+     */
     public void OwnerHomePageAddUserSnapShotListener(final OwnerHomepage ownerHomepage, final String username){
         DocumentReference userRef = db.collection("users").document(username);
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -649,6 +683,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method sets a SnapShotListener, when the info of borrower changes,
+     * it will call updateBorrowerInfo method
+     * @param borrowerProfileActivity
+     * @param username
+     * These are related activity and username
+     */
     public void BorrowerProfileAddUserSnapShotListener(final BorrowerProfileActivity borrowerProfileActivity, final String username){
         DocumentReference userRef = db.collection("users").document(username);
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -660,6 +701,13 @@ public class DataBaseManager {
 
     }
 
+    /**
+     * This method can reset borrower's profile page when the
+     * info of the borrower changes
+     * @param document
+     * @param borrowerProfileActivity
+     * These are related activity and DocumentSnapshot
+     */
     private void updateBorrowerInfo(DocumentSnapshot document, final BorrowerProfileActivity borrowerProfileActivity) {
         Borrower borrower = document.toObject(Borrower.class);
         borrowerProfileActivity.setUsername(borrower.getUsername());
@@ -669,6 +717,13 @@ public class DataBaseManager {
         borrowerProfileActivity.setDescription(borrower.getDescription());
     }
 
+    /**
+     * This method sets a SnapshotListener, when the info of owner changes,
+     * it will call updateOwnerInfo method
+     * @param ownerProfileActivity
+     * @param username
+     * These are related activity and username
+     */
     public void OwnerProfileAddUserSnapShotListener(final OwnerProfileActivity ownerProfileActivity, final String username){
         DocumentReference userRef = db.collection("users").document(username);
         userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -680,6 +735,13 @@ public class DataBaseManager {
 
     }
 
+    /**
+     * This method can reset owner's profile page when the
+     * info of the owner changes
+     * @param document
+     * @param ownerProfileActivity
+     * These are related activity and DocumentSnapshot
+     */
     private void updateOwnerInfo(DocumentSnapshot document, final OwnerProfileActivity ownerProfileActivity) {
         Borrower borrower = document.toObject(Borrower.class);
         ownerProfileActivity.setUsername(borrower.getUsername());
@@ -689,6 +751,11 @@ public class DataBaseManager {
         ownerProfileActivity.setDescription(borrower.getDescription());
     }
 
+    /**
+     * This method can remove a book from database
+     * @param book
+     * This is the book that need to be deleted
+     */
     public void removeBook(Book book){
         DocumentReference docRef = db.collection("books").document(book.getISBN());
         docRef.delete()
@@ -732,6 +799,13 @@ public class DataBaseManager {
 
  */
 
+    /**
+     * This method sets a SnapshotListener, when user update the info of
+     * a book, it will call updateBookInfo method
+     * @param ownerBookProfile
+     * @param isbn
+     * These are related activity and the ISBN of the book
+     */
     public void BookProfileAddUserSnapShotListener(final OwnerBookProfile ownerBookProfile, final String isbn){
         DocumentReference bookRef = db.collection("books").document(isbn);
         bookRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -744,6 +818,12 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method can reset the info of a book in OwnerBookProfile
+     * @param documentSnapshot
+     * @param ownerBookProfile
+     * These are related activity and DocumentSnapshot
+     */
     private void updateBookInfo (DocumentSnapshot documentSnapshot, final OwnerBookProfile ownerBookProfile) {
         Book book = documentSnapshot.toObject(Book.class);
         ownerBookProfile.setTitle_text(book.getTitle());
@@ -755,6 +835,16 @@ public class DataBaseManager {
         ownerBookProfile.setSelectBook(book);
     }
 
+    /**
+     * This method can update the information of a book in the database
+     * @param isbn
+     * @param title
+     * @param author
+     * @param des
+     * @param bitmap
+     * @param imageChanged
+     * These are the new information of the book
+     */
     public void updateBook (final String isbn, String title, String author, String des, Bitmap bitmap, int imageChanged) {
         DocumentReference bookRef = db.collection("books").document(isbn);
         bookRef.update("description",des);
@@ -790,6 +880,12 @@ public class DataBaseManager {
         }
     }
 
+    /**
+     * This method sets a SnapshotListener on the BorrowerHomepage
+     * @param borrowerHomepage
+     * @param username
+     * These are related activity and username
+     */
     public void BorrowerHomepageBookAddSnapShotListener(final BorrowerHomepage borrowerHomepage, final String username){
 
 
@@ -832,6 +928,14 @@ public class DataBaseManager {
 
     }
 
+    /**
+     * This method is used to delete a book, after the action
+     * it will show a toast to inform owner the deletion is successful
+     * or failed
+     * @param ownerBookProfile
+     * @param isbn
+     * These are related activity and the isbn of the book
+     */
     public void deleteBook(final OwnerBookProfile ownerBookProfile, String isbn){
         db.collection("books").document(isbn)
                 .delete()
@@ -851,6 +955,14 @@ public class DataBaseManager {
                 });
     }
 
+    /**
+     * This method sets a SnapshotListener on BorrowerHomepage. When there is
+     * any change relate to the borrower, it will refresh the list and
+     * also show a toast to inform the borrower what had been changed
+     * @param borrowerHomepage
+     * @param username
+     * These are related activity and the username
+     */
     public void BorrowerHomepageRequestListener(final BorrowerHomepage borrowerHomepage, final String username){
 
         db.collection("requests")
@@ -957,6 +1069,13 @@ public class DataBaseManager {
 
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in BorrowerBookProfile to see their profile
+     * @param borrowerBookProfile
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserBorrowBookProfile(final BorrowerBookProfile borrowerBookProfile, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -971,6 +1090,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in ShowBookDetail to see their profile
+     * @param showBookDetail
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserShowBookDetail(final ShowBookDetail showBookDetail, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -985,6 +1111,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in BorrowerRequestDelivery to see their profile
+     * @param borrowerRequestDelivery
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserBorrowerRequestDelivery(final BorrowerRequestDelivery borrowerRequestDelivery, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -999,6 +1132,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in OnwerBookProfile to see their profile
+     * @param ownerBookProfile
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserOwnerBookProfile(final OwnerBookProfile ownerBookProfile, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -1013,6 +1153,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in Request Profile to see their profile
+     * @param requestProfile
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserRequestProfile(final RequestProfile requestProfile, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -1027,6 +1174,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in BorrowerReturn to see their profile
+     * @param borrowerReturn
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserBorrowerReturn(final BorrowerReturn borrowerReturn, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -1041,6 +1195,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in OwnerReturn to see their profile
+     * @param ownerReturn
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserOwnerReturn(final OwnerReturn ownerReturn, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -1055,6 +1216,13 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method allows users to tap the name of owner or borrower
+     * in OwnerAcceptDeclineFragment to see their profile
+     * @param ownerAcceptDeclineFragment
+     * @param username
+     * These are related activity and the username
+     */
     public void getUserOwnerAcceptedDecline(final OwnerAcceptDeclineFragment ownerAcceptDeclineFragment, String username){
         DocumentReference docRef = db.collection("users").document(username);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -1069,6 +1237,11 @@ public class DataBaseManager {
         });
     }
 
+    /**
+     * This method is used to delete the image of a book
+     * @param isbn
+     * This is the isbn of the book
+     */
     public void deleteImage(String isbn){
         db.collection("books").document(isbn).update("image", null);
     }
